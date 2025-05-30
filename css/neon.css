@@ -1,0 +1,22 @@
+/* 霓虹灯特效 */
+.navbar-title {
+  display: inline-block;
+  --neon-color: lightseagreen;
+  text-shadow: 
+    0 0 5px var(--neon-color),
+    0 0 15px var(--neon-color),
+    0 0 30px var(--neon-color);
+  animation: neon-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes neon-glow {
+  from {
+    text-shadow: 0 0 5px var(--neon-color);
+  }
+  to {
+    text-shadow: 
+      0 0 10px var(--neon-color),
+      0 0 20px var(--neon-color),
+      0 0 30px var(--neon-color);
+  }
+}
