@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>信息搜集</title>
+    <link href="/2025/06/04/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/"/>
+    <url>/2025/06/04/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/</url>
+    
+    <content type="html"><![CDATA[<h2 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h2><p>网站根目录下存在robots.txt文件，其内容规定了网络爬虫可爬和不可爬的目录文件。</p><h2 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h2><p><strong>phps文件</strong>就是php的源代码文件，通常用于提供给用户（访问者）直接通过Web浏览器查看php代码的内容。</p><p>因为用户无法直接通过Web浏览器“看到”php文件的内容，所以需要用phps文件代替。直接访问&#x2F;index.phps即可获得php</p><h2 id="web6"><a href="#web6" class="headerlink" title="web6"></a>web6</h2><p>www源码泄露</p><p>访问url&#x2F;<a href="http://www.zip,通过其源码泄露,发现index.php文件/">www.zip，通过其源码泄露，发现index.php文件</a></p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Author</span>: h1xa</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Date</span>:   2020-09-01 14:37:13</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Last</span> Modified by:   h1xa</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Last</span> Modified time: 2020-09-01 14:42:44</span><br><span class="hljs-comment"># <span class="hljs-doctag">@email</span>: h1xa<span class="hljs-doctag">@ctfer</span>.com</span><br><span class="hljs-comment"># <span class="hljs-doctag">@link</span>: https://ctfer.com</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">//flag in fl000g.txt</span><br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;web6:where is flag?&quot;</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure><p>fl000g.txt里显示flag{flag_here}，尝试直接url&#x2F;fl000g.txt，得到flag</p><h2 id="web7"><a href="#web7" class="headerlink" title="web7"></a>web7</h2><blockquote><p>版本控制很重要，但不要部署到生产环境更重要。</p></blockquote><p>开发人员在开发时，常常会先把源码提交到远程托管网站（如github），最后再从远程托管网站把源码pull到服务器的web目录下，如果忘记把.git文件删除，就造成此漏洞。利用.git文件恢复网站的源码，而源码里可能会有数据库的信息。<br>当前大量开发人员使用git进行版本控制，对站点自动部署。 如果配置不当，可能会将.git文件夹直接部署到线上环境，这就引起了git泄露漏洞。</p><p>尝试&#x2F;.git得到flag</p><h2 id="web8"><a href="#web8" class="headerlink" title="web8"></a>web8</h2><p>主流的版本控制器有git和svn，访问&#x2F;.svn得到flag</p><h2 id="web9"><a href="#web9" class="headerlink" title="web9"></a>web9</h2><blockquote><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">发现网页有个错别字？赶紧在生产环境<span class="hljs-keyword">vim</span>改下，不好，死机了<br></code></pre></td></tr></table></figure></blockquote><p>在Linux生产环境上使用vim或者vi做修改时，会生成一个swp为后缀的文件.</p><ul><li>第一次意外退出生成的是.swp</li><li>第二次意外退出生成的是.swo</li><li>第三次为.swn</li></ul><p>访问&#x2F;index.php.swp获得带有flag的文件</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title></title>
     <link href="/2025/06/02/%E6%B5%8B%E8%AF%95/"/>
     <url>/2025/06/02/%E6%B5%8B%E8%AF%95/</url>
