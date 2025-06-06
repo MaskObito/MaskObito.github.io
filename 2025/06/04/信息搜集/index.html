@@ -27,7 +27,7 @@
 <meta property="og:description" content="web4网站根目录下存在robots.txt文件，其内容规定了网络爬虫可爬和不可爬的目录文件。 web5phps文件就是php的源代码文件，通常用于提供给用户（访问者）直接通过Web浏览器查看php代码的内容。 因为用户无法直接通过Web浏览器“看到”php文件的内容，所以需要用phps文件代替。直接访问&#x2F;index.phps即可获得php web6www源码泄露 访问url&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-04T12:46:25.000Z">
-<meta property="article:modified_time" content="2025-06-04T17:10:40.437Z">
+<meta property="article:modified_time" content="2025-06-06T06:28:34.305Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          471 字
+          726 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          4 分钟
+          7 分钟
         
       </span>
     
@@ -303,6 +303,31 @@
 <li>第三次为.swn</li>
 </ul>
 <p>访问&#x2F;index.php.swp获得带有flag的文件</p>
+<h2 id="web12"><a href="#web12" class="headerlink" title="web12"></a>web12</h2><blockquote>
+<p>有时候网站上的公开信息，就是管理员常用密码</p>
+</blockquote>
+<p>访问&#x2F;admin，弹出登陆界面，账号用admin，密码从网站里找</p>
+<h2 id="web14"><a href="#web14" class="headerlink" title="web14"></a>web14</h2><blockquote>
+<p>有时候源码里面就能不经意间泄露重要(editor)的信息,默认配置害死人</p>
+</blockquote>
+<p>访问&#x2F;editor，是文件上传界面，点击文件空间，从var&#x2F;www&#x2F;html找到nothinghere，点进去是fl000g.txt，访问&#x2F;nothinghere&#x2F;fl000g.txt得到flag</p>
+<h2 id="web15"><a href="#web15" class="headerlink" title="web15"></a>web15</h2><blockquote>
+<p>公开的信息比如邮箱，可能造成信息泄露，产生严重后果</p>
+</blockquote>
+<p>登录界面找回密保问题，通过文章里的qq邮箱得到居住地，成功找回密码。</p>
+<h2 id="web16"><a href="#web16" class="headerlink" title="web16"></a>web16</h2><blockquote>
+<p>对于测试用的探针，使用完毕后要及时删除，可能会造成信息泄露</p>
+</blockquote>
+<p>访问tz.php找到flag</p>
+<h2 id="web17"><a href="#web17" class="headerlink" title="web17"></a>web17</h2><blockquote>
+<p>备份的sql文件会泄露敏感信息</p>
+</blockquote>
+<p>扫到backup.sql得到flag</p>
+<h2 id="web18"><a href="#web18" class="headerlink" title="web18"></a>web18</h2><blockquote>
+<p>玩101分给你flag</p>
+</blockquote>
+<p>找到js文件，看见大于100分输出的字符串，解码获得flag</p>
+<h2 id="web20"><a href="#web20" class="headerlink" title="web20"></a>web20</h2><p>mdb文件从txt打开，虽然是乱码也可以搜到flag</p>
 
                 
               </div>
