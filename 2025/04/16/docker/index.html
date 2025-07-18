@@ -19,23 +19,21 @@
   <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="无过滤注入web171  闭合单引号：通过输入&#39;闭合id参数的单引号。 注入UNION查询：使用UNION SELECT获取其他数据，确保列数与原查询一致。 绕过原查询条件：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的username !&#x3D; &#39;flag&#39;限制。 注释剩余部分：使用--注释掉原SQL的剩余部分，避免语法错误。  观察">
+    <meta name="description" content="Docker 容器基本操作Docker 是一种容器化技术，可将应用及其依赖打包为独立容器。以下是基本操作指南： 1. 容器生命周期管理 1234567891011121314151617181920# 运行新容器（-d后台运行，-p端口映射，--name命名）docker run -d -p 80:80 --name web nginx# 查看运行中容器docker ps# 查看所有容器（包括已停">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sql注入">
-<meta property="og:url" content="http://maskobito.github.io/2025/05/15/%E6%B5%8B%E8%AF%95%EF%BC%88%E5%9B%BE%E7%89%87%EF%BC%89/index.html">
+<meta property="og:title" content="docker">
+<meta property="og:url" content="http://maskobito.github.io/2025/04/16/docker/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="无过滤注入web171  闭合单引号：通过输入&#39;闭合id参数的单引号。 注入UNION查询：使用UNION SELECT获取其他数据，确保列数与原查询一致。 绕过原查询条件：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的username !&#x3D; &#39;flag&#39;限制。 注释剩余部分：使用--注释掉原SQL的剩余部分，避免语法错误。  观察">
+<meta property="og:description" content="Docker 容器基本操作Docker 是一种容器化技术，可将应用及其依赖打包为独立容器。以下是基本操作指南： 1. 容器生命周期管理 1234567891011121314151617181920# 运行新容器（-d后台运行，-p端口映射，--name命名）docker run -d -p 80:80 --name web nginx# 查看运行中容器docker ps# 查看所有容器（包括已停">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://maskobito.github.io/images/web171.jpg">
-<meta property="article:published_time" content="2025-05-15T14:50:03.000Z">
-<meta property="article:modified_time" content="2025-06-18T08:31:30.938Z">
+<meta property="article:published_time" content="2025-04-15T18:40:00.000Z">
+<meta property="article:modified_time" content="2025-07-18T07:02:01.858Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://maskobito.github.io/images/web171.jpg">
   
   
   
-  <title>sql注入 - MaskObito</title>
+  <title>docker - MaskObito</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="sql注入"></span>
+            <span id="subtitle" data-typed-text="docker"></span>
           
         </div>
 
@@ -216,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-15 22:50" pubdate>
-          2025年5月15日 晚上
+        <time datetime="2025-04-16 02:40" pubdate>
+          2025年4月16日 凌晨
         </time>
       </span>
     
@@ -228,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          156 字
+          300 字
         
       </span>
     
@@ -239,7 +237,7 @@
         
         
         
-          2 分钟
+          3 分钟
         
       </span>
     
@@ -276,24 +274,25 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">sql注入</h1>
+            <h1 id="seo-header">docker</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="无过滤注入"><a href="#无过滤注入" class="headerlink" title="无过滤注入"></a>无过滤注入</h1><h2 id="web171"><a href="#web171" class="headerlink" title="web171"></a>web171</h2><p><img src="/images/web171.jpg" srcset="/img/loading.gif" lazyload></p>
-<ol>
-<li><strong>闭合单引号</strong>：通过输入<code>&#39;</code>闭合id参数的单引号。</li>
-<li><strong>注入UNION查询</strong>：使用<code>UNION SELECT</code>获取其他数据，确保列数与原查询一致。</li>
-<li><strong>绕过原查询条件</strong>：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的<code>username != &#39;flag&#39;</code>限制。</li>
-<li><strong>注释剩余部分</strong>：使用<code>--</code>注释掉原SQL的剩余部分，避免语法错误。</li>
-</ol>
-<p>观察到有三列，两种解发均可，后者会带出id&#x3D;1的那一行，没啥作用</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-string">&#x27; union select username,password,1 from ctfshow_user where username=&#x27;</span>flag<span class="hljs-string">&#x27; -- </span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string">1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> username,password,<span class="hljs-number">1</span> <span class="hljs-keyword">from</span> ctfshow_user <span class="hljs-keyword">where</span> username<span class="hljs-operator">=</span><span class="hljs-string">&#x27;flag&#x27;</span> <span class="hljs-comment">-- </span><br></code></pre></td></tr></table></figure>
+                <h3 id="Docker-容器基本操作"><a href="#Docker-容器基本操作" class="headerlink" title="Docker 容器基本操作"></a>Docker 容器基本操作</h3><p>Docker 是一种容器化技术，可将应用及其依赖打包为独立容器。以下是基本操作指南：</p>
+<p><strong>1. 容器生命周期管理</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 运行新容器（-d后台运行，-p端口映射，--name命名）</span><br>docker run -d -p 80:80 --name web nginx<br><br><span class="hljs-comment"># 查看运行中容器</span><br>docker ps<br><br><span class="hljs-comment"># 查看所有容器（包括已停止的）</span><br>docker ps -a<br><br><span class="hljs-comment"># 停止/启动/重启容器</span><br>docker stop web<br>docker start web<br>docker restart web<br><br><span class="hljs-comment"># 删除容器（需先停止）</span><br>docker <span class="hljs-built_in">rm</span> web<br><br><span class="hljs-comment"># 强制删除运行中的容器</span><br>docker <span class="hljs-built_in">rm</span> -f web<br><br></code></pre></td></tr></table></figure>
 
+<p><strong>2. 容器内操作</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进入容器交互式终端</span><br>docker <span class="hljs-built_in">exec</span> -it web bash<br><br><span class="hljs-comment"># 查看容器日志</span><br>docker logs web<br><br><span class="hljs-comment"># 查看容器资源使用情况</span><br>docker stats web<br><br></code></pre></td></tr></table></figure>
 
+<h3 id="Docker-镜像创建"><a href="#Docker-镜像创建" class="headerlink" title="Docker 镜像创建"></a>Docker 镜像创建</h3><p>镜像是容器的模板，可通过 Dockerfile 构建：</p>
+<p><strong>1. Dockerfile 示例</strong></p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment"># 基础镜像</span><br><span class="hljs-keyword">FROM</span> python:<span class="hljs-number">3.9</span><br><br><span class="hljs-comment"># 设置工作目录</span><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span><br><br><span class="hljs-comment"># 复制依赖文件并安装</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> requirements.txt .</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> pip install -r requirements.txt</span><br><br><span class="hljs-comment"># 复制应用代码</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> . .</span><br><br><span class="hljs-comment"># 暴露端口</span><br><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">5000</span><br><br><span class="hljs-comment"># 启动命令</span><br><span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;python&quot;</span>, <span class="hljs-string">&quot;app.py&quot;</span>]</span><br><br></code></pre></td></tr></table></figure>
 
-<p> <strong>注释符的区别</strong></p>
+<p><strong>2. 构建与推送镜像</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 构建镜像（-t标签，.表示当前目录的Dockerfile）</span><br>docker build -t my-app:1.0 .<br><br><span class="hljs-comment"># 查看本地镜像</span><br>docker images<br><br><span class="hljs-comment"># 登录Docker Hub</span><br>docker login<br><br><span class="hljs-comment"># 标记镜像以推送至仓库</span><br>docker tag my-app:1.0 username/my-app:1.0<br><br><span class="hljs-comment"># 推送镜像</span><br>docker push usernae/my-app:1.0<br><br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -311,8 +310,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>sql注入</div>
-      <div>http://maskobito.github.io/2025/05/15/测试（图片）/</div>
+      <div>docker</div>
+      <div>http://maskobito.github.io/2025/04/16/docker/</div>
     </div>
     <div class="license-meta">
       
@@ -324,7 +323,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年5月15日</div>
+          <div>2025年4月16日</div>
         </div>
       
       
@@ -356,9 +355,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/20/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">
+                      <a href="/2025/05/15/%E6%B5%8B%E8%AF%95%EF%BC%88%E5%9B%BE%E7%89%87%EF%BC%89/" title="sql注入">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">数据库</span>
+                        <span class="hidden-mobile">sql注入</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -366,8 +365,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/04/16/docker/" title="docker">
-                        <span class="hidden-mobile">docker</span>
+                      <a href="/2025/03/03/%E4%B8%AD%E5%9B%BD%E8%9A%81%E5%89%91/" title="中国蚁剑">
+                        <span class="hidden-mobile">中国蚁剑</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
