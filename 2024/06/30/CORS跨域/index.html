@@ -19,26 +19,21 @@
   <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言部分0.项目背景与目标2024国护开始，在北京奇安信，国家xx银行驻场。护网前先是进行了渗透测试，这篇blog进行详细的叙述。 郑重说明本次测试为完全授权的合法合规测试。文中涉及目标均为”某银行”代称，严格脱敏。不会透露内部数据信息，目的在于分享方法论，过程，共性问题与防护思路。 测试过程及方法论1.漏洞扫描结果包括但不限于应用漏洞，系统漏洞以及弱口令等常见安全隐患。本次共发现漏洞77个：高危">
-<meta property="og:type" content="article">
-<meta property="og:title" content="2024国家护网">
-<meta property="og:url" content="http://maskobito.github.io/2025/07/30/2024%E5%9B%BD%E5%AE%B6%E6%8A%A4%E7%BD%91/index.html">
+    <meta property="og:type" content="article">
+<meta property="og:title" content="CORS">
+<meta property="og:url" content="http://maskobito.github.io/2024/06/30/CORS%E8%B7%A8%E5%9F%9F/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="前言部分0.项目背景与目标2024国护开始，在北京奇安信，国家xx银行驻场。护网前先是进行了渗透测试，这篇blog进行详细的叙述。 郑重说明本次测试为完全授权的合法合规测试。文中涉及目标均为”某银行”代称，严格脱敏。不会透露内部数据信息，目的在于分享方法论，过程，共性问题与防护思路。 测试过程及方法论1.漏洞扫描结果包括但不限于应用漏洞，系统漏洞以及弱口令等常见安全隐患。本次共发现漏洞77个：高危">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://maskobito.github.io/images/2024%E5%9B%BD%E6%8A%A41.jpg">
-<meta property="og:image" content="http://maskobito.github.io/images/2024%E5%9B%BD%E6%8A%A42.jpg">
-<meta property="og:image" content="http://maskobito.github.io/images/2024%E5%9B%BD%E6%8A%A43.jpg">
-<meta property="og:image" content="http://maskobito.github.io/images/2024%E5%9B%BD%E6%8A%A44.jpg">
-<meta property="article:published_time" content="2025-07-30T12:00:11.000Z">
-<meta property="article:modified_time" content="2025-08-14T05:43:30.252Z">
+<meta property="og:image" content="http://maskobito.github.io/images/image-20250805150643063.png">
+<meta property="article:published_time" content="2024-06-30T01:20:13.000Z">
+<meta property="article:modified_time" content="2025-08-14T05:42:25.370Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://maskobito.github.io/images/2024%E5%9B%BD%E6%8A%A41.jpg">
+<meta name="twitter:image" content="http://maskobito.github.io/images/image-20250805150643063.png">
   
   
   
-  <title>2024国家护网 - MaskObito</title>
+  <title>CORS - MaskObito</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -208,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="2024国家护网"></span>
+            <span id="subtitle" data-typed-text="CORS"></span>
           
         </div>
 
@@ -219,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-30 20:00" pubdate>
-          2025年7月30日 晚上
+        <time datetime="2024-06-30 09:20" pubdate>
+          2024年6月30日 上午
         </time>
       </span>
     
@@ -231,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          0 字
         
       </span>
     
@@ -242,7 +237,7 @@
         
         
         
-          11 分钟
+          1 分钟
         
       </span>
     
@@ -279,77 +274,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">2024国家护网</h1>
+            <h1 id="seo-header">CORS</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="前言部分"><a href="#前言部分" class="headerlink" title="前言部分"></a>前言部分</h1><h2 id="0-项目背景与目标"><a href="#0-项目背景与目标" class="headerlink" title="0.项目背景与目标"></a>0.项目背景与目标</h2><p>2024国护开始，在北京奇安信，国家xx银行驻场。护网前先是进行了渗透测试，这篇blog进行详细的叙述。</p>
-<h3 id="郑重说明"><a href="#郑重说明" class="headerlink" title="郑重说明"></a>郑重说明</h3><p>本次测试为完全授权的合法合规测试。<br>文中涉及目标均为”某银行”代称，严格脱敏。<br>不会透露内部数据信息，目的在于分享方法论，过程，共性问题与防护思路。</p>
-<h1 id="测试过程及方法论"><a href="#测试过程及方法论" class="headerlink" title="测试过程及方法论"></a>测试过程及方法论</h1><h2 id="1-漏洞扫描结果"><a href="#1-漏洞扫描结果" class="headerlink" title="1.漏洞扫描结果"></a>1.漏洞扫描结果</h2><p>包括但不限于应用漏洞，系统漏洞以及弱口令等常见安全隐患。本次共发现漏洞77个：高危漏洞0个，中危漏洞8个，低危漏洞69个。研判后确定存在高危0个，中危5个</p>
-<h2 id="2-漏洞类型"><a href="#2-漏洞类型" class="headerlink" title="2.漏洞类型"></a>2.漏洞类型</h2><ul>
-<li>Access-Control_Allow-Origin设置不当－低危</li>
-<li>Cookie未开启HttpOnly－低危</li>
-<li>Cookie未开启Secure－低危</li>
-<li>Host头欺骗攻击－中危</li>
-<li>Webpack Sourcemap文件泄露漏洞－低危</li>
-<li>常见管理接口(正常登录界面)－中危</li>
-<li>密码表单传输未加密－中危</li>
-<li>疑似文件上传点－低危</li>
-<li>发现Robots.txt－低危</li>
-</ul>
-<h2 id="关于“Host头欺骗攻击”漏洞"><a href="#关于“Host头欺骗攻击”漏洞" class="headerlink" title="关于“Host头欺骗攻击”漏洞"></a>关于“Host头欺骗攻击”漏洞</h2><ol>
-<li>漏洞描述:<br>开发人员为方便获取网站域名，常依赖HTTP协议的Host头，如在php代码中可用$_SERVER[“HTTP_HOST”]获取。但实际中该头由客户端控制，不可信，若应用程序未正确处理，可能导致恶意代码传入。</li>
-<li>修复建议:<br>不处理客户端传入的Host头信息，或者使用前进行白名单检查。</li>
-</ol>
-<h2 id="关于“Webpack-Sourcemap文件泄露”漏洞"><a href="#关于“Webpack-Sourcemap文件泄露”漏洞" class="headerlink" title="关于“Webpack Sourcemap文件泄露”漏洞"></a>关于“Webpack Sourcemap文件泄露”漏洞</h2><ol>
-<li>漏洞背景</li>
-</ol>
-<ul>
-<li>Webpack：是前端常用的打包工具，能把一堆零散的前端代码（像 Vue 写的组件、JS 逻辑等）打包成几个文件，方便网站运行 。</li>
-<li>Sourcemap：就像“代码地图”，原本打包后代码会被压缩、混淆，有了它，出问题时能顺着“地图”找到原始代码位置，方便开发调试 。但要是泄露出去，就会把原始代码暴露给外人 。</li>
-</ul>
-<ol start="2">
-<li>漏洞情况<br>因为网站用 Webpack 打包时，配置没弄好，导致.js.map这类Sourcemap文件能被外人通过网络请求拿到 。一旦被拿到，里面可能藏着：</li>
-</ol>
-<ul>
-<li>API 信息：比如系统里调用哪些后台接口，知道了可能仿造请求搞破坏 。</li>
-<li>加密算法</li>
-<li>管理员邮箱：知道了可能给管理员发钓鱼邮件，骗他们泄露更重要的账号密码 。</li>
-<li>内部功能<br>GET &#x2F;coremail&#x2F;bundle&#x2F;polyfill.e5a03.js HTTP&#x2F;1.1这类请求，就是在尝试找能拿到Sourcemap文件的入口。</li>
-</ul>
-<ol start="3">
-<li>修复</li>
-</ol>
-<ul>
-<li>改配置：找到项目里config&#x2F;index.js文件，把productionSourceMap改成  false  。这样正式环境（用户访问的环境）就不会生成 Sourcemap 文件，从源头减少泄露可能 。</li>
-<li>删文件：把正式环境里已经存在的.js.map文件都删掉或者设置成不让外人访问 。这样就算之前有残留，也不会被拿到了 。<br>简单说，就是网站因为前端打包配置问题，暴露了能让别人拿到原始代码、敏感信息的“地图文件”，按修复建议改配置、删文件，就能堵住这个安全窟窿。</li>
-</ul>
-<h2 id="关于“疑似文件上传”漏洞"><a href="#关于“疑似文件上传”漏洞" class="headerlink" title="关于“疑似文件上传”漏洞"></a>关于“疑似文件上传”漏洞</h2><ol>
-<li><p>漏洞描述：<br>检测到应用表单&#x2F;脚本里有文件上传表单或代码，存在文件上传点。若 Web 应用处理文件上传时，路径、文件名、扩展名可被用户控制，攻击者可能上传脚本木马，控制服务器</p>
-</li>
-<li><p>请求包：<br>包含  GET &#x2F;coremail&#x2F;bundle&#x2F;e5a03.js HTTP&#x2F;1.1  等请求头（Host、Accept - Encoding 等 ）</p>
-</li>
-<li><p>输出研判：<br>发现  <input type="file" name="upfilg" class="uploadfile" size="1" accept="{}" multiple="true" />  上传控件</p>
-</li>
-<li><p>修复建议：<br>检查上传文件扩展名白名单；上传路径、文件名不用用户可控数据；上传目录不提供脚本解析；图片上传先处理（转码、缩略、水印等 ）再保存 ，以此防范文件上传漏洞带来的服务器被入侵风险 。</p>
-</li>
-</ol>
-<h1 id="利用waf检测"><a href="#利用waf检测" class="headerlink" title="利用waf检测"></a>利用waf检测</h1><p>尝试用命令注入攻击<br><img src="/images/2024%E5%9B%BD%E6%8A%A41.jpg" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/images/2024%E5%9B%BD%E6%8A%A42.jpg" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/images/2024%E5%9B%BD%E6%8A%A43.jpg" srcset="/img/loading.gif" lazyload></p>
-<h1 id="蓝队实战"><a href="#蓝队实战" class="headerlink" title="蓝队实战"></a>蓝队实战</h1><p><img src="/images/2024%E5%9B%BD%E6%8A%A44.jpg" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>确认威胁详情：查看每个威胁名称，了解其具体含义，如  TCP_Kerberos_横向移动_横向工具转移，涉及到 Kerberos 协议的横向移动风险，明确攻击者可能的意图和攻击方式 。</li>
-<li>查看威胁级别：区分高、中、低危告警，优先处理像  HTTP_文件操作攻击_SiteServer  这类高危告警，因为它们对系统安全的威胁更大。</li>
-</ul>
-<ol>
-<li>直接在防火墙，路由器封ip</li>
-<li>看被攻击的目的ip(服务器)，临时加强防御</li>
-<li>看日志，找是否是内网电脑中病毒</li>
-<li>针对nmap，把不常用的端口关闭，更新，打补丁</li>
-<li>文件上传限制文件内容，如过滤php等</li>
-</ol>
+                <p><img src="/../images/image-20250805150643063.png" srcset="/img/loading.gif" lazyload alt="image-20250805150643063"></p>
 
                 
               </div>
@@ -367,8 +297,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>2024国家护网</div>
-      <div>http://maskobito.github.io/2025/07/30/2024国家护网/</div>
+      <div>CORS</div>
+      <div>http://maskobito.github.io/2024/06/30/CORS跨域/</div>
     </div>
     <div class="license-meta">
       
@@ -380,7 +310,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月30日</div>
+          <div>2024年6月30日</div>
         </div>
       
       
