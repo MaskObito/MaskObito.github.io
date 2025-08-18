@@ -19,21 +19,21 @@
   <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="渗透测试  精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。  Web安全工具：精通Bur">
+    <meta name="description" content="URL重定向与SSRFURL重定向（URL Redirection）和服务器端请求伪造（Server-Side Request Forgery, SSRF）是两种截然不同的概念，它们在目的、执行者和安全影响上有着本质的区别。 URL重定向URL重定向是一种网站技术，指当用户访问某个网址时，自动将其导向另一个网址。 这种技术通常用于正当目的，例如：  网站迁移：将旧域名的流量引导至新域名。 简化UR">
 <meta property="og:type" content="article">
-<meta property="og:title" content="部分总结">
-<meta property="og:url" content="http://maskobito.github.io/2025/01/01/%E9%83%A8%E5%88%86%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:title" content="URL重定向与SSRF与CORS跨域">
+<meta property="og:url" content="http://maskobito.github.io/2025/01/23/URL%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8ESSRF%E4%B8%8ECORS%E8%B7%A8%E5%9F%9F/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="渗透测试  精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。  Web安全工具：精通Bur">
+<meta property="og:description" content="URL重定向与SSRFURL重定向（URL Redirection）和服务器端请求伪造（Server-Side Request Forgery, SSRF）是两种截然不同的概念，它们在目的、执行者和安全影响上有着本质的区别。 URL重定向URL重定向是一种网站技术，指当用户访问某个网址时，自动将其导向另一个网址。 这种技术通常用于正当目的，例如：  网站迁移：将旧域名的流量引导至新域名。 简化UR">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-12-31T23:52:03.000Z">
-<meta property="article:modified_time" content="2025-08-18T16:40:05.029Z">
+<meta property="article:published_time" content="2025-01-22T18:10:14.000Z">
+<meta property="article:modified_time" content="2025-08-18T16:44:14.751Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>部分总结 - MaskObito</title>
+  <title>URL重定向与SSRF与CORS跨域 - MaskObito</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="部分总结"></span>
+            <span id="subtitle" data-typed-text="URL重定向与SSRF与CORS跨域"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-01-01 07:52" pubdate>
-          2025年1月1日 早上
+        <time datetime="2025-01-23 02:10" pubdate>
+          2025年1月23日 凌晨
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.8k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          11 分钟
+          16 分钟
         
       </span>
     
@@ -274,48 +274,115 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">部分总结</h1>
+            <h1 id="seo-header">URL重定向与SSRF与CORS跨域</h1>
             
             
               <div class="markdown-body">
                 
-                <ol>
-<li><p><em>渗透测试</em><br>  <em>精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。</em><br><em>掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。</em></p>
-</li>
-<li><p><em>Web安全工具：精通Burp Suite全模块操作（Intruder爆破、Repeater、Decoder），擅长自定义插件开发；熟练使用SQLmap、Dirsearch、Nmap、中国蚁剑等工具进行自动化漏洞检测，结合手工测试提升漏洞发现率。</em><br>  3.<em>编程语言：熟练运用Python&#x2F;C&#x2F;Java&#x2F;PHP开发安全脚本与工具（如漏洞扫描器、流量分析脚本），Python获蓝桥杯线下省二等奖，精通动态规划、树状数组、回溯、贪心、滑动窗口递归双指针等，精通将数据结构与算法优化应用于漏洞特征匹配（如二分查找+SQL布尔盲注、堆叠注入、时间盲注绕过waf）。</em></p>
-</li>
-<li><p><em>漏洞研究与代码审计</em><br>  <em>深入研究且精通SQL注入、文件包含、命令执行、反序列化等漏洞原理，具备PHP&#x2F;Java代码审计能力，熟悉网络协议分析（TCP&#x2F;IP、HTTP&#x2F;HTTPS），熟练使用并分析mysql数据库，擅长使用Fiddler、Wireshark、科来网络分析系统进行流量抓包与安全事件溯源。</em></p>
-</li>
-</ol>
-<p><em>项目一：中铁港航东南海洋工程有限公司全栈渗透测试项目 | 2025.02-2025.04</em><br><em>项目背景：在该企业实习期间，为集团旗下Web网址及内部网络进行全方位安全评估，防范数据泄露风险。</em><br><em>采用“黑盒+白盒”测试模式，使用Nmap扫描内网资产，结合BP爆破敏感接口，通过sql布尔盲注发现3处未授权访问漏洞，导致核心用户数据可被遍历。</em><br>*-通过PHP代码审计定位文件上传漏洞，利用蚁剑实现服务器权限获取getshell，进一步横向移动发现域控服务器弱口令，最终完成渗透测试</p>
-<p><em>项目成果：累计发现中危漏洞15个，协助企业建立漏洞管理体系，获该企业奖金5k</em></p>
-<p>http明文传输，https用ssl加密传输,ssl防窃听防中间人</p>
-<p>MITRE ATT&amp;CK是一个知识库，用来规划攻击的</p>
-<p>–tamper&#x3D;space2comment.py</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-keyword">if</span> payload:<br>    retVal = base64<span class="hljs-selector-class">.b64encode</span>(payload<span class="hljs-selector-attr">[::-1]</span><span class="hljs-selector-class">.encode</span>(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>    retVal = base64<span class="hljs-selector-class">.b64encode</span>(retVal<span class="hljs-selector-attr">[::-1]</span>)<span class="hljs-selector-class">.decode</span>(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;+++++++++++++&quot;</span>+retVal)<br></code></pre></td></tr></table></figure>
-
-<p>堆叠注入用；布尔盲注根据抓包回显判断，benchmark时间盲注</p>
-<p><strong>XSS、越权访问（水平&#x2F;垂直）命令执行、反序列化、文件上传&#x2F;包含&#x2F;路径遍历</strong></p>
-<p>跨站脚本攻击，将<code>&lt;script&gt;</code> 标签代码执行，反射型不会存储在服务器如钓鱼邮件，存储型长期在服务器上，窃取 Cookie，利用受害者身份进行攻击，如拒绝式服务攻击。</p>
-<p>system()    &#x2F;&#x2F; 执行外部程序并显示输出。过滤后可以用passthru。eval($c); 使用 eval() 函数执行 $c 变量中的代码。eval() 会将 $c 中的字符串作为 PHP 代码执行，这可能导致执行任意 PHP 代码，从而形成安全漏洞。调用shell.php，传入cmd，system ls，system cat tac</p>
-<p>本地文件包含漏洞（LFI   伪协议input； data：相对路径被过滤，服务器禁止访问根目录；<strong>include</strong>：当包含 .php 文件时会执行其中的代码，非显示源码z</p>
-<p>大小写绕过，过滤php可以用session，文件可控</p>
-<p>webshell：通过抓包改ua头上传恶意php，在用get或者post传参执行命令</p>
-<p>防御：不要直接包含用户输入，open_base限制PHP可访问的目录</p>
-<p>写脚本监控日志防止数据库泄露</p>
-<p>array检查是否是数组</p>
-<p><strong>编程语言</strong></p>
-<p>sql注入加上python二分查找大大减少爆破时间</p>
-<p><strong>mysql数据库</strong></p>
-<p>联合查询union select，增删查改</p>
-<p><strong>我熟练使用SQLmap进行自动化SQL注入检测和利用，用Dirsearch&#x2F;Nmap进行资产发现和目录扫描，用蚁剑管理Webshell</strong></p>
-<p><strong>漏洞研究</strong></p>
-<p>如文件上传欺骗改文件后缀php改成jpg绕过waf，执行恶意代码</p>
-<p><strong>我擅长使用Fiddler、Wireshark、科来网络分析系统进行流量抓包和分析</strong></p>
-<p><strong>‘黑盒测试+白盒审计</strong></p>
-<p>使用nmap扫描ip，开放端口，在线主机，dirsearch收集子域名，用sqlmap，bp对登录接口、用户查询接口、订单查询接口等<strong>敏感功能点</strong>进行手工测试</p>
-<p>**代码审计突破 (白盒)**发现文件上传漏洞，直接引用参数，应该先进行如base64，url编码，或添加死亡die函数，上传whoami等获得管理员信息，弱密码爆破</p>
-<p>、<strong>SQL注入</strong>和<strong>越权访问 是最常见的，通过PHP代码审计发现文件上传漏洞并最终拿到域控权限</strong></p>
+                <h1 id="URL重定向与SSRF"><a href="#URL重定向与SSRF" class="headerlink" title="URL重定向与SSRF"></a>URL重定向与SSRF</h1><p>URL重定向（URL Redirection）和服务器端请求伪造（Server-Side Request Forgery, SSRF）是两种截然不同的概念，它们在目的、执行者和安全影响上有着本质的区别。</p>
+<h3 id="URL重定向"><a href="#URL重定向" class="headerlink" title="URL重定向"></a><strong>URL重定向</strong></h3><p>URL重定向是一种网站技术，指当用户访问某个网址时，自动将其导向另一个网址。 这种技术通常用于正当目的，例如：</p>
+<ul>
+<li><strong>网站迁移</strong>：将旧域名的流量引导至新域名。</li>
+<li><strong>简化URL</strong>：将冗长复杂的网址转换为更短、更易于记忆的链接。</li>
+<li><strong>站点维护</strong>：在网站维护期间临时将用户导向一个通知页面。</li>
+</ul>
+<p>在URL重定向中，请求的发起者是用户的<strong>浏览器（客户端）</strong>。服务器在收到初始请求后，会返回一个特殊的HTTP响应（如301永久重定向或302临时重定向），浏览器在解析这个响应后，会再发起一个新的请求到目标URL。</p>
+<h3 id="服务器端请求伪造-SSRF"><a href="#服务器端请求伪造-SSRF" class="headerlink" title="服务器端请求伪造 (SSRF)"></a><strong>服务器端请求伪造 (SSRF)</strong></h3><p>服务器端请求伪造（SSRF）是一种网络安全漏洞，攻击者可以利用这个漏洞来滥用服务器功能，让服务器代替攻击者发起请求，从而访问或操作那些攻击者无法直接访问的内部系统或数据。</p>
+<p>在SSRF攻击中，请求的发起者是<strong>存在漏洞的服务器</strong>。攻击者通过构造恶意的请求，诱使服务器向其指定的URL（通常是内部网络或本地回环地址）发送请求。</p>
+<h3 id="主要区别"><a href="#主要区别" class="headerlink" title="主要区别"></a><strong>主要区别</strong></h3><table>
+<thead>
+<tr>
+<th>特征</th>
+<th>URL重定向</th>
+<th>服务器端请求伪造 (SSRF)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>发起者</strong></td>
+<td>用户的浏览器（客户端）</td>
+<td>Web应用程序所在的服务器（服务端）</td>
+</tr>
+<tr>
+<td><strong>目的</strong></td>
+<td>通常是合法的，用于网站管理和用户体验优化</td>
+<td>恶意的，旨在攻击服务器及其内部网络</td>
+</tr>
+<tr>
+<td><strong>控制方</strong></td>
+<td>网站管理员设置重定向规则</td>
+<td>攻击者利用漏洞构造并发送恶意请求</td>
+</tr>
+<tr>
+<td><strong>影响</strong></td>
+<td><strong>对用户的影响</strong>：用户被导向不同的网页。如果被恶意利用，可能导致钓鱼攻击。</td>
+<td><strong>对服务器的影响</strong>：攻击者可以利用服务器作为代理，扫描内部网络、攻击内部服务、读取本地文件或窃取敏感数据，绕过防火墙等安全防护。</td>
+</tr>
+<tr>
+<td><strong>本质</strong></td>
+<td>一种<strong>网站功能</strong></td>
+<td>一种<strong>安全漏洞</strong></td>
+</tr>
+</tbody></table>
+<p>简而言之，<strong>URL重定向是让用户的浏览器去访问另一个地址，而SSRF是欺骗服务器去访问一个地址</strong>。前者是服务器指挥浏览器，后者是攻击者指挥服务器。这个根本性的差异导致了它们在应用场景和安全风险上的巨大不同。</p>
+<h1 id="URL重定向与SSRF与CORS跨域"><a href="#URL重定向与SSRF与CORS跨域" class="headerlink" title="URL重定向与SSRF与CORS跨域"></a>URL重定向与SSRF与CORS跨域</h1><p>URL重定向（URL Redirection）、服务器端请求伪造（SSRF）和跨域资源共享（CORS）这三者之间的区别。</p>
+<p>这三者涉及到网络请求和资源访问，但它们的机制、目的和安全关注点完全不同。</p>
+<h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><ul>
+<li><strong>URL重定向 (URL Redirection):</strong> 一种服务器或客户端行为，目的是将一个URL的访问请求自动导向另一个URL。</li>
+<li><strong>服务器端请求伪造 (SSRF):</strong> 一种安全漏洞，攻击者利用该漏洞，诱使服务器代替攻击者发起请求到一个攻击者指定的地址。</li>
+<li><strong>跨域资源共享 (CORS):</strong> 一种浏览器安全机制，用于允许或限制网页脚本从一个源（origin）向另一个源发起跨域HTTP请求。</li>
+</ul>
+<h3 id="主要区别对比表"><a href="#主要区别对比表" class="headerlink" title="主要区别对比表"></a>主要区别对比表</h3><p>为了更清晰地理解，我们可以从以下几个维度进行对比：</p>
+<table>
+<thead>
+<tr>
+<th>特征维度</th>
+<th>URL重定向</th>
+<th>服务器端请求伪造 (SSRF)</th>
+<th>跨域资源共享 (CORS)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>发起方</strong></td>
+<td>用户的<strong>浏览器</strong>（在收到服务器的重定向指令后）</td>
+<td>存在漏洞的<strong>Web服务器</strong>（受攻击者控制）</td>
+<td>用户的<strong>浏览器</strong>（由网页中的脚本如JavaScript发起）</td>
+</tr>
+<tr>
+<td><strong>请求方向</strong></td>
+<td>浏览器 -&gt; 服务器A -&gt; (重定向指令) -&gt; 浏览器 -&gt; 服务器B</td>
+<td>攻击者 -&gt; 服务器A -&gt; (伪造的请求) -&gt; 目标服务器B (通常是内部网络或本地)</td>
+<td>浏览器 (运行着源A的脚本) -&gt; 目标服务器B</td>
+</tr>
+<tr>
+<td><strong>本质与目的</strong></td>
+<td>一种<strong>网站功能</strong>，用于网站导航、域名变更等。</td>
+<td>一种<strong>安全漏洞</strong>，目的是利用服务器作为代理来攻击内部系统。</td>
+<td>一种<strong>浏览器安全策略</strong>，目的是在受控的情况下允许跨源请求，以增强Web应用的灵活性。</td>
+</tr>
+<tr>
+<td><strong>谁来控制</strong></td>
+<td><strong>网站开发者&#x2F;管理员</strong>设置重定向规则。</td>
+<td><strong>攻击者</strong>通过构造恶意输入来控制服务器发起的请求。</td>
+<td>由<strong>目标服务器B</strong>通过设置特定的HTTP响应头（如 <code>Access-Control-Allow-Origin</code>）来决定是否允许来自<strong>源A</strong>的请求。</td>
+</tr>
+<tr>
+<td><strong>安全关注点</strong></td>
+<td><strong>开放重定向 (Open Redirect)</strong>：如果重定向的目标URL可被用户任意控制，攻击者可能利用它将用户重定向到恶意网站，进行钓鱼攻击。</td>
+<td>攻击内部网络、端口扫描、读取本地敏感文件、执行远程命令等，是<strong>服务端</strong>的严重安全风险。</td>
+<td>防止恶意网站脚本在用户不知情的情况下，读取或操作用户在其他网站上的敏感数据，是<strong>浏览器端</strong>为了保护用户数据而设定的安全机制。</td>
+</tr>
+</tbody></table>
+<h3 id="场景类比"><a href="#场景类比" class="headerlink" title="场景类比"></a>场景类比</h3><p>为了帮助理解，我们可以做一个简单的比喻：</p>
+<ul>
+<li><strong>URL重定向</strong>：你（浏览器）去A公司找人，A公司的前台告诉你：“你要找的人已经搬到B公司了”，于是你自己（浏览器）跑到B公司去。 <strong>整个过程的主动权在你（浏览器）手上</strong>。</li>
+<li><strong>SSRF</strong>：你（攻击者）打电话给A公司（存在漏洞的服务器），骗前台说：“麻烦你帮我给你们的CEO打个内部电话（内部网络），告诉他一件事”。A公司的前台（服务器）信以为真，就用内部电话帮你传话了。 <strong>你利用了A公司的身份和权限去办事</strong>。</li>
+<li><strong>CORS</strong>：你（运行在浏览器上的A网站脚本）想直接从你的工位上拿一份B公司的内部文件（跨域请求资源）。B公司的安保系统（浏览器同源策略）拦住了你，说：“不行，不同公司的人不能随便拿东西”。但如果B公司（目标服务器）的门口贴了一张告示：“欢迎A公司的员工来取文件”（设置了CORS响应头），那么安保系统（浏览器）就会放行。 <strong>这是B公司决定是否给你权限</strong>。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>URL重定向</strong>和<strong>CORS</strong>的请求发起方都是<strong>浏览器</strong>，而<strong>SSRF</strong>的发起方是<strong>服务器</strong>。</li>
+<li><strong>URL重定向</strong>是一种功能，<strong>SSRF</strong>是一种漏洞，<strong>CORS</strong>是一种安全机制。</li>
+<li>它们解决的问题完全不同：URL重定向解决的是**“去哪里”<strong>的问题；SSRF利用的是</strong>“让服务器替我请求”<strong>的漏洞；CORS解决的是浏览器脚本</strong>“能不能跨域请求资源”**的权限问题。</li>
+</ul>
 
                 
               </div>
@@ -333,8 +400,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>部分总结</div>
-      <div>http://maskobito.github.io/2025/01/01/部分总结/</div>
+      <div>URL重定向与SSRF与CORS跨域</div>
+      <div>http://maskobito.github.io/2025/01/23/URL重定向与SSRF与CORS跨域/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +413,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年1月1日</div>
+          <div>2025年1月23日</div>
         </div>
       
       
@@ -378,15 +445,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/01/02/%E6%B5%8B%E8%AF%95%EF%BC%88%E5%9B%BE%E7%89%87%EF%BC%89/" title="sql注入">
+                      <a href="/2025/01/24/2024%E5%9B%BD%E5%AE%B6%E6%8A%A4%E7%BD%91/" title="2024国家护网">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">sql注入</span>
+                        <span class="hidden-mobile">2024国家护网</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2025/01/22/URL%E9%87%8D%E5%AE%9A%E5%90%91/" title="URL">
+                        <span class="hidden-mobile">URL</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

