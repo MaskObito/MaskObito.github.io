@@ -1,0 +1,1046 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MaskObito">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一章 绪论核心考点 Java语言特点（单选题&#x2F;简答题）  跨平台性（JVM实现）：.java → 编译为 .class字节码 → JVM解释执行（对比Python的.py→PVM） 面向对象：完全OOP（连main都必须在类中），Python支持多范式 自动内存管理：垃圾回收器GC（类似Python，但Java需手动触发System.gc()建议回收） 强类型：变量必须声明类型（Py">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA">
+<meta property="og:url" content="http://maskobito.github.io/2025/03/14/JAVA/index.html">
+<meta property="og:site_name" content="MaskObito">
+<meta property="og:description" content="第一章 绪论核心考点 Java语言特点（单选题&#x2F;简答题）  跨平台性（JVM实现）：.java → 编译为 .class字节码 → JVM解释执行（对比Python的.py→PVM） 面向对象：完全OOP（连main都必须在类中），Python支持多范式 自动内存管理：垃圾回收器GC（类似Python，但Java需手动触发System.gc()建议回收） 强类型：变量必须声明类型（Py">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5Cjava.png">
+<meta property="article:published_time" content="2025-03-14T00:53:08.000Z">
+<meta property="article:modified_time" content="2025-08-31T13:30:14.044Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maskobito.github.io/%5Cimages%5Cjava.png">
+  
+  
+  
+  <title>JAVA - MaskObito</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/neon.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maskobito.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[],"type":"particle"},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"language":"zh-CN","enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">MaskObito</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="JAVA"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-14 08:53" pubdate>
+          2025年3月14日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">JAVA</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<h3 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a><strong>第一章 绪论</strong></h3><h4 id="核心考点"><a href="#核心考点" class="headerlink" title="核心考点"></a><strong>核心考点</strong></h4><ol>
+<li><p><strong>Java语言特点</strong>（单选题&#x2F;简答题）</p>
+<ul>
+<li><strong>跨平台性</strong>（JVM实现）：<code>.java</code> → 编译为 <code>.class</code>字节码 → JVM解释执行（对比Python的<code>.py</code>→PVM）</li>
+<li><strong>面向对象</strong>：完全OOP（连<code>main</code>都必须在类中），Python支持多范式</li>
+<li><strong>自动内存管理</strong>：垃圾回收器GC（类似Python，但Java需手动触发<code>System.gc()</code>建议回收）</li>
+<li><strong>强类型</strong>：变量必须声明类型（Python是动态类型）</li>
+</ul>
+</li>
+<li><p><strong>Java运行原理</strong>（填空题）</p>
+<pre><code class=" mermaid">graph LR
+A[.java源码] --&gt; B[javac编译]
+B --&gt; C[.class字节码]
+C --&gt; D[JVM加载]
+D --&gt; E[解释执行/即时编译JIT]
+</code></pre></li>
+</ol>
+<hr>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h3 id="Java运行原理（外卖平台类比）"><a href="#Java运行原理（外卖平台类比）" class="headerlink" title="Java运行原理（外卖平台类比）"></a><strong>Java运行原理（外卖平台类比）</strong></h3><ol>
+<li><strong>您写代码</strong> &#x3D; 在美团后台创建新功能（<code>.java</code>文件）</li>
+<li><strong>javac编译</strong> &#x3D; 美团技术团队打包成APP安装包（生成<code>.class</code>）</li>
+<li><strong>JVM运行</strong> &#x3D; 用户手机安装美团APP（不同手机&#x3D;不同操作系统）</li>
+<li><strong>跨平台</strong> &#x3D; 同一安装包在华为&#x2F;小米&#x2F;iPhone都能运行</li>
+</ol>
+<p>“Java要求所有代码必须包含在类中（包括main入口函数），通过创建对象来操作数据和方法。这符合面向对象的封装性（数据与操作绑定在类内）、继承性（extends实现代码复用）、多态性（父类引用指向子类对象）三大特征”</p>
+<h3 id="第二章-Java语言基础"><a href="#第二章-Java语言基础" class="headerlink" title="第二章 Java语言基础"></a><strong>第二章 Java语言基础</strong></h3><h4 id="1-标识符规则（判断题）"><a href="#1-标识符规则（判断题）" class="headerlink" title="1. 标识符规则（判断题）"></a><strong>1. 标识符规则</strong>（判断题）</h4><ul>
+<li>首字符：字母&#x2F;<code>_</code>&#x2F;<code>$</code>（<strong>不能数字开头</strong>，同Python）</li>
+<li>区分大小写（<code>age</code>≠<code>Age</code>）</li>
+<li><strong>禁止关键字</strong>（<code>int</code>, <code>class</code>等48个保留字）<blockquote>
+<p>✅合法：<code>_name</code>, <code>$value</code><br>❌非法：<code>1var</code>（数字开头）, <code>public</code>（关键字）</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-数据类型（填空题）"><a href="#2-数据类型（填空题）" class="headerlink" title="2. 数据类型（填空题）"></a><strong>2. 数据类型</strong>（填空题）</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>位数</th>
+<th>范围</th>
+<th>Java示例</th>
+<th>Python对比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>byte</code></td>
+<td>8</td>
+<td>-128~127</td>
+<td><code>byte b = 10;</code></td>
+<td><code>int</code>自动处理</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>32</td>
+<td>≈±21亿</td>
+<td><code>int i = 100;</code></td>
+<td><code>int</code>无位数限制</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>64</td>
+<td>IEEE 754浮点</td>
+<td><code>double d=3.14;</code></td>
+<td><code>float</code></td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td>16</td>
+<td>Unicode字符</td>
+<td><code>char c=&#39;A&#39;;</code></td>
+<td><code>str</code>单字符</td>
+</tr>
+<tr>
+<td><code>boolean</code></td>
+<td>-</td>
+<td><code>true</code>&#x2F;<code>false</code></td>
+<td><code>boolean flag=true;</code></td>
+<td><code>bool</code></td>
+</tr>
+</tbody></table>
+<p><strong>引用类型</strong>：类&#x2F;数组&#x2F;接口（类似Python的类实例、list）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;hello&quot;</span>;  <span class="hljs-comment">// 引用类型声明</span><br><span class="hljs-type">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[<span class="hljs-number">5</span>]; <span class="hljs-comment">// 数组声明（固定长度）</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-运算符（程序填空）"><a href="#3-运算符（程序填空）" class="headerlink" title="3. 运算符（程序填空）"></a><strong>3. 运算符</strong>（程序填空）</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>运算符</th>
+<th>特殊点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>算术</td>
+<td><code>+ - * / %</code></td>
+<td><code>10/3=3</code>（整数除）</td>
+</tr>
+<tr>
+<td>关系</td>
+<td><code>== != &gt; &lt;</code></td>
+<td><strong><code>==</code>比较引用地址</strong>（字符串用<code>.equals()</code>）</td>
+</tr>
+<tr>
+<td>逻辑</td>
+<td>&#96;&amp;&amp;</td>
+<td></td>
+</tr>
+<tr>
+<td>赋值</td>
+<td><code>= += -=</code></td>
+<td><code>x += 5</code> 等价 <code>x = x+5</code></td>
+</tr>
+</tbody></table>
+<h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><h1 id="Java运算符考试详解（针对Python开发者）"><a href="#Java运算符考试详解（针对Python开发者）" class="headerlink" title="Java运算符考试详解（针对Python开发者）"></a><em>Java运算符考试详解（针对Python开发者）</em></h1><p><em>下面我将详细讲解Java运算符在考试中的具体考法，结合真题和Python对比，帮助您彻底掌握这些考点：</em></p>
+<h2 id="一、算术运算符：整数除法的”陷阱题”"><a href="#一、算术运算符：整数除法的”陷阱题”" class="headerlink" title="一、算术运算符：整数除法的”陷阱题”"></a><em>一、算术运算符：整数除法的”陷阱题”</em></h2><h3 id="考试常见题型"><a href="#考试常见题型" class="headerlink" title="考试常见题型"></a><em>考试常见题型</em></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 题型1：程序填空</span><br><span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-number">3</span>;<br><span class="hljs-type">double</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> a / b; <span class="hljs-comment">// 空1：c = ______ (3.0)</span><br><span class="hljs-type">double</span> <span class="hljs-variable">d</span> <span class="hljs-operator">=</span> (<span class="hljs-type">double</span>)a / b; <span class="hljs-comment">// 空2：d = ______ (3.333...)</span><br><br><span class="hljs-comment">// 题型2：判断题</span><br><span class="hljs-comment">// &quot;Java中5/2的结果是2.5&quot; → False（正确答案是2）</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="核心考点解析"><a href="#核心考点解析" class="headerlink" title="核心考点解析"></a><em>核心考点解析</em></h3><ol>
+<li><p><em><strong>整数除法截断</strong>：</em></p>
+<ul>
+<li><em>Java：<code>10/3 = 3</code>（直接舍弃小数部分）</em></li>
+<li><em>Python：<code>10/3 = 3.333...</code>（自动转为浮点除）</em></li>
+</ul>
+</li>
+<li><p><em><strong>类型提升规则</strong>：</em></p>
+<pre><code class=" mermaid">graph LR
+A[int/int] --&gt; B[int]
+C[double/int] --&gt; D[double]
+D --&gt; E[保留小数]
+</code></pre></li>
+</ol>
+<h3 id="避坑技巧"><a href="#避坑技巧" class="headerlink" title="避坑技巧"></a><em>避坑技巧</em></h3><ul>
+<li><em>看到除法先看操作数类型</em></li>
+<li><em>需要小数结果时，将被除数强转为<code>double</code></em></li>
+<li><em>取模运算<code>%</code>的行为与Python相同</em></li>
+</ul>
+<h2 id="二、关系运算符：字符串比较的”死亡陷阱”"><a href="#二、关系运算符：字符串比较的”死亡陷阱”" class="headerlink" title="二、关系运算符：字符串比较的”死亡陷阱”"></a><em>二、关系运算符：字符串比较的”死亡陷阱”</em></h2><h3 id="考试高频题"><a href="#考试高频题" class="headerlink" title="考试高频题"></a><em>考试高频题</em></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 题型1：程序输出判断</span><br><span class="hljs-type">String</span> <span class="hljs-variable">s1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;hello&quot;</span>;<br><span class="hljs-type">String</span> <span class="hljs-variable">s2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">&quot;hello&quot;</span>);<br><br>System.out.println(s1 == s2); <span class="hljs-comment">// 空1：输出______ (false)</span><br>System.out.println(s1.equals(s2)); <span class="hljs-comment">// 空2：输出______ (true)</span><br><br><span class="hljs-comment">// 题型2：找错题</span><br><span class="hljs-comment">// 找出下面代码的错误：</span><br><span class="hljs-keyword">if</span> (nameInput == <span class="hljs-string">&quot;admin&quot;</span>) &#123; <span class="hljs-comment">// 应该用equals</span><br>    grantAccess();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><em>比较方式</em></th>
+<th><em>Java</em></th>
+<th><em>Python</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>值比较</em></td>
+<td><em><code>.equals()</code></em></td>
+<td><em><code>==</code></em></td>
+</tr>
+<tr>
+<td><em>引用比较</em></td>
+<td><em><code>==</code></em></td>
+<td><em><code>is</code></em></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><em>💡 考试口诀：<strong>Java字符串，equals保平安</strong></em></p>
+</blockquote>
+<h2 id="三、逻辑运算符：短路规则的”隐蔽考点”"><a href="#三、逻辑运算符：短路规则的”隐蔽考点”" class="headerlink" title="三、逻辑运算符：短路规则的”隐蔽考点”"></a><em>三、逻辑运算符：短路规则的”隐蔽考点”</em></h2><h3 id="典型考题"><a href="#典型考题" class="headerlink" title="典型考题"></a><em>典型考题</em></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 题型1：程序填空</span><br><span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">5</span>;<br><span class="hljs-type">boolean</span> <span class="hljs-variable">b1</span> <span class="hljs-operator">=</span> (x &gt; <span class="hljs-number">10</span>) &amp;&amp; (++x &gt; <span class="hljs-number">0</span>);<br><span class="hljs-comment">// 空1：x的值是？______ (5)</span><br><br><span class="hljs-type">boolean</span> <span class="hljs-variable">b2</span> <span class="hljs-operator">=</span> (x &lt; <span class="hljs-number">10</span>) || (++x &gt; <span class="hljs-number">0</span>);<br><span class="hljs-comment">// 空2：x的值是？______ (5)</span><br><br><span class="hljs-comment">// 题型2：输出结果分析</span><br><span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">5</span>;<br><span class="hljs-keyword">if</span> (a &gt; <span class="hljs-number">4</span> || a++ &lt; <span class="hljs-number">10</span>) &#123;<br>    System.out.println(a); <span class="hljs-comment">// 输出？______ (5)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="短路规则详解"><a href="#短路规则详解" class="headerlink" title="短路规则详解"></a><em>短路规则详解</em></h3><table>
+<thead>
+<tr>
+<th><em>表达式</em></th>
+<th><em>执行情况</em></th>
+<th><em>解释</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em><code>false &amp;&amp; ...</code></em></td>
+<td><em>跳过右边</em></td>
+<td><em>一假即假</em></td>
+</tr>
+<tr>
+<td>*&#96;true</td>
+<td></td>
+<td>…&#96;*</td>
+</tr>
+<tr>
+<td><em><code>true &amp;&amp; ...</code></em></td>
+<td><em>执行右边</em></td>
+<td><em>需验证</em></td>
+</tr>
+<tr>
+<td>*&#96;false</td>
+<td></td>
+<td>…&#96;*</td>
+</tr>
+</tbody></table>
+<h2 id="四、赋值运算符：类型转换的”暗坑”"><a href="#四、赋值运算符：类型转换的”暗坑”" class="headerlink" title="四、赋值运算符：类型转换的”暗坑”"></a><em>四、赋值运算符：类型转换的”暗坑”</em></h2><h3 id="经典考题"><a href="#经典考题" class="headerlink" title="经典考题"></a><em>经典考题</em></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 题型1：编译错误判断</span><br><span class="hljs-type">byte</span> <span class="hljs-variable">num</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>num = num + <span class="hljs-number">5</span>;   <span class="hljs-comment">// 空1：是否编译错误？______ (是)</span><br>num += <span class="hljs-number">5</span>;        <span class="hljs-comment">// 空2：是否编译错误？______ (否)</span><br><br><span class="hljs-comment">// 题型2：结果计算</span><br><span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">5</span>;<br>x += <span class="hljs-number">3</span> * <span class="hljs-number">2</span>;      <span class="hljs-comment">// 空3：x = ______ (11)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="类型转换规则"><a href="#类型转换规则" class="headerlink" title="类型转换规则"></a><em>类型转换规则</em></h3><pre><code class=" mermaid">graph LR
+    A[byte + int] --&gt; B[int]
+    C[直接赋值给byte] --&gt; D[需要强制转换]
+    E[复合赋值] --&gt; F[自动转换]
+</code></pre>
+
+<h3 id="复合赋值等价公式"><a href="#复合赋值等价公式" class="headerlink" title="复合赋值等价公式"></a><em>复合赋值等价公式</em></h3><table>
+<thead>
+<tr>
+<th><em>表达式</em></th>
+<th><em>等价形式</em></th>
+<th><em>特殊处理</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em><code>x += y</code></em></td>
+<td><em><code>x = (T)(x + y)</code></em></td>
+<td><em>自动类型转换</em></td>
+</tr>
+<tr>
+<td><em><code>x = x + y</code></em></td>
+<td><em>-</em></td>
+<td><em>需要手动转换</em></td>
+</tr>
+</tbody></table>
+<h2 id="五、综合考题分析"><a href="#五、综合考题分析" class="headerlink" title="五、综合考题分析"></a><em>五、综合考题分析</em></h2><h3 id="真题示例（程序填空）"><a href="#真题示例（程序填空）" class="headerlink" title="真题示例（程序填空）"></a><em>真题示例（程序填空）</em></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OperatorTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">// 算术运算符</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> <span class="hljs-number">7</span>, n = <span class="hljs-number">4</span>;<br>        <span class="hljs-type">double</span> <span class="hljs-variable">r1</span> <span class="hljs-operator">=</span> m / n;          <span class="hljs-comment">// 空1：______ (1.0)</span><br>        <span class="hljs-type">double</span> <span class="hljs-variable">r2</span> <span class="hljs-operator">=</span> (<span class="hljs-type">double</span>)m / n;  <span class="hljs-comment">// 空2：______ (1.75)</span><br>        <br>        <span class="hljs-comment">// 关系运算符</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">s1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;java&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">s2</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Java&quot;</span>;<br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">b1</span> <span class="hljs-operator">=</span> s1.equals(s2); <span class="hljs-comment">// 空3：______ (false)</span><br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">b2</span> <span class="hljs-operator">=</span> s1.equalsIgnoreCase(s2); <span class="hljs-comment">// 空4：______ (true)</span><br>        <br>        <span class="hljs-comment">// 逻辑运算符</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">5</span>;<br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">b3</span> <span class="hljs-operator">=</span> (x &gt; <span class="hljs-number">3</span>) &amp;&amp; (x++ &lt; <span class="hljs-number">10</span>); <span class="hljs-comment">// 空5：b3 = ______ (true)</span><br>        <span class="hljs-comment">// 空6：x = ______ (6)</span><br>        <br>        <span class="hljs-comment">// 赋值运算符</span><br>        <span class="hljs-type">byte</span> <span class="hljs-variable">y</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>        y += <span class="hljs-number">20</span>; <span class="hljs-comment">// 空7：y = ______ (30)</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="解题技巧"><a href="#解题技巧" class="headerlink" title="解题技巧"></a><em>解题技巧</em></h3><ol>
+<li><em><strong>整数除法</strong>：先看操作数类型，整数除结果必为整数</em></li>
+<li><em><strong>字符串比较</strong>：永远用equals，&#x3D;&#x3D;只用于基本类型</em></li>
+<li><em><strong>短路规则</strong>：注意自增(++)在逻辑表达式中的执行情况</em></li>
+<li><em><strong>复合赋值</strong>：注意自动类型转换特性</em></li>
+</ol>
+<h2 id="六、Python开发者特别注意事项"><a href="#六、Python开发者特别注意事项" class="headerlink" title="六、Python开发者特别注意事项"></a><em>六、Python开发者特别注意事项</em></h2><table>
+<thead>
+<tr>
+<th><em>运算符</em></th>
+<th><em>Java陷阱</em></th>
+<th><em>Python行为</em></th>
+<th><em>应对策略</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em><code>/</code></em></td>
+<td><em>整数除截断</em></td>
+<td><em>自动浮点除</em></td>
+<td><em>强转为double</em></td>
+</tr>
+<tr>
+<td><em><code>==</code></em></td>
+<td><em>比较对象引用</em></td>
+<td><em>比较值</em></td>
+<td><em>字符串用equals</em></td>
+</tr>
+<tr>
+<td><em><code>&amp;&amp;</code></em></td>
+<td><em>短路规则</em></td>
+<td><em>and同样短路</em></td>
+<td><em>避免右边有副作用</em></td>
+</tr>
+<tr>
+<td><em><code>+=</code></em></td>
+<td><em>自动类型转换</em></td>
+<td><em>无类型限制</em></td>
+<td><em>注意byte&#x2F;short类型</em></td>
+</tr>
+<tr>
+<td><em><code>++</code></em></td>
+<td><em>前后缀区别大</em></td>
+<td><em>无此运算符</em></td>
+<td><em>避免在复杂表达式使用</em></td>
+</tr>
+</tbody></table>
+<h2 id="七、考试答题口诀"><a href="#七、考试答题口诀" class="headerlink" title="七、考试答题口诀"></a><em>七、考试答题口诀</em></h2><blockquote>
+<p><em>除法先看类型，整数结果截断<br></em><br><em>字符串比用equals，&#x3D;&#x3D;只判血缘<br></em><br><em>逻辑运算会短路，右边可能不算<br></em><br><em>复合赋值能强转，普通赋值瞪眼<br></em><br><em>自增前后要分清，考试专设此险</em></p>
+</blockquote>
+<p><em>掌握这些考点和技巧，运算符相关题目将不再是难题！考试时遇到运算符题目，先默念口诀再作答，能有效避免常见陷阱。</em></p>
+<h4 id="4-控制语句（与Python对比）"><a href="#4-控制语句（与Python对比）" class="headerlink" title="4. 控制语句（与Python对比）"></a><strong>4. 控制语句</strong>（与Python对比）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// if-else（必须用括号）</span><br><span class="hljs-keyword">if</span> (score &gt;= <span class="hljs-number">60</span>) &#123;<br>    System.out.println(<span class="hljs-string">&quot;及格&quot;</span>);<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    System.out.println(<span class="hljs-string">&quot;不及格&quot;</span>);<br>&#125;<br><br><span class="hljs-comment">// switch（支持int/char/String）</span><br><span class="hljs-keyword">switch</span>(grade) &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;A&#x27;</span>: <br>        System.out.println(<span class="hljs-string">&quot;优秀&quot;</span>);<br>        <span class="hljs-keyword">break</span>;  <span class="hljs-comment">// 必须break，否则穿透！</span><br>    <span class="hljs-keyword">default</span>:<br>        System.out.println(<span class="hljs-string">&quot;未知&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-循环（重点！程序填空高频）"><a href="#5-循环（重点！程序填空高频）" class="headerlink" title="5. 循环（重点！程序填空高频）"></a><strong>5. 循环</strong>（重点！程序填空高频）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// for循环（固定次数）</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10</span>; i++) &#123;  <span class="hljs-comment">// i只在循环内有效</span><br>    System.out.print(i);<br>&#125;<br><br><span class="hljs-comment">// while（条件循环）</span><br><span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;<br><span class="hljs-keyword">while</span> (j&lt;<span class="hljs-number">5</span>) &#123;<br>    System.out.print(j);<br>    j++;<br>&#125;<br><br><span class="hljs-comment">// do-while（至少执行一次）</span><br><span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;<br><span class="hljs-keyword">do</span> &#123;<br>    System.out.print(k);<br>    k++;<br>&#125; <span class="hljs-keyword">while</span> (k&lt;<span class="hljs-number">3</span>);<br></code></pre></td></tr></table></figure>
+
+<h4 id="6-break-continue（判断题）"><a href="#6-break-continue（判断题）" class="headerlink" title="6. break&#x2F;continue（判断题）"></a><strong>6. break&#x2F;continue</strong>（判断题）</h4><ul>
+<li><code>break</code>：跳出<strong>整个循环</strong>（同Python）</li>
+<li><code>continue</code>：跳过<strong>本次循环</strong>剩余代码（同Python）</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10</span>; i++) &#123;<br>    <span class="hljs-keyword">if</span> (i == <span class="hljs-number">5</span>) <span class="hljs-keyword">break</span>;     <span class="hljs-comment">// 结束循环（i=5时退出）</span><br>    <span class="hljs-keyword">if</span> (i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>; <span class="hljs-comment">// 跳过偶数</span><br>    System.out.print(i);  <span class="hljs-comment">// 输出：1 3</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第三章-面向对象（核心！）"><a href="#第三章-面向对象（核心！）" class="headerlink" title="第三章 面向对象（核心！）"></a><strong>第三章 面向对象（核心！）</strong></h3><p><img src="/%5Cimages%5Cjava.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="1-基本概念（简答题）"><a href="#1-基本概念（简答题）" class="headerlink" title="1. 基本概念（简答题）"></a><strong>1. 基本概念</strong>（简答题）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span> &#123;                 <span class="hljs-comment">// 类定义（类似Python class）</span><br>    String name;            <span class="hljs-comment">// 成员变量（属性）</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Dog</span><span class="hljs-params">(String n)</span> &#123;  <span class="hljs-comment">// 构造方法（__init__）</span><br>        <span class="hljs-built_in">this</span>.name = n;      <span class="hljs-comment">// this指当前对象</span><br>    &#125;<br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">bark</span><span class="hljs-params">()</span> &#123;           <span class="hljs-comment">// 成员方法</span><br>        System.out.println(name + <span class="hljs-string">&quot;汪汪！&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-comment">// 创建对象</span><br><span class="hljs-type">Dog</span> <span class="hljs-variable">myDog</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Dog</span>(<span class="hljs-string">&quot;Buddy&quot;</span>);  <span class="hljs-comment">// new实例化（Python直接Dog()）</span><br>myDog.bark();  <span class="hljs-comment">// 调用方法</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-三大特性"><a href="#2-三大特性" class="headerlink" title="2. 三大特性"></a><strong>2. 三大特性</strong></h4><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Java实现</th>
+<th>Python对比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>封装</strong></td>
+<td><code>private</code>&#x2F;<code>protected</code>&#x2F;<code>public</code></td>
+<td>命名约定（_name）</td>
+</tr>
+<tr>
+<td><strong>继承</strong></td>
+<td><code>extends</code>（单继承）</td>
+<td>多继承（MRO）</td>
+</tr>
+<tr>
+<td><strong>多态</strong></td>
+<td>父类引用指向子类对象 + 方法重写</td>
+<td>Duck Typing</td>
+</tr>
+</tbody></table>
+<p><strong>继承示例</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Animal</span> &#123; <span class="hljs-keyword">void</span> <span class="hljs-title function_">eat</span><span class="hljs-params">()</span> &#123; System.out.println(<span class="hljs-string">&quot;Eating...&quot;</span>); &#125; &#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Cat</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Animal</span> &#123;  <span class="hljs-comment">// 继承</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">eat</span><span class="hljs-params">()</span> &#123;  <span class="hljs-comment">// 方法重写（多态基础）</span><br>        System.out.println(<span class="hljs-string">&quot;Cat eats fish&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-comment">// 多态应用</span><br><span class="hljs-type">Animal</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Cat</span>();  <span class="hljs-comment">// 父类引用指向子类对象</span><br>a.eat();  <span class="hljs-comment">// 输出&quot;Cat eats fish&quot;（动态绑定）</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-访问控制（单选题）"><a href="#3-访问控制（单选题）" class="headerlink" title="3. 访问控制（单选题）"></a><strong>3. 访问控制</strong>（单选题）</h4><table>
+<thead>
+<tr>
+<th>修饰符</th>
+<th>类内</th>
+<th>同包</th>
+<th>子类</th>
+<th>其他包</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>private</code></td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>protected</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="第四章-高级特性（重点！）"><a href="#第四章-高级特性（重点！）" class="headerlink" title="第四章 高级特性（重点！）"></a><strong>第四章 高级特性（重点！）</strong></h3><p>只有static和final可组合在一起，而abstract和static一般不能组<br>合在一起。</p>
+<p>• 接口与类的共同点：均可以实现类的继承。<br>• 接口与类的不同点：<br>（1）一个接口可由一个类或多个类来实现，一个类也可以实现<br>多个接口，从而具备多重继承的特性。但是一个类只能有一个直<br>接父类，没有多重继承的特性。<br>（2）接口中的所有方法均没有方法体，只有成员方法名，而类<br>要实现接口的话，必须实现接口里面的所有成员方法。<br>（3）一个类可以直接继承其父类的成员方法，不需要去实现方<br>法，也可以重载或者重写其父类的成员方法。</p>
+<h4 id="1-关键字"><a href="#1-关键字" class="headerlink" title="1. 关键字"></a><strong>1. 关键字</strong></h4><table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>abstract</code></td>
+<td>抽象类&#x2F;方法（不能实例化）</td>
+<td><code>abstract void draw();</code></td>
+</tr>
+<tr>
+<td><code>static</code></td>
+<td>类级别共享</td>
+<td><code>static int count=0;</code></td>
+</tr>
+<tr>
+<td><code>final</code></td>
+<td>常量&#x2F;不可继承</td>
+<td><code>final double PI=3.14;</code></td>
+</tr>
+<tr>
+<td><code>this</code></td>
+<td>当前对象引用</td>
+<td><code>this.name = name;</code></td>
+</tr>
+</tbody></table>
+<h4 id="2-接口-vs-抽象类（简答题）"><a href="#2-接口-vs-抽象类（简答题）" class="headerlink" title="2. 接口 vs 抽象类（简答题）"></a><strong>2. 接口 vs 抽象类</strong>（简答题）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">Flyable</span> &#123;          <span class="hljs-comment">// 接口（100%抽象）</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">fly</span><span class="hljs-params">()</span>;              <span class="hljs-comment">// 默认public abstract</span><br>&#125;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Bird</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Flyable</span> &#123;  <span class="hljs-comment">// 实现接口（多继承）</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">fly</span><span class="hljs-params">()</span> &#123; <br>        System.out.println(<span class="hljs-string">&quot;拍翅膀飞&quot;</span>); <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-参数传递（程序填空）"><a href="#3-参数传递（程序填空）" class="headerlink" title="3. 参数传递（程序填空）"></a><strong>3. 参数传递</strong>（程序填空）</h4><ul>
+<li><strong>基本类型</strong>：值传递（方法内修改不影响外部）</li>
+<li><strong>引用类型</strong>：地址传递（方法内修改对象属性会影响外部）</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">change</span><span class="hljs-params">(<span class="hljs-type">int</span> num, <span class="hljs-type">int</span>[] arr)</span> &#123;<br>    num = <span class="hljs-number">100</span>;         <span class="hljs-comment">// 不影响外部</span><br>    arr[<span class="hljs-number">0</span>] = <span class="hljs-number">99</span>;       <span class="hljs-comment">// 修改外部数组</span><br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br><span class="hljs-type">int</span>[] a = &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>&#125;;<br>change(x, a);<br>System.out.println(x); <span class="hljs-comment">// 输出10（未变）</span><br>System.out.println(a[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 输出99（已修改）</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第五章-数组、字符串、集合（重点！）"><a href="#第五章-数组、字符串、集合（重点！）" class="headerlink" title="第五章 数组、字符串、集合（重点！）"></a><strong>第五章 数组、字符串、集合（重点！）</strong></h3><h4 id="1-数组（程序填空）"><a href="#1-数组（程序填空）" class="headerlink" title="1. 数组（程序填空）"></a><strong>1. 数组</strong>（程序填空）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span>[] arr1 = &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>&#125;;           <span class="hljs-comment">// 静态初始化</span><br><span class="hljs-type">int</span>[][] arr2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[<span class="hljs-number">2</span>][<span class="hljs-number">3</span>];    <span class="hljs-comment">// 二维数组</span><br>arr2[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">5</span>;                 <span class="hljs-comment">// 访问元素</span><br>System.out.println(arr1.length); <span class="hljs-comment">// 长度属性（非方法！）</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-字符串（高频考点！）"><a href="#2-字符串（高频考点！）" class="headerlink" title="2. 字符串（高频考点！）"></a><strong>2. 字符串</strong>（高频考点！）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">s1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;hello&quot;</span>;<br><span class="hljs-type">String</span> <span class="hljs-variable">s2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">&quot;world&quot;</span>);<br><span class="hljs-comment">// 常用方法（对比Python）</span><br>s1.concat(s2);      <span class="hljs-comment">// 拼接（Python: s1+s2）</span><br>s1.substring(<span class="hljs-number">1</span>,<span class="hljs-number">3</span>);  <span class="hljs-comment">// 切片&quot;el&quot;（Python: s1[1:3]）</span><br>s1.equals(s2);      <span class="hljs-comment">// 内容比较（==比较地址！）</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-集合类（程序填空）"><a href="#3-集合类（程序填空）" class="headerlink" title="3. 集合类（程序填空）"></a><strong>3. 集合类</strong>（程序填空）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.ArrayList;<br>ArrayList&lt;String&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(); <span class="hljs-comment">// 泛型</span><br>list.add(<span class="hljs-string">&quot;A&quot;</span>);                     <span class="hljs-comment">// 添加元素</span><br>list.get(<span class="hljs-number">0</span>);                       <span class="hljs-comment">// 获取元素</span><br>list.size();                       <span class="hljs-comment">// 长度（Python: len()）</span><br><span class="hljs-comment">// Vector线程安全但效率低（用法类似）</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第六章-异常处理"><a href="#第六章-异常处理" class="headerlink" title="第六章 异常处理"></a><strong>第六章 异常处理</strong></h3><p>采用try-catch-finally结构：<br>（1）当try语句块中有抛出<br>（throw）异常时，则try语句块中<br>的剩余语句不执行。<br>（2）finally语句块一般都要执<br>行，除非try和catch语句块中有<br>System.exit(0)，则不执行finally语<br>句块，直接退出。<br>（3）当catch语句块能捕捉到<br>try语句块中抛出的异常，则try-<br>catch-finally结构之后的代码会被<br>执行，否则不会被执行。</p>
+<hr>
+<h3 id="第七章-文件与数据流"><a href="#第七章-文件与数据流" class="headerlink" title="第七章 文件与数据流"></a><strong>第七章 文件与数据流</strong></h3><h4 id="1-字节流（程序填空）"><a href="#1-字节流（程序填空）" class="headerlink" title="1. 字节流（程序填空）"></a><strong>1. 字节流</strong>（程序填空）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 文件复制（模板代码！）</span><br><span class="hljs-keyword">try</span> (<span class="hljs-type">FileInputStream</span> <span class="hljs-variable">fis</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(<span class="hljs-string">&quot;in.jpg&quot;</span>);<br>     <span class="hljs-type">FileOutputStream</span> <span class="hljs-variable">fos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(<span class="hljs-string">&quot;out.jpg&quot;</span>)) &#123;<br>    <span class="hljs-type">byte</span>[] buffer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[<span class="hljs-number">1024</span>];<br>    <span class="hljs-type">int</span> len;<br>    <span class="hljs-keyword">while</span> ((len = fis.read(buffer)) != -<span class="hljs-number">1</span>) &#123;<br>        fos.write(buffer, <span class="hljs-number">0</span>, len);  <span class="hljs-comment">// 缓冲区读写</span><br>    &#125;<br>&#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-缓冲流（效率更高）"><a href="#2-缓冲流（效率更高）" class="headerlink" title="2. 缓冲流（效率更高）"></a><strong>2. 缓冲流</strong>（效率更高）</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">BufferedInputStream</span> <span class="hljs-variable">bis</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedInputStream</span>(fis);<br><span class="hljs-type">BufferedOutputStream</span> <span class="hljs-variable">bos</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedOutputStream</span>(fos);<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="备考策略"><a href="#备考策略" class="headerlink" title="备考策略"></a><strong>备考策略</strong></h3><ol>
+<li><p><strong>优先级排序</strong>：<br><strong>面向对象(30%) &gt; 集合&#x2F;字符串(25%) &gt; 异常&#x2F;流(15%) &gt; 基础语法(30%)</strong></p>
+</li>
+<li><p><strong>Python迁移技巧</strong>：</p>
+<ul>
+<li>Java的<code>ArrayList</code> ≈ Python的<code>list</code></li>
+<li><code>String</code>方法名不同但功能类似（<code>.length()</code> vs <code>len()</code>）</li>
+<li>OOP概念通用（封装、继承、多态）</li>
+</ul>
+</li>
+<li><p><strong>刷题重点</strong>：</p>
+<ul>
+<li>程序填空题：循环&#x2F;数组&#x2F;字符串&#x2F;集合方法调用</li>
+<li>简答题：OOP三大特性、接口vs抽象类</li>
+<li>判断题：标识符规则、异常分类</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>💡 <strong>最后叮嘱</strong>：虽然你精通算法，但Java考试更关注<strong>语法细节</strong>和<strong>API调用规范</strong>，务必多练手写代码！尤其注意分号、花括号、类型声明等Python没有的约束。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>JAVA</div>
+      <div>http://maskobito.github.io/2025/03/14/JAVA/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MaskObito</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/03/15/Log4j2%E7%9A%84JNDI%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="Log4j2的JNDI注入漏洞复现">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Log4j2的JNDI注入漏洞复现</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/10/CORS%E8%B7%A8%E5%9F%9F/" title="CORS跨域">
+                        <span class="hidden-mobile">CORS跨域</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/typing-effect.js"></script>
+<script src="/js/particle.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
