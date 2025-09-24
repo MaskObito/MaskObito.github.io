@@ -158,7 +158,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
+                <span>CTF</span>
               </a>
             </li>
           
@@ -170,7 +170,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
+                <span>关于本站</span>
               </a>
             </li>
           
@@ -242,6 +242,60 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2025/04/18/shell/" target="_self">
+          shell
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/04/18/shell/" target="_self">
+        <div>
+          深入详解：WebShell 与日志文件包含攻击一、什么是 WebShell？WebShell 本质：一个隐藏在网站服务器上的恶意脚本文件，攻击者通过浏览器就能远程控制服务器，就像在服务器内部安装了”遥控器”。 典型 WebShell 代码： 1&lt;?php system($_GET[&#x27;cmd&#x27;]); ?&gt;  访问方式：http://target.com/shell.p
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-04-18 23:00" pubdate>
+              2025-04-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2025/04/17/POC/" target="_self">
           POC
         </a>
@@ -264,27 +318,13 @@
           </div>
         
         
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
             
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%B7%A5%E5%85%B7/" class="category-chain-item">工具</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
+              <a href="/tags/%E5%B7%A5%E5%85%B7/">#工具</a>
+            
           </div>
-        
         
       </div>
     </article>
@@ -404,6 +444,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2025/03/19/CTF-XSS/" target="_self">
+          CTF-XSS
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/19/CTF-XSS/" target="_self">
+        <div>
+          反射型XSSweb316无任何过滤尝试基本语句 1&lt;script&gt;alert(&#x27;XSS&#x27;)&lt;/script&gt;   能成功弹窗  查看源代码的时候也看到web页面源代码有xss语句，证明我们的xss语句被成功插入并解析  X自己语句1&lt;script&gt;alert(document.cookie)&lt;/script&gt;   X管理员（核心语
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-03-19 07:20" pubdate>
+              2025-03-19
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/">#CTF靶场</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2025/03/15/Log4j2%E7%9A%84JNDI%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_self">
           Log4j2的JNDI注入漏洞复现
         </a>
@@ -466,7 +546,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/03/14/JAVA/" target="_self">
         <div>
-          第一章 绪论核心考点 Java语言特点（单选题&#x2F;简答题）  跨平台性（JVM实现）：.java → 编译为 .class字节码 → JVM解释执行（对比Python的.py→PVM） 面向对象：完全OOP（连main都必须在类中），Python支持多范式 自动内存管理：垃圾回收器GC（类似Python，但Java需手动触发System.gc()建议回收） 强类型：变量必须声明类型（Py
+          JAVA 第一章 绪论核心考点 Java语言特点（单选题&#x2F;简答题）  跨平台性（JVM实现）：.java → 编译为 .class字节码 → JVM解释执行（对比Python的.py→PVM） 面向对象：完全OOP（连main都必须在类中），Python支持多范式 自动内存管理：垃圾回收器GC（类似Python，但Java需手动触发System.gc()建议回收） 强类型：变量必须声明类
         </div>
       </a>
 
@@ -480,27 +560,13 @@
           </div>
         
         
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
             
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%AF%AD%E8%A8%80/" class="category-chain-item">语言</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
+              <a href="/tags/%E8%AF%AD%E8%A8%80/">#语言</a>
+            
           </div>
-        
         
       </div>
     </article>
@@ -588,27 +654,13 @@
           </div>
         
         
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
             
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/web%E6%BC%8F%E6%B4%9E/" class="category-chain-item">web漏洞</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
+              <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/">#CTF靶场</a>
+            
           </div>
-        
         
       </div>
     </article>
@@ -668,119 +720,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/02/11/CTF%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89/" target="_self">
-          CTF条件竞争漏洞
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/02/11/CTF%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89/" target="_self">
-        <div>
-          条件竞争指的是程序的执行结果依赖于不受控制的事件发生的顺序或时机。当多个线程或进程在没有适当同步机制的情况下，同时访问和操作共享资源（如文件、变量、数据库记录）时，就可能出现非预期的、错误的执行结果。 核心原理： 共享资源： 存在一个多个请求&#x2F;线程&#x2F;进程都能访问的资源（例如：一个临时文件、一个状态标志、一个数据库字段、一个计数器）。  非原子操作： 对共享资源的操作不是“原子性
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-02-11 21:24" pubdate>
-              2025-02-11
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/web%E6%BC%8F%E6%B4%9E/" class="category-chain-item">web漏洞</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/02/05/%E9%80%9A%E8%BE%BEOA%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_self">
-          通达
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/02/05/%E9%80%9A%E8%BE%BEOA%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_self">
-        <div>
-          
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-02-05 17:59" pubdate>
-              2025-02-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

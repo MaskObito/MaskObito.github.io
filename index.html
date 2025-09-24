@@ -158,7 +158,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
+                <span>CTF</span>
               </a>
             </li>
           
@@ -170,7 +170,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
+                <span>关于本站</span>
               </a>
             </li>
           
@@ -466,7 +466,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/05/08/CTF-SSRF/" target="_self">
         <div>
-          相关函数和类 file_get_contents(): 将整个文件或一个url所指向的文件读入一个字符串中 readfile(): 输出一个文件的内容 fsockopen(): 打开一个网络连接或者一个Unix套接字连接 curl_exec(): 初始化一个新的会话，返回一个cURL句柄，供curl_setopt(), curl_exec()和curl_close()函数使用 fopen(): 打
+          web351源码如下： 12345678910111213141516171819202122232425262728&lt;?php// 关闭所有错误报告，不显示任何PHP错误、警告或通知error_reporting(0);// 高亮显示当前文件源代码（用于调试或展示代码）highlight_file(__FILE__);// 从POST请求中获取名为&#x27;url&#x27;的参数值$u
         </div>
       </a>
 
@@ -480,27 +480,53 @@
           </div>
         
         
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
         
-  <a href="/categories/web%E6%BC%8F%E6%B4%9E/" class="category-chain-item">web漏洞</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/">#CTF靶场</a>
+            
           </div>
         
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/06/CTF-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" target="_self">
+          文件上传
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/06/CTF-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" target="_self">
+        <div>
+          web153 .user.ini 的作用：它是一个“目录级”的配置文件，可以自动影响该目录下所有PHP文件的行为。 核心指令：auto_prepend_file（在PHP文件前包含）和 auto_append_file（在PHP文件后包含）。 妙用：利用这个机制，将一个非PHP格式的文件（如图片）强制作为PHP代码来执行，从而绕过上传限制。 关键条件：目录下必须有一个可被访问执行的PHP文件（如i
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-06 21:40" pubdate>
+              2025-05-06
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/">#CTF靶场</a>
+            
+          </div>
         
       </div>
     </article>
@@ -722,65 +748,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/04/18/shell/" target="_self">
-          shell
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/04/18/shell/" target="_self">
-        <div>
-          深入详解：WebShell 与日志文件包含攻击一、什么是 WebShell？WebShell 本质：一个隐藏在网站服务器上的恶意脚本文件，攻击者通过浏览器就能远程控制服务器，就像在服务器内部安装了”遥控器”。 典型 WebShell 代码： 1&lt;?php system($_GET[&#x27;cmd&#x27;]); ?&gt;  访问方式：http://target.com/shell.p
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-04-18 23:00" pubdate>
-              2025-04-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
