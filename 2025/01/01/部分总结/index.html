@@ -19,15 +19,15 @@
   <meta name="author" content="MaskObito">
   <meta name="keywords" content="">
   
-    <meta name="description" content="渗透测试  精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。  Web安全工具：精通Bur">
+    <meta name="description" content="这是我的私人空间，请勿随意查看。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="部分总结">
 <meta property="og:url" content="http://maskobito.github.io/2025/01/01/%E9%83%A8%E5%88%86%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="MaskObito">
-<meta property="og:description" content="渗透测试  精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。  Web安全工具：精通Bur">
+<meta property="og:description" content="这是我的私人空间，请勿随意查看。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-12-31T23:52:03.000Z">
-<meta property="article:modified_time" content="2025-09-24T07:09:34.884Z">
+<meta property="article:modified_time" content="2025-09-24T07:38:40.349Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -288,48 +288,22 @@
             <h1 id="seo-header">部分总结</h1>
             
             
-              <div class="markdown-body">
-                
-                <ol>
-<li><p><em>渗透测试</em><br>  <em>精通OWASP Top 10漏洞原理及利用技术，熟练运用MITRE ATT&amp;CK框架进行威胁建模，具备企业级网络安全架构渗透测试经验（涵盖Web应用、API、内网横向移动、移动应用等场景）。</em><br><em>掌握渗透测试全流程（信息搜集、漏洞探测、漏洞利用、权限维持、痕迹清除），擅长制定针对性测试方案，曾主导多个小型企业网络安全评估项目，累计发现高危漏洞超15个。</em></p>
-</li>
-<li><p><em>Web安全工具：精通Burp Suite全模块操作（Intruder爆破、Repeater、Decoder），擅长自定义插件开发；熟练使用SQLmap、Dirsearch、Nmap、中国蚁剑等工具进行自动化漏洞检测，结合手工测试提升漏洞发现率。</em><br>  3.<em>编程语言：熟练运用Python&#x2F;C&#x2F;Java&#x2F;PHP开发安全脚本与工具（如漏洞扫描器、流量分析脚本），Python获蓝桥杯线下省二等奖，精通动态规划、树状数组、回溯、贪心、滑动窗口递归双指针等，精通将数据结构与算法优化应用于漏洞特征匹配（如二分查找+SQL布尔盲注、堆叠注入、时间盲注绕过waf）。</em></p>
-</li>
-<li><p><em>漏洞研究与代码审计</em><br>  <em>深入研究且精通SQL注入、文件包含、命令执行、反序列化等漏洞原理，具备PHP&#x2F;Java代码审计能力，熟悉网络协议分析（TCP&#x2F;IP、HTTP&#x2F;HTTPS），熟练使用并分析mysql数据库，擅长使用Fiddler、Wireshark、科来网络分析系统进行流量抓包与安全事件溯源。</em></p>
-</li>
-</ol>
-<p><em>项目一：中铁港航东南海洋工程有限公司全栈渗透测试项目 | 2025.02-2025.04</em><br><em>项目背景：在该企业实习期间，为集团旗下Web网址及内部网络进行全方位安全评估，防范数据泄露风险。</em><br><em>采用“黑盒+白盒”测试模式，使用Nmap扫描内网资产，结合BP爆破敏感接口，通过sql布尔盲注发现3处未授权访问漏洞，导致核心用户数据可被遍历。</em><br>*-通过PHP代码审计定位文件上传漏洞，利用蚁剑实现服务器权限获取getshell，进一步横向移动发现域控服务器弱口令，最终完成渗透测试</p>
-<p><em>项目成果：累计发现中危漏洞15个，协助企业建立漏洞管理体系，获该企业奖金5k</em></p>
-<p>http明文传输，https用ssl加密传输,ssl防窃听防中间人</p>
-<p>MITRE ATT&amp;CK是一个知识库，用来规划攻击的</p>
-<p>–tamper&#x3D;space2comment.py</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-keyword">if</span> payload:<br>    retVal = base64<span class="hljs-selector-class">.b64encode</span>(payload<span class="hljs-selector-attr">[::-1]</span><span class="hljs-selector-class">.encode</span>(<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br>    retVal = base64<span class="hljs-selector-class">.b64encode</span>(retVal<span class="hljs-selector-attr">[::-1]</span>)<span class="hljs-selector-class">.decode</span>(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;+++++++++++++&quot;</span>+retVal)<br></code></pre></td></tr></table></figure>
+              
+              <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="813eeae585db50127858fe90854a4fd6c5eb9bacaea236e8dc2d93d84cb21511">75b764c9e13fd99acaf0f71a5cd36f2bd2f9162981c2e181907f923f90db9efccdc84f5c7e1eb67477ab125a92ec1bdf56e4a3bd066917a827c3581227d035e9f24155f2a4857a7b99b36e6101b92448fc58eebb6e36ca64621ad7ae6133e96daca68b333518ea416ae33932ece16dcbd24ba43104074a2e7a2411dac4e946d9359b952664e1c830e13c009042a61057d02d617cc5ebfcfc8a4c9d69380848ac79ef92dcf16e43daf75772ca2aeeb893dab3200db6a90d7a24036f7ae8aa7c1a2223aa1393850667e1ed564a4661a7434a4eed6a3735518ee06c8f0957939b27c93f919e843c8abec015d590e4eabf9846e9c6d78a7a8ecce645011b37abff9d695a70561285ae7f8dbef2cc4920c3a107fe7a1a8a4a21a995acf1ba2385548e4a9c0ab9906aca4c0e25e3f855ac417791dfc14f91c02b9034d62e34e82c86157d6a8e92706c1561a803cccd6e59edfb415571f9b33ff0eb55b5cff6b07e66dc93f825465e588dc378686983c5c3e15e36da686c8083445f650021ed4e7e0d9b4bd0a0d501a0f7450ac9977bb342a95080756d09a46e51332cd1debf99cfccd2753a38b5d04f24ae68af9dc55fdaf3c0da0830a4e40317ab0e7e29134445fbd23d209cdeee98772c1b510441a510d16c49b2806a4e95fcc2d2934d98c0ac4aa7de8d78bc2782da769efff4aa4b5bc9ee9b40f39745c4c407b5dab1058a052d55486733285dd704d5265cfdbcbbb0c042f9d6300946b915a024668a370d9c10d82ccbaabedc18bcfa349ace0de42bbef237bc7e778af9aa69e9cfc25cad5f5dca66ecbe7d6217577683c0d00c932a23063bb562143e6316f4498c452a618b710e4f0fa599553400dee874841f7a305f1d9b480b25ed2d1965d715c4e74db387854c5217df9c023193e4bae894abf2e18bf6fe214312a4310b5b9f31d1e4a3dbb8a285a06362267cbd7625477ada34785859022450387cec9dbe715237d9d0f439a7012d8b5f9b6db926abbc6b6851714cb3f1aa6d5f78f231b12ed155354d612ff629eaf39e58256a59001a7202f1bccf181d9e74509438811e775c0587c4534d3b506ad0ef428906efa90e32fb1c8db83c1dc632f536545e0085fafce1437b5a6ec3eec105bfabb90a19e21c4913c043383ec1e67f928dff6a8a3b286f867552df502efba271d76cdc5552ccb7dbb392f4762d11c8669af7619cd24fb05edc293e2e9cef98fa05715e4ff77f044a93f4c8215a4fb5489cfdc8b8d44c461c673a6b698149e91dbb2cb4d12da4700e6ece2088877c4abc69bce1dff4e0e9bfc70f8dae20b269991a4cfc2f5c60bd1afb63c600af31e023716d7b75f0dda3512a0a9692f43858418a0a665982c647fb210c2267664db5b47a244321f907eeda139d8aa0d81e746477460c88ae83357d86592b038cf61a5e95a156a4b13ddbc7f289ab40a22824f2c38c8457305f6fc4f979d258b85c2538d1dceb2e04587d238b1450def21f22c3a649849dec2fbd9e8d73d9000b66839a5a54db162fd3b0f854452b2b9539fbf12aa48f35e329dee94dfcee9baa68532e027acfe8ded0b6b4a2e281307e438a283e00262b9b7e80f25fef1945b86b437d3ebb8c8e01dc8e83f692bc1e88a8a7cf68a19dc782c42347bb1d614290a41930fab6ea316a931304852387b55c04fb807bf2cf9f31a95a27386483caef743187315544087bd5833b6b9f086e620f260417a75435f4de4ca30774d2fdab233d565a1cde4e7cc268eba85dc3ac1a3e5468dde6d801c6b31ba366144767bca869878ad2f42528b947448164297ad58ca124d183c5ecc90030c21aa4b9a2db19eb92f3073d6b36aa69d211ee28129142fd7aba5654c8b8cd22f117f08910bf45f5cb74768041ae0ce1ed4c6cf6b4e4def458600c349e04433ffa54e3e0c83bf050060c0a1ec135c0b71a31d141ad26ea4cd266fa5aefb564c949fa2d296067fa1c7f8308fe7629645cc5d1c800f2c70c9acbd41fed7296e253131e1187ebf864251a848133b527d6832d51f32e83429445957dbaec376f7d92e24481a636b6b6b8fb557cd2980bf9184378d94f76185eef93eacb86b691ee8fb5de869c544d9a45f6c2be76cceabb1d1cae6161ab7af9144be8d0caf9729b96b4b71bdb201544d6fd7253ee67861234d23fc8ba6490d078b2bae3372cbf2c9fee062d97659155016df8447845ffde4eb699bf83f5747166e721f86d7b909fc541f216f209a3f02334f9a5162cd63abd56aadad3d3d904b7223b0815b19ce63261498ad1c43ea29d573c75cf07da140bf7b96bec7623a1ba6d87cf546d9c26889dde4aad9a29b3b478dfc8b37dc404e7c9f8056d319d33499ae6698f510c467362195b69908ae30e7a2fb847c8d392a4b533e863d23e4b452365b5456d3e9ba5ab4bca622e60662b0c2f180f202c0f31a1e9d0f91d9b293ae8c34baf83ed0aec58261e1bdf1749aed8c5dcc9772c651784cd8da67798dbbaeede92eefd336bf580e6491f561f931be1bb1f3a170af9522a72dc0dd5bf29e6ca4c9dab5aec63a7aeca7f4e2889dea633297806d5ea3ab7b081c46ac7218577ff807ed63380fcac38736d9d01cecb4661b0fa542bca111ea364a3573db9447a667ff76930600bd7aad48c7c20b103ecb561afb102207de44da744f0f3f7484c5f7cb326de302cb51ddef9841a43eec2191294281f08abeffbbfc85727b338b80447a982e42e0b4dd823c01c8a76c68bbec6c9ad8bc73cae8aa0024af0066f92b119d0c8a033127d52c6d0ad4dbdf2643bea94aaf34621b401be7a0a02b0072b683189c369ccc180eaa3a58227abd1556b0b9f1bfba37a02ebbed94b521960801cb15c09c97f99a6ba903b3b4e4fbaeacb9198ce4c2a27974d7f59d2e643b1aef86602e29c9840aae278d2b78f455b4f2c7576aad5110c66ba0ba52fce984311194d8cdcd266743530310c8e3974581df8fa33a8b5741b225386e92a31d09745b53f62749745055455c45c16b6320436bdf3c3234ba76f3cff17d7ef7d6c02dfda3fe265c0cc95bfc198d24585ae656225931455c14bf9a03b40610eef4d01754ba92b9383cc53afaaf8b900414aff5bd7d2360c930fec8793db8de225998524db072559faf798ca5dd743149cca128a51b30757a3e976c4e1fd2986b08c18719d1b374c001de4f2176a590e6daaf2450bcc8370943a4087c76db4ef0dc913cd7d5d6cfa539cb359abdce3857ae5d7b3742e57e54731e85099073ebedceebc77876615c37af081ed13566301e9bc6f3ef14d467b91f9d5840125c9a5752db38a703cf8c8584e0b7f553edba52e73f1b922ff01755ec8309fb694b659db055e8639472b2bb6bbaf032f0cfdbb19baa9edfaae6d43780f31f73ee87bb34b99ed002b4a5276028aa356d6501b78451123aec9bc03b02e0f88b016fafa97ee4ac0e39f502cf248a8dd88a86ff09959a8dcbb68744a42d95bfb7b373b7f2b0bf5c4a4bdc9b62632ac6a5dc09238db8201a3aa03b711637ada0727d2e6c057894aa9b9ee26a5d79d171049fd7f3f32775889e2725ec871c8f0fe4f41f95a13113d94efd0433bd7f6703f1ed7e3e43f4f0fc95f8348181d26fe21ce5b4e7c0f2fbb04ff8323d0d5d5a4347d9775aab750ed85b2a1966abb7f8f6f742d58fe0d38ace7760888f4f7d0d056677701ce22d0079664b1be189c434ba9d976bbef0344b8ec74b979ac37d444c326473c17088fe72921db2e2f55624926ceb11eaaed6d3fd910c7685046567b0b5ceced4c22df81abf552909de205e1b36b9ef4cd330e170f2dc682ed3f77ec3df57816047d142202d08e852ccf6b3ae97757bb96b19c5eb7961b68c79f127adf00ed0e2dd6c3abddd9a5d36e69ee0c031c4ca318f820caa89d20e91de5704473a37ac0b46995fca4609fc838542b9b3c570d31e105e08c5267d2d6ac7321826c1fc9931ddf3bbbb0f373de08964549a9570afc064169526356d5517a1c10140f1a088cf23ee2724060c216c81943c7f2f095ff2832ca5dc82836c22b8196211f06fdd6ae02ef1866f0f167a8de13512bb00906f8b9bcf3bffdcc03118a3b63c9c65804e94f74c7068db626c443069423afc1206c04062b277af6e7a462e95f4f9cd6bf2bcace946546aa76543ee36778ecbc66a88ee52a1807136c2b5da4a0d97a8d03ffe578ca17d3b22f6638ab11831ca453e4218644d018a0d3925f7cd167c9784003d042031548397a4ab8a22623d0c1b75970aa01a25fbabb51a5dc758f11fad40bf342a41942c854f72f27d3a8a66ed6dbe3adfba0bd2db2862fcc5cd3d2229dc04ebd0ce7784358593dcfe7db67587fa91b0f03713d70299d911a67bb87a6244c9955581f183f86b933c73cd182a4569590e1737f28e130471266c88d78375b1ac690a10e483723d32037357ebc9c5e94c690f5f95a1d2f9b881b992de906400793353faa99b87f380c49b749d494730f58aad972d1082a3fe4d04340eb77bd89d9ddc514c440341a0b099024e6c3122507f211a3103f48676dce6c2bfbf800a3edaf1c0dcd27f2b22674627378ce9d37f28d3d993d6cb5644a8a2fe1b1a6dbf6c08e674a08d1cd6c1e29f87e40e8e42a8a4c21baac5c349e2f1d41378c6de8dac882b5fdb86351d96d991ddf6d5a1070ff77bb46a6e37e4575c17029f33ae6a32e348d4c9254d3df5139cf10cbc4f017b129b0e625a5273e4beeaae397e8d5b5562a682fd31ca5bb1e1493fc7aa04731b99ebd99225679b06ec72986039ddac8d32732812edcfd1bb87936a4f75b0b73b5eba366ff0be81ae6af3277cfed6ebf7cd281965706a8b39fcb130a50f4ef88d134d17276bf53f70ca40bc46984ea7a6331b9d6d0acc5f75e76b22ca78b1754cfce73eb344d9a6e8be3a4a16b183d4d732a108909f18fbbfbf5730ddb7e95579a56c29318d1abfa46f95686391287435011913a38b48b313bd7537718ddcb9101bbaf4b3e7e7414439e4ece845c6d140670e9484431807c410b906cccd868dbb1cb9354764cc940b57e4f5702a714d45ceb0188528679d7f922d7e23741ee3f632e6067ffd3093204f20b0a18e9027ea3db295828a677ba7f1b8f5f2d0cd4542c48040d1f4dd58312f2291eb034a4221af6f2db3c1918430aaddb636219a60c3008486136801361bc7168f184a08dc38848c722b5f6262efc57f90b92dd8325e3e21f524028a9d7c4f4c97978f2b90b3a7b9bc0b9d6494a10d276309cca8b64da6400da2c3ceba5688bf39530500075ca23dc0c12308fb145b26b7a884624eae5dd197589cd75dc8a146bbc8aa099dcc9993a626abf73d19c058e8497245ce8c1add6bbe0731a9aff07f5168a3baa3c006caad0dac75d60db66b0d8861ce4507e3230b264b18363c321c190bc36b231497c12e3a217be57e17453d0fe57bb58403eff7f96e3f1bddf9621ee18368432e10be01c61c19f317521936596fd184d89d1e7f156f5900fe0e17699326cd0c69909a9c1c3e97f1df3b9d642f153b47c41289f701bbc4f7bd9da96ffc4091110a97fe5f4c101bfb788edc57002c6332b732facb6ac0527a3e61d652318b96edd524eaec7ad0aaf46ae0c8d43884d9a0fdc14bc6a037d36f4ed4a2af69deffd486d8718b9c7fdf388b5c6701c399e9b7ec83ed9d90490edcf137777302a066380c7d600430373350e7d4bce283bc98bc2e9a162986adc7b43180874338fe085c1a58791e009b766ddac4174e3b3e2b4e213d621920a7d6bf7db40f33c1d31ae3f153d696cc76b9650fd11fc2407bc92afee78bc08421b1ec44f5df605c111b426e0b38f9f3514a1e091cc9ed10f7f457e166b89beb4114f249ad9f119c75623d5521a761e1c10eee7b1a3a0055fc5755471c2bb447ec4100c97d96985d8a5315cf184280bd5200199c1c897af76c9c596d791494e9ea568e5bd4561d24dc42975eb7702b2a074aa0da185c96611bc0fea5061ba5472ded118f6be1c428882bd10573cb8efddc1fe9e01ca95342564afe8c5484f837b5af981befc0a0471aded3497656292b4862065989d92a665f7e23461e06872d24c26c015c9e21c6588d505cb5c6331542354f5ed7285859b437a5de22595841aa146dbb1f2c0313de93e24160b065aa78a268b7da7682bf33fec265bab66e70a2a887a36e05cb5c41a95486800d13e95000b606f62f94db0b27c18dfc933695f0bc7e5910fb8a372a2f30e4a14db155b19a40fb5ab390e1d74eeb568df8686c1cf48abc0e759a539a0443313337a662e5bdaff1d9b8fe925fd7278b29115bcd81fd7f07e45d285cfcdcdb78f30aa4c84b002876b4436139af6af4e70af679412b7f647ab2e5962262e19bda6e8db2c9eee55514cadbc9a49baeb65ec2348b22228fea82b7ec1a72d955a1e0afa0c3344a6bd7c9d7a6e0ec01eb89be953cdb6aaa00237350a58ad8536dab7e6269198fd211d163e3c91e3ad754d46e271e3ddda18e1899f0d45486668b63ab76b1fd9367520231b3dae988a04d0a47f7b9515be22bb4a4400e0278e25abdf96a34364e446457f4a8a078458dec4eb3a585446b41cb067e78de08a394d3502137951be1d2c0945c86d4002f392754904197386cab20da878e378a5930a127ac3eccd83287793dfe2e0480f194102c929daeafc3ca231925394e0d2443a52d48bddc1f6796be7f6c866c0e2ba013cbae1f522183582ad5a5936c7b96cfb8890eb1e98aab19461c77be499d5e2dc96d6b4219d8a6efa4837ed0781076719c3b4dc59002012bae548eebecc78ca81a82a82d5ac2f3c3922d4c07241513566f22deab3a461dd01e6c05c74bd4ead81288b9a83bedfc70e7c4c151cb0e748050508f0134980a2bb48e9a1837ba5a26aefec5d1bb064864079f6032223bff1bf3099ee9c7a8ab71ab0d71023ee8e3500bad9f9900dc452d15f49bd60ec51dee7df2749b62cc89f8ebe68def1838d32552b8f2ed92e331087274ea2b9861fd44f099d7c293681c7a0f705b15322494e41182d59a2694b31c1fddb92331052aaad814f581ae0bc4b513d837b73672afa74aa50c46b09774f1521e60abd39527f751fc4a93b22d74e4e5d84302e6c374a4bacbd7b40dfaef73c833f3c6bbd1903405b5c80002f1cf4052912966abbfcaadb77a974e93b3a990e653dd565869df8f9f76eb2ac49f83782b58b2ecc325bf949bb3720517bde4b5b77760bb3f547109dd0ee593f68ab20bb66a49338ae0a2ab6fcc0ec13997a7df82b52020b73ef9f0fb25bc915303e62fdd78d2c23021db08dd574da378172e7ba667caef264ba109d66c0a9227a72f163c4e7e24c0013c18db8248255f137cc3fedbacd5cda30f7467bf3c92509e11458ab11c3ef9bc8f9af5ca96aca943bc934d7b1f5a5d99a76b0ec21a9a4f0349f313fc1e920d10b1879561488454618dba658c65cd759406ec6868d52b1f1e621255ad5300917093c31036348bf80c23e1c664e8c0e5ea55528e0981cca87bdcd742e307500a884ee671297a08cf71f4208fda6264546c5783c9e4e431d73269b90b6c5b64edcc70cf562ecc255ad724797c9207bb47579b6c45d592f3434353d4badda546fdc3abb851c3bfe29111aa818c3b13d5dc68e55afcf099d5d84a0ae9bbe91587f2f061255d3db9f81d8db707046b4b36b0bbaf419ca5b8c42ce97b9546ecd0b57249efab9067948f57601fc54c499498fa0f30e978ea09329e3fc2f548034a691e78386a8b62f40ffb4895f424d0557a5b77b0584f944272a440158349704bc94cf0fffbc140fc5fe17c1fc6f1907497373ea47392f9101636afd669778fa911861a6b333fa12dda905f7fbebc0109e9c2ebda4861e7043a1c45785aa94397807ec23721faff11a230d8b47d7f8af27a4eba0d417d25509f418c01cf6e46689b5421b9a3d696e48bdab4bbb561d31aa53b547d87801f9a62e9e7942435fc647312bf20db8a7d1d9f8d2f82010a18a512c20bde8da0d4a26a0da3ed1994833dd1e0b26068989184229903bfce4ec9979ff317172fc367ebc506f518de549474f643710ce6608c1fe1e5a7283c780537c7eb801ad1de16c4a560f73287e5abfd49714aeb593cd564b1d394821d4691eac30d8cb378f6cb856cf28a9dd97411ac0dff5972356a9163cd820b2cb3605abc274283eb587989675dc2ed4473722aab9ff54c40de691e0c3c70486eaa5f7bfbe6cb5be205ce1cb1cd9a5c83ad4234b4a2725bdb324d5d706a66b1423feb611f7bb365ad3f27caa9abb803b725c1c241e82b48d283ce3c9c30ba1fefccf888a5c07a33b3e09cd35a19f8d1399925093784cb6fb3e7a98c354ca8d4d5ef6e7f88132285eb999b64c01a9e403e001d1d30b51db08d5e56afb40a444d20f95467b7d30c907c3d51beabfd69a7609374d2b3abc241011cbe5d8097be271edd78690bee8f09cd6d94be6f018a31782a82c26ca77f1073d4fb78a2e8c309ece4001e3a2c2de503350c9b5a6abcde0e05c84c7fff943e30db5e38f83c71c58a902c26b4d30c0fabd9b352a7b7637b1179892e69fb862b4113a310b544efe3e833b6dc819dae9a92588579fec46678357d538fa8161b152a03742078b4b4f5c15c51c4f738c37546e1bb2168904903dc6dd1758184d5e04c28cc4b2</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">这是我的私人空间，请勿随意查看。</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+              
 
-<p>堆叠注入用；布尔盲注根据抓包回显判断，benchmark时间盲注</p>
-<p><strong>XSS、越权访问（水平&#x2F;垂直）命令执行、反序列化、文件上传&#x2F;包含&#x2F;路径遍历</strong></p>
-<p>跨站脚本攻击，将<code>&lt;script&gt;</code> 标签代码执行，反射型不会存储在服务器如钓鱼邮件，存储型长期在服务器上，窃取 Cookie，利用受害者身份进行攻击，如拒绝式服务攻击。</p>
-<p>system()    &#x2F;&#x2F; 执行外部程序并显示输出。过滤后可以用passthru。eval($c); 使用 eval() 函数执行 $c 变量中的代码。eval() 会将 $c 中的字符串作为 PHP 代码执行，这可能导致执行任意 PHP 代码，从而形成安全漏洞。调用shell.php，传入cmd，system ls，system cat tac</p>
-<p>本地文件包含漏洞（LFI   伪协议input； data：相对路径被过滤，服务器禁止访问根目录；<strong>include</strong>：当包含 .php 文件时会执行其中的代码，非显示源码z</p>
-<p>大小写绕过，过滤php可以用session，文件可控</p>
-<p>webshell：通过抓包改ua头上传恶意php，在用get或者post传参执行命令</p>
-<p>防御：不要直接包含用户输入，open_base限制PHP可访问的目录</p>
-<p>写脚本监控日志防止数据库泄露</p>
-<p>array检查是否是数组</p>
-<p><strong>编程语言</strong></p>
-<p>sql注入加上python二分查找大大减少爆破时间</p>
-<p><strong>mysql数据库</strong></p>
-<p>联合查询union select，增删查改</p>
-<p><strong>使用SQLmap进行自动化SQL注入检测和利用，用Dirsearch&#x2F;Nmap进行资产发现和目录扫描，用蚁剑管理Webshell</strong></p>
-<p><strong>漏洞研究</strong></p>
-<p>如文件上传欺骗改文件后缀php改成jpg绕过waf，执行恶意代码</p>
-<p><strong>擅长使用Fiddler、Wireshark、科来网络分析系统进行流量抓包和分析</strong></p>
-<p><strong>黑盒测试+白盒审计</strong></p>
-<p>使用nmap扫描ip，开放端口，在线主机，dirsearch收集子域名，用sqlmap，bp对登录接口、用户查询接口、订单查询接口等<strong>敏感功能点</strong>进行手工测试</p>
-<p>**代码审计突破 (白盒)**发现文件上传漏洞，直接引用参数，应该先进行如base64，url编码，或添加死亡die函数，上传whoami等获得管理员信息，弱密码爆破</p>
-<p>、<strong>SQL注入</strong>和<strong>越权访问 是最常见的，通过PHP代码审计发现文件上传漏洞并最终拿到域控权限</strong></p>
-
-                
-              </div>
+              
             
             <hr/>
             <div>
@@ -581,6 +555,23 @@
   
 
 
+
+
+  
+  <script defer>
+    if (document.getElementById('hbePass') || document.querySelector('hbe-prefix')) {
+      Fluid.utils.waitElementLoaded('hbe-prefix', function() {
+        var hbePrefix = document.querySelector('hbe-prefix');
+        hbePrefix.parentElement.classList.add('markdown-body');
+        Fluid.utils.retry(function() {
+          if (Fluid.boot && Fluid.boot.refresh) {
+            Fluid.boot.refresh();
+            return true;
+          }
+        }, 100, 10);
+      })
+    }
+  </script>
 
 
   
