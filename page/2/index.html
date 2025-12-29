@@ -244,6 +244,248 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2025/06/08/xss/" target="_self">
+          xss
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/06/08/xss/" target="_self">
+        <div>
+          XSS常用标签及绕过姿势平台： https://xssaq.com/ https://xssjs.com  一、xss 常见标签语句 0x01.  标签 12345&lt;a href=&quot;javascript:alert(1)&quot;&gt;test&lt;/a&gt;&lt;a href=&quot;x&quot; onfocus=&quot;alert(&#x27;xss&#
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-06-08 21:26" pubdate>
+              2025-06-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/web%E6%BC%8F%E6%B4%9E/" class="category-chain-item">web漏洞</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/08/CTF-SSRF/" target="_self">
+          CTF-SSRF
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/08/CTF-SSRF/" target="_self">
+        <div>
+          web351源码如下： 12345678910111213141516171819202122232425262728&lt;?php// 关闭所有错误报告，不显示任何PHP错误、警告或通知error_reporting(0);// 高亮显示当前文件源代码（用于调试或展示代码）highlight_file(__FILE__);// 从POST请求中获取名为&#x27;url&#x27;的参数值$u
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-08 07:51" pubdate>
+              2025-05-08
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/">#CTF靶场</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/06/CTF-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" target="_self">
+          文件上传
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/06/CTF-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" target="_self">
+        <div>
+          web153 .user.ini 的作用：它是一个“目录级”的配置文件，可以自动影响该目录下所有PHP文件的行为。 核心指令：auto_prepend_file（在PHP文件前包含）和 auto_append_file（在PHP文件后包含）。 妙用：利用这个机制，将一个非PHP格式的文件（如图片）强制作为PHP代码来执行，从而绕过上传限制。 关键条件：目录下必须有一个可被访问执行的PHP文件（如i
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-06 21:40" pubdate>
+              2025-05-06
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/">#CTF靶场</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" target="_self">
+          文件上传
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/06/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" target="_self">
+        <div>
+          文件上传1.只是前端校验，可通过在前端修改后缀 2.后端单一校验，可通过抓包改后缀不改文件类型  若存在后端校验，同样上传jpg，只改前端无法绕过。   (不在同一目录下可用tac  ..&#x2F;flag.php) 3.mine检测，需要改content-type 1if($_FILES[&#x27;file&#x27;][&#x27;type&#x27;] == &#x27;image/pn
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-06 21:40" pubdate>
+              2025-05-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/web%E6%BC%8F%E6%B4%9E/" class="category-chain-item">web漏洞</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/04/23/URL%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8ESSRF%E4%B8%8ECORS%E8%B7%A8%E5%9F%9F/" target="_self">
+          URL重定向与SSRF与CORS跨域
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/04/23/URL%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8ESSRF%E4%B8%8ECORS%E8%B7%A8%E5%9F%9F/" target="_self">
+        <div>
+          URL重定向与SSRFURL重定向（URL Redirection）和服务器端请求伪造（Server-Side Request Forgery, SSRF）是两种截然不同的概念，它们在目的、执行者和安全影响上有着本质的区别。 URL重定向URL重定向是一种网站技术，指当用户访问某个网址时，自动将其导向另一个网址。 这种技术通常用于正当目的，例如：  网站迁移：将旧域名的流量引导至新域名。 简化UR
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-04-23 02:10" pubdate>
+              2025-04-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/web%E6%BC%8F%E6%B4%9E/" class="category-chain-item">web漏洞</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2025/04/22/URL%E9%87%8D%E5%AE%9A%E5%90%91/" target="_self">
           URL
         </a>
@@ -494,253 +736,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/03/21/ueditor/" target="_self">
-          ueditor
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/21/ueditor/" target="_self">
-        <div>
-          搭建临时网站f7msgp.dnslog.cn 上传恶意 JSP 文件上传接口：/ueditor/jsp/controller.jsp?action=uploadfile 1234567891011&lt;%@ page import=&quot;java.net.URL&quot; %&gt;&lt;%  String dnsDomain = &quot;abc123.dnslog.cn&quot
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-03-21 21:00" pubdate>
-              2025-03-21
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/03/19/CTF-XSS/" target="_self">
-          CTF-XSS
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/19/CTF-XSS/" target="_self">
-        <div>
-          这是我的私人空间，请勿随意查看。
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-03-19 07:20" pubdate>
-              2025-03-19
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CTF%E9%9D%B6%E5%9C%BA/">#CTF靶场</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/03/15/Log4j2%E7%9A%84JNDI%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_self">
-          Log4j2的JNDI注入漏洞复现
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/15/Log4j2%E7%9A%84JNDI%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_self">
-        <div>
-          Log4j2的JNDI注入漏洞复现参考文章： https://www.freebuf.com/vuls/316143.html https://www.cnblogs.com/0dot7/p/17259327.html 漏洞描述关于Log4j2Log4j2是一个Java日志组件，被各类Java框架广泛地使用。它的前身是Log4j，Log4j2重新构建和设计了框架，可以认为两者是完全独立的两个日志组
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-03-15 23:13" pubdate>
-              2025-03-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/03/14/JAVA/" target="_self">
-          JAVA
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/14/JAVA/" target="_self">
-        <div>
-          JAVA 第一章 绪论核心考点 Java语言特点（单选题&#x2F;简答题）  跨平台性（JVM实现）：.java → 编译为 .class字节码 → JVM解释执行（对比Python的.py→PVM） 面向对象：完全OOP（连main都必须在类中），Python支持多范式 自动内存管理：垃圾回收器GC（类似Python，但Java需手动触发System.gc()建议回收） 强类型：变量必须声明类
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-03-14 08:53" pubdate>
-              2025-03-14
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AF%AD%E8%A8%80/">#语言</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/03/10/CORS%E8%B7%A8%E5%9F%9F/" target="_self">
-          CORS跨域
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/10/CORS%E8%B7%A8%E5%9F%9F/" target="_self">
-        <div>
-          
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-03-10 09:20" pubdate>
-              2025-03-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
